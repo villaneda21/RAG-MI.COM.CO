@@ -40,3 +40,11 @@ def test_register_case_normalizes_category(tmp_path: Path) -> None:
         detalle="No me llegan los mensajes al buzón.",
     )
     assert record.categoria == "Correo electrónico"
+
+
+def test_colombia_timezone_does_not_crash() -> None:
+    from app.services.case_service import colombia_tz
+
+    zone = colombia_tz()
+    stamp = __import__("datetime").datetime.now(zone)
+    assert stamp.tzinfo is not None

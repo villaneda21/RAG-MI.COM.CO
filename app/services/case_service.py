@@ -7,9 +7,9 @@ import logging
 import re
 import uuid
 from dataclasses import asdict, dataclass
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from app.config.settings import settings
 
@@ -23,7 +23,15 @@ CATEGORIES = (
 )
 
 EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-BOGOTA = ZoneInfo("America/Bogota")
+# Windows no incluye tzdata de IANA; si falta, usamos UTC-5 (Colombia).
+_COLOMBIA_OFFSET = timezone(timedelta(hours=-5), name="COT")
+
+
+def colombia_tz() -> timezone | ZoneInfo:
+    try:
+        return ZoneInfo("America/Bogota")
+    except (ZoneInfoNotFoundError, ModuleNotFoundError, Exception):
+        return _COLOMBIA_OFFSET
 
 
 class CaseRegistrationError(Exception):
@@ -81,7 +89,7 @@ class CaseService:
                 user_message="Cuéntame un poco más del motivo de tu contacto para dejarlo registrado.",
             )
 
-        now = datetime.now(BOGOTA)
+        now = datetime.now(colombia_tz())
         record = CaseRecord(
             case_id=_new_case_id(now),
             correo=email,
