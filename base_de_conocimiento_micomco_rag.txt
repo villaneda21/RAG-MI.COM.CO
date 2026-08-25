@@ -1,0 +1,981 @@
+================================================================================
+DOCUMENT METADATA
+================================================================================
+TITULO_DOCUMENTO: Base de Conocimiento y Términos de Servicio de MI.COM.CO
+ORGANIZACION: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+NIT: 900.293.637-2
+PAIS: Colombia
+DOMICILIO_PRINCIPAL: Bogotá, Carrera 6 No. 77-42
+CORREO_CONTACTO: atulado@mi.com.co
+PORTAL_WEB: mi.com.co
+VERSION_DOCUMENTO: 1.0 (Julio 2026)
+AUTOR: Juan Villaneda
+PROPOSITO: Base de Conocimiento optimizada para sistemas RAG (Retrieval-Augmented Generation), consolidando guías operativas, políticas de privacidad, soporte técnico y términos contractuales.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: INTRO-001
+[CATEGORY]: Información General y Objetivos
+[TITLE]: Introducción y Objetivos de la Base de Conocimiento de MI.COM.CO
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S. / MI.COM.CO
+[KEYWORDS]: base de conocimiento, mi.com.co, soporte técnico, plataforma de autogestión, documentación operativa, entregable S3
+[SUMMARY]: Descripción general, objetivos y alcance de la Base de Conocimiento oficial de MI.COM.CO.
+--------------------------------------------------------------------------------
+[CONTENT]:
+1. Introducción:
+La Base de Conocimiento de MI.COM.CO es un repositorio documental diseñado para centralizar, organizar y estandarizar la información relacionada con los procedimientos operativos más frecuentes de la plataforma de autogestión. Su propósito es facilitar el acceso a información clara, actualizada y estructurada tanto para los clientes como para el personal de soporte técnico.
+
+Este documento constituye el resultado del entregable "S3 - Depuración, estandarización y actualización de la Base de Conocimiento", desarrollado para consolidar guías, eliminar redundancias y establecer un formato uniforme.
+
+2. Objetivo General:
+Estandarizar y consolidar la documentación operativa de la plataforma MI.COM.CO mediante la creación de una Base de Conocimiento organizada, actualizada y de fácil consulta, permitiendo mejorar la experiencia de los usuarios y optimizar los procesos de soporte técnico.
+
+3. Objetivos Específicos:
+- Centralizar la documentación existente en un único repositorio.
+- Eliminar información duplicada o desactualizada.
+- Estandarizar el formato de todas las guías y procedimientos.
+- Actualizar la información de acuerdo con el funcionamiento actual de la plataforma.
+- Facilitar la consulta de procedimientos mediante una estructura organizada por categorías.
+- Mejorar la disponibilidad del conocimiento para clientes y personal de soporte.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-001
+[CATEGORY]: Guías Operativas - Gestión de Cuenta
+[TITLE]: Cómo crear tu cuenta en Mi.com.co
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: crear cuenta, registro de usuario, registrarse, formulario de registro, verificación de correo, mi.com.co
+[SUMMARY]: Pasos detallados para crear y verificar una cuenta de usuario en el portal mi.com.co.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Procedimiento paso a paso para registrarte en Mi.com.co:
+
+1. Accede al portal oficial:
+Dirígete a la dirección mi.com.co desde tu navegador web.
+
+2. Inicia el registro:
+En la página principal, busca y haz clic en el botón "Crear Cuenta" para ir al formulario de registro.
+
+3. Completa tus datos:
+- Nombre, Email y Contraseña: Usa un correo electrónico al que tengas acceso permanente.
+- Datos Adicionales (Opcional): Puedes desplegar la sección "Datos adicionales" para completar tu apellido, teléfono y documento de identidad. Si deseas agilizar el proceso, puedes completar estos datos posteriormente.
+
+4. Verifica tu cuenta:
+- Revisa tu bandeja de entrada de correo electrónico tras hacer clic en el botón de registro.
+- Abre el correo de confirmación enviado por el sistema.
+- Haz clic en el enlace de verificación dentro del mensaje.
+- Una vez verificado, podrás acceder a mi.com.co utilizando tu correo y contraseña registrados.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-002
+[CATEGORY]: Guías Operativas - Gestión de Cuenta
+[TITLE]: Cómo encontrar tu Código de Cliente
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: código de cliente, identificador único, CLI, mi cuenta, perfil de usuario, soporte técnico
+[SUMMARY]: Instrucciones para ubicar el Código de Cliente (identificador CLI-XXXXXX) en la plataforma Mi.com.co.
+--------------------------------------------------------------------------------
+[CONTENT]:
+El Código de Cliente es el identificador oficial de tu cuenta en Mi.com.co (formato típico: CLI-XXXXXX). Es requerido por el equipo de soporte técnico para realizar cambios técnicos o administrativos.
+
+Pasos para localizar tu Código de Cliente:
+
+1. Iniciar sesión:
+Accede a mi.com.co e ingresa con tu correo y contraseña.
+
+2. Entrar a la configuración de Perfil:
+En el menú superior derecho, haz clic en el icono de usuario (o sobre tu nombre) y selecciona la opción "Mi cuenta" o "Perfil".
+
+3. Identificar el código:
+- Dentro de la pestaña "Información de la cuenta", ubica la columna de la derecha.
+- Busca el campo "CÓDIGO DE CLIENTE".
+- El código se visualiza con el formato CLI-XXXXXX.
+
+Nota de soporte: Ten este código a la mano al contactar al equipo de atención por chat o correo electrónico para agilizar el servicio.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-003
+[CATEGORY]: Guías Operativas - Seguridad de Cuenta
+[TITLE]: Cómo cambiar la contraseña de tu cuenta y activar 2FA
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: cambiar contraseña, cambiar clave, seguridad de cuenta, 2FA, autenticación de dos pasos, doble factor
+[SUMMARY]: Instrucciones para cambiar la contraseña de acceso al panel de Mi.com.co y recomendaciones de seguridad.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Procedimiento para actualizar la contraseña de acceso a tu panel de administración:
+
+1. Ingresar a "Mi cuenta":
+Inicia sesión en mi.com.co, haz clic en el icono de perfil en la esquina superior derecha y selecciona "Mi cuenta".
+
+2. Seleccionar "Contraseña y 2FA":
+En el menú lateral izquierdo, ubica la sección "SEGURIDAD" y selecciona la opción "Contraseña y 2FA".
+
+3. Actualizar la clave:
+Ingresa tu contraseña actual y define la nueva contraseña cumpliendo las recomendaciones de seguridad:
+- Longitud mínima de 10 caracteres.
+- Combinación de letras mayúsculas, minúsculas, números y símbolos.
+- Evitar información personal obvia (fechas de nacimiento, nombres, etc.).
+
+4. Guardar los cambios:
+Haz clic en el botón de guardar para activar la nueva contraseña de inmediato.
+
+Recomendación de seguridad adicional:
+En la misma sección "Contraseña y 2FA", activa la Autenticación de Dos Pasos (2FA) para proteger la cuenta contra accesos no autorizados.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-004
+[CATEGORY]: Guías Operativas - Servicio de Correo
+[TITLE]: Cómo crear tu cuenta de correo corporativa y acceder a Webmail
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: crear correo corporativo, buzón de correo, webmail, webmail.mi.com.co, administrar correo, nuevo buzón
+[SUMMARY]: Pasos para la creación de un nuevo buzón de correo corporativo bajo tu propio dominio y acceso a Webmail.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Pasos para configurar un nuevo buzón de correo corporativo bajo tu propio dominio:
+
+1. Ingresar al panel:
+Accede a mi.com.co e inicia sesión con tus credenciales.
+
+2. Gestionar el servicio de Correo:
+En el menú principal, dirígete a la sección "Correo". Haz clic en la opción de gestionar/ver del servicio de correo activo.
+
+3. Crear una nueva cuenta:
+En el administrador de correo, haz clic en el botón "Nueva cuenta" o "Nuevo buzón".
+
+4. Configurar los datos del buzón:
+- Dirección de correo: Escribe el nombre de usuario (ejemplo: contacto, ventas, o nombre personal). El dominio se adjunta automáticamente.
+- Contraseña: Define una clave segura de mínimo 8 caracteres.
+- Confirmar contraseña: Reingresa la clave definida.
+- Haz clic en el botón "Crear buzón".
+
+5. Acceso al correo (Webmail):
+Para enviar y recibir correos desde la interfaz web, ingresa a:
+URL: webmail.mi.com.co
+Ingresa utilizando la dirección de correo completa creada y la contraseña asignada.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-005
+[CATEGORY]: Guías Operativas - MiConstructor
+[TITLE]: Cómo acceder al panel de administración de MiConstructor
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: MiConstructor, constructor web, editor web, diseño web, mis servicios, publicar sitio
+[SUMMARY]: Pasos para ingresar al editor visual de MiConstructor desde el panel de cliente de Mi.com.co.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Procedimiento para ingresar al diseñador web MiConstructor:
+
+1. Ingresar a la cuenta:
+Inicia sesión en mi.com.co con tu usuario y contraseña.
+
+2. Ubicar la sección "Mis servicios":
+En el panel principal (Dashboard), desplázate hacia abajo hasta la tabla "Mis servicios".
+
+3. Seleccionar el servicio de Constructor:
+Busca la fila donde el tipo de servicio sea "Constructor" (identificado con el icono de varita mágica). Haz clic en la flecha azul (→) en la columna "VER".
+
+4. Abrir el panel de administración:
+Dentro de los detalles del servicio, haz clic en "Abrir panel de administración" para cargar el editor visual de la página web.
+
+Recomendaciones y tips:
+- Consulta en la tabla "Mis servicios" los días de vigencia restantes y la fecha de vencimiento de tu plan.
+- Tras realizar cambios en el sitio web, haz clic en el botón "Publicar" dentro de MiConstructor para aplicar las actualizaciones en vivo.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-006
+[CATEGORY]: Guías Operativas - Configuración DNS
+[TITLE]: Cómo agregar un Registro TXT en la Zona DNS
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: registro TXT, DNS, zona DNS, configuración DNS, SPF, verificación de dominio, registro TXT mi.com.co
+[SUMMARY]: Guía paso a paso para añadir un registro TXT en la zona DNS por defecto de Mi.com.co.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Requisitos previos:
+1. El dominio debe tener configurada la Zona DNS por defecto de Mi.com.co.
+2. Ingresa los valores específicos proporcionados por tu proveedor técnico (los datos de tutoriales son de prueba).
+
+Pasos para agregar un Registro TXT:
+
+1. Localizar el dominio:
+En el panel principal, desplázate a "Mis servicios", ubica el dominio a configurar y haz clic en la flecha azul (→).
+
+2. Entrar a la sección DNS:
+En el menú lateral izquierdo, haz clic en la opción "DNS" para ver la tabla de registros activos.
+
+3. Crear el registro TXT:
+Haz clic en el botón/icono para agregar registros y completa el formulario:
+- Tipo: TXT
+- Nombre: Ingrese "@" (para el dominio raíz) o el subdominio/texto específico requerido.
+- Valor: Ingrese o pegue el texto o código de validación suministrado por el proveedor.
+- Presione el botón azul "+ Agregar registro".
+
+Tiempo de propagación:
+Los cambios en los registros DNS pueden tardar desde unos minutos hasta un par de horas en propagarse globalmente.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-007
+[CATEGORY]: Guías Operativas - Hosting Web
+[TITLE]: Cómo acceder al panel de administración de Hosting (cPanel)
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: hosting, cPanel, acceder a cPanel, administración de hosting, mis servicios, panel hosting
+[SUMMARY]: Pasos para acceder a cPanel desde el panel de administración de Mi.com.co.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Procedimiento para ingresar al panel técnico de cPanel de tu servicio de hosting:
+
+1. Ingresar a la cuenta:
+Inicia sesión en mi.com.co con tus credenciales.
+
+2. Ubicar el servicio de Hosting:
+En el Dashboard principal, deslízate a la tabla "Mis servicios", ubica la fila correspondiente a tu Hosting y haz clic en la flecha azul (→).
+
+3. Ir a la pestaña "Acceso":
+En el menú lateral izquierdo, dentro de la categoría "PRINCIPAL", haz clic en la opción "Acceso" (se resaltará en color naranja).
+
+4. Entrar a cPanel:
+En la sección central "Acceso a cPanel", haz clic en el botón azul "Acceder a cPanel". Se abrirá una nueva pestaña con las herramientas de gestión del servidor cPanel.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-008
+[CATEGORY]: Guías Operativas - Configuración DNS
+[TITLE]: Cómo agregar un Registro MX en la Zona DNS
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: registro MX, DNS, correo electrónico, servidor de correo, prioridad MX, zona DNS
+[SUMMARY]: Instrucciones para configurar un registro MX en la zona DNS de Mi.com.co para la recepción de correo.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Requisitos previos:
+1. El dominio debe utilizar la Zona DNS por defecto de Mi.com.co.
+2. Debes contar con la dirección del servidor de correo y el valor de prioridad entregados por tu proveedor de correo.
+
+Pasos para agregar un Registro MX:
+
+1. Localizar el dominio:
+Desde el panel principal, dirígete a "Mis servicios", ubica el dominio y haz clic en la flecha azul (→).
+
+2. Entrar a la sección DNS:
+En el menú lateral izquierdo, selecciona la opción "DNS".
+
+3. Crear el registro MX:
+Haz clic en el botón para agregar un nuevo registro y completa los siguientes campos:
+- Tipo: MX
+- Nombre: Generalmente se utiliza "@" (para el dominio principal).
+- Valor: Ingrese el servidor de correo asignado por su proveedor (ej. mail.midominio.com o servidor del proveedor).
+- Prioridad: Ingrese el número de prioridad asignado (comúnmente 0, 10, 20).
+- Haz clic en el botón azul "+ Agregar registro".
+
+Tiempo de propagación:
+Los registros MX gestionan la recepción de mensajes. Los cambios tardan habitualmente entre 1 y 2 horas en propagarse. Si utilizas varios servidores MX, valida las prioridades indicadas por tu proveedor.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-009
+[CATEGORY]: Guías Operativas - Configuración DNS
+[TITLE]: Cómo agregar un Registro CNAME en la Zona DNS
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: registro CNAME, DNS, alias, subdominio, www, redirección DNS, zona DNS
+[SUMMARY]: Pasos para crear un alias CNAME apuntando un subdominio a un nombre de dominio destino en la Zona DNS.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Requisitos previos:
+1. El dominio debe tener configurada la Zona DNS por defecto de Mi.com.co.
+2. Debes tener a la mano el subdominio y el nombre de dominio destino.
+
+Pasos para agregar un Registro CNAME:
+
+1. Localizar el dominio:
+En la sección "Mis servicios", busca el dominio correspondiente y haz clic en la flecha azul (→).
+
+2. Entrar a la sección DNS:
+En el menú lateral izquierdo, haz clic en "DNS" para acceder a los registros activos.
+
+3. Crear el registro CNAME:
+Haz clic en el botón para agregar registro y completa los campos:
+- Tipo: CNAME
+- Nombre: Ingrese el subdominio (ejemplo: "www").
+- Valor: Ingrese el nombre de dominio destino al cual debe apuntar el alias.
+- Haz clic en el botón azul "+ Agregar registro".
+
+Consideración de soporte:
+Los registros CNAME crean alias hacia otros nombres de dominio. Si el registro para el subdominio ya existe, debes editar el registro existente en lugar de crear uno nuevo para evitar conflictos en la Zona DNS.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-010
+[CATEGORY]: Guías Operativas - Configuración DNS
+[TITLE]: Cómo agregar un Registro A en la Zona DNS
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: registro A, dirección IP, apuntar dominio, DNS, servidor web, ip hosting
+[SUMMARY]: Guía para vincular un nombre de dominio o subdominio con la dirección IP de un servidor web mediante un Registro A.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Requisitos previos:
+1. El dominio debe estar configurado con la Zona DNS por defecto de Mi.com.co.
+2. Contar con la dirección IP pública del servidor web o proveedor de hosting.
+
+Pasos para agregar un Registro A:
+
+1. Localizar el dominio:
+En el panel principal, dirígete a "Mis servicios", encuentra el dominio a configurar y haz clic en la flecha azul (→).
+
+2. Entrar a la sección DNS:
+Selecciona la opción "DNS" en el menú lateral izquierdo.
+
+3. Crear el registro A:
+Haz clic en agregar nuevo registro y diligencia los datos:
+- Tipo: A
+- Nombre: Usa "@" para el dominio principal, o el nombre del subdominio específico.
+- Valor: Ingrese la dirección IP del servidor (ejemplo: 192.67.90.X).
+- Haz clic en el botón azul "+ Agregar registro".
+
+Sugerencia técnica:
+El Registro A asocia el nombre de dominio a una IP física. Si ya existe un Registro A con el nombre "@" o "www", edita el registro existente para no generar duplicidades o fallos de resolución.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-011
+[CATEGORY]: Guías Operativas - Dominio y Seguridad
+[TITLE]: Cómo gestionar la Seguridad y obtener el Código de Autorización (EPP Code)
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: EPP code, código de autorización, transferencia de dominio, WHOIS privacy, auto-renovación, seguridad dominio
+[SUMMARY]: Instrucciones para ver el Código EPP (Auth Code) y gestionar opciones de seguridad para transferir o proteger un dominio.
+--------------------------------------------------------------------------------
+[CONTENT]:
+El Código de Autorización (EPP Code / Auth Code) es la clave requerida para transferir la gestión de un dominio hacia otro registrador.
+
+Pasos para obtener el Código EPP y gestionar protecciones:
+
+1. Localizar el dominio:
+En la sección "Mis servicios" de tu panel principal en mi.com.co, identifica el dominio y haz clic en la flecha azul (→).
+
+2. Entrar a la pestaña "Seguridad":
+En el menú lateral izquierdo de administración del dominio, selecciona la opción "Seguridad".
+
+3. Visualizar el código y gestionar opciones:
+- Código de Autorización (EPP): Haz clic en el icono del ojo para revelar el código.
+- Auto-renovación y WHOIS Privacy: Utiliza los interruptores para activar o desactivar la renovación automática y la protección de datos WHOIS según tus necesidades.
+
+Nota de transferencia:
+Para transferir un dominio exitosamente hacia otro proveedor, es indispensable desactivar la protección Antirrobo (Transfer Lock) y obtener el Código de Autorización EPP.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-012
+[CATEGORY]: Guías Operativas - Dominio y Seguridad
+[TITLE]: Cómo activar y desactivar la protección Antirrobo (Transfer Lock)
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: antirrobo, transfer lock, bloqueo de transferencia, seguridad de dominio, transferir dominio
+[SUMMARY]: Procedimiento para activar o desactivar el bloqueo Antirrobo (Transfer log/lock) en dominios registrados en Mi.com.co.
+--------------------------------------------------------------------------------
+[CONTENT]:
+La función Antirrobo (Transfer Lock) bloquea las solicitudes de transferencia no autorizadas hacia otros proveedores.
+
+Pasos para modificar la protección Antirrobo:
+
+1. Localizar el dominio:
+En el panel principal de mi.com.co, desplázate a "Mis servicios", ubica el dominio y haz clic en la flecha azul (→).
+
+2. Entrar a "Seguridad":
+En el menú lateral izquierdo del dominio, haz clic en "Seguridad".
+
+3. Modificar el estado del Antirrobo:
+- Desplázate a la sección de protecciones.
+- Ubica la opción "Antirrobo".
+- Mueve el interruptor para ENCENDER (activar protección contra transferencias) o APAGAR (permitir transferencias salientes).
+
+Confirmación del sistema:
+El sistema guarda los cambios de forma automática. El icono de candado en la parte superior cambiará de estado para confirmar si el dominio está protegido o desbloqueado. Si vas a trasladar tu dominio a otro proveedor, es obligatorio apagar la protección Antirrobo.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-013
+[CATEGORY]: Guías Operativas - Registro de Dominios
+[TITLE]: Cómo buscar y registrar un nuevo dominio en Mi.com.co
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: registrar dominio, comprar dominio, buscar dominio, disponibilidad de dominio, carrito de compra
+[SUMMARY]: Instrucciones para buscar disponibilidad de nombres de dominio y realizar el registro a través del portal.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Pasos para buscar y comprar un nuevo dominio:
+
+1. Acceder al buscador:
+Inicia sesión en micom.co. En el Dashboard, dirígete a "Acciones rápidas" y haz clic en "Buscar dominio - Registrar nuevo" (icono de lupa). Alternativamente, navega en el menú superior a: Dominios > Registrar nuevo.
+
+2. Ubicar la barra de búsqueda:
+Serás redirigido a la pantalla principal de registro de dominios ("Compra el dominio perfecto para tu negocio"). Desplázate hacia la barra de búsqueda central.
+
+3. Buscar disponibilidad y agregar al carrito:
+- Escribe el nombre completo con la extensión deseada (ejemplo: DOMINIOPRUEBA.COM.CO) y haz clic en "Buscar".
+- El sistema indicará si está "Disponible" con una etiqueta verde.
+- Haz clic en el botón azul "Agregar" y continúa hacia el carrito para completar el pago.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-014
+[CATEGORY]: Guías Operativas - Soporte y Cuenta
+[TITLE]: Procedimiento para Cambio de Correo Administrador (Con acceso a la cuenta)
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: cambio de correo, actualizar datos de cuenta, soporte chat, correo administrador, perfil
+[SUMMARY]: Procedimiento para solicitar la actualización del correo de administración cuando se tiene acceso a la cuenta.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Si actualmente posees acceso a tu panel de control y necesitas modificar el correo electrónico u otros datos de usuario registrados, sigue estos pasos:
+
+1. Ingresar a la cuenta:
+Haz clic en el Ícono de Perfil en la esquina superior derecha y selecciona la opción "Mi Cuenta".
+
+2. Capturar pantalla:
+Toma una captura de pantalla (screenshot) visible donde se observe la información actual registrada en tu cuenta.
+
+3. Enviar solicitud:
+Adjunta la captura de pantalla en el chat de atención al cliente e indica de forma explícita los datos que deseas actualizar o asignar (ejemplo: nueva dirección de correo electrónico).
+
+El equipo de soporte procesará la actualización tras verificar la información suministrada.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: GUA-015
+[CATEGORY]: Guías Operativas - Facturación
+[TITLE]: Confirmación de Envío de Factura Electrónica
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: factura, envío de factura, factura electrónica, correo spam, soporte facturación
+[SUMMARY]: Notificación estándar para la confirmación del envío de facturación y verificación en correo no deseado.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Notificación estándar sobre facturas emitidas por CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.:
+
+- Confirmación de envío: Las facturas son transmitidas automáticamente al correo electrónico registrado en la cuenta del cliente.
+- Verificación en SPAM: Si la comunicación no aparece en la bandeja de entrada principal, el usuario debe revisar las carpetas de Correo No Deseado o SPAM.
+- Soporte: Para copias adicionales o consultas sobre la factura, el usuario puede comunicarse con el correo atulado@mi.com.co o a través del chat de atención.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: LEG-001
+[CATEGORY]: Términos y Condiciones - Marco Legal
+[TITLE]: Términos y Condiciones: Información Legal de CENTRAL y Capacidad Contratante
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: NIT 900293637, Ley 1480 de 2011, domicilio Bogotá, capacidad legal, verificación de identidad, mayor de edad
+[SUMMARY]: Datos societarios, identificación legal de CENTRAL y requisitos de capacidad para contratar servicios.
+--------------------------------------------------------------------------------
+[CONTENT]:
+1.1. Información de Contacto de CENTRAL:
+En cumplimiento de la Ley 1480 de 2011 (Estatuto del Consumidor), CENTRAL COMERCIALIZADORA DE INTERNET S.A.S. informa sus datos de identificación legal:
+- NIT: 900.293.637-2
+- Domicilio principal: Bogotá, Colombia
+- Dirección de notificación judicial: Carrera 6 No. 77-42, Bogotá
+- Correo electrónico de contacto: atulado@mi.com.co
+
+1.2. Capacidad Legal del Usuario:
+El USUARIO declara que:
+- Es mayor de dieciocho (18) años de edad.
+- Posee plena capacidad legal para contraer obligaciones contractuales.
+- Representación legal: Si actúa en nombre de una persona jurídica o un tercero, el solicitante garantiza contar con las facultades legales para obligar a dicha entidad. En caso contrario, responderá de forma personal por todas las obligaciones derivadas del contrato.
+- Verificación de Identidad: CENTRAL se reserva la facultad de solicitar documentación comprobatoria de identidad. La falta de entrega de los documentos requeridos constituye causal para denegar o rechazar solicitudes sobre los servicios.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: LEG-002
+[CATEGORY]: Términos y Condiciones - Reglas Generales
+[TITLE]: Términos y Condiciones: Veracidad, Legitimidad, Vigencia y PQR
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: veracidad de datos, sanción por datos falsos, legitimidad de contenidos, vigencia de contrato, PQR, peticiones quejas reclamos
+[SUMMARY]: Normas sobre veracidad de la información del cliente, contenidos permitidos, vigencia del contrato y trámite de PQRs.
+--------------------------------------------------------------------------------
+[CONTENT]:
+1.3. Veracidad de la Información Suministrada:
+- El USUARIO garantiza que toda la información provista a CENTRAL es veraz, exacta y actualizada.
+- El USUARIO debe actualizar de inmediato sus datos a través de los canales autorizados.
+- Sanción por información falsa: CENTRAL podrá cancelar, terminar, suspender, limitar o eliminar los servicios si detecta datos falsos, inexactos o desactualizados.
+
+1.4. Legitimidad de Servicios y Contenidos:
+- Los servicios, datos o contenidos alojados o transmitidos no deben infringir derechos de propiedad intelectual, derechos de imagen ni acuerdos con terceros.
+- Se prohíbe el uso de los servicios para actividades ilegales bajo la legislación colombiana o internacional.
+
+1.5. Duración del Contrato:
+- La vigencia inicia con la aceptación electrónica del USUARIO y se extiende mientras permanezcan obligaciones pendientes.
+- La vigencia contractual general es independiente de la duración de suscripción individual de cada servicio.
+- Vencimiento: El USUARIO es responsable de verificar la fecha de vencimiento. CENTRAL no asume responsabilidad sobre servicios cuyo plazo haya expuesto.
+
+1.6. Peticiones, Quejas y Reclamos (PQR):
+Para el trámite de peticiones, quejas, reclamos o consultas sobre el estado de las mismas, el canal oficial habilitado es el correo electrónico: atulado@mi.com.co.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: LEG-003
+[CATEGORY]: Términos y Condiciones - Responsabilidad y Modificaciones
+[TITLE]: Términos y Condiciones: Legislación, Controversias, Seguridad de Credenciales y Modificaciones
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: legislación colombiana, jurisdicción ordinaria, ICANN, custodia de claves, modificación de términos, soporte técnico
+[SUMMARY]: Ley aplicable, resolución de litigios, responsabilidad por claves de acceso y facultad de modificación de términos.
+--------------------------------------------------------------------------------
+[CONTENT]:
+1.7. Legislación Aplicable:
+El Portal y los servicios prestados por CENTRAL se rigen exclusivamente por las leyes de la República de Colombia.
+
+1.8. Solución de Controversias:
+- Las disputas derivadas de la ejecución o interpretación del contrato se someterán a los jueces de la jurisdicción ordinaria de Colombia.
+- Excepción: En materia de nombres de dominio, aplicará la jurisdicción y reglamentación definida por la ICANN, el Administrador del dominio (como .CO Internet SAS) u órgano competente.
+
+1.9. Responsabilidad por Uso Indebido de Datos de Acceso:
+- El USUARIO es responsable exclusivo de custodiar y mantener la confidencialidad de sus credenciales.
+- CENTRAL no responde por modificaciones o gestiones realizadas por terceros que accedan con las credenciales del USUARIO.
+- Quien controle la cuenta de correo electrónico asociada al registro tendrá facultad para administrar o modificar los servicios.
+- Si el USUARIO suministra sus claves al personal de Soporte para asistencia, exime a CENTRAL de toda responsabilidad económica o legal por dichas gestiones.
+
+1.10. Modificaciones a los Términos y Condiciones:
+- CENTRAL se reserva el derecho de modificar los Términos y Condiciones en cualquier momento.
+- Las modificaciones surten efecto mediante publicación en el Portal. El uso continuado de los servicios constituye aceptación tácita.
+- En caso de desacuerdo, el USUARIO podrá solicitar la cancelación de servicios o la transferencia de sus dominios.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: LEG-004
+[CATEGORY]: Términos y Condiciones - Terminación del Servicio
+[TITLE]: Términos y Condiciones: Causales de Suspensión, Bloqueo y Terminación del Servicio
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: terminación del servicio, suspensión de cuenta, causales de cancelación, phishing, spam, no reembolso
+[SUMMARY]: Detalle de las 8 causales que facultan a CENTRAL a denegar, suspender o terminar servicios sin derecho a reembolso.
+--------------------------------------------------------------------------------
+[CONTENT]:
+1.11. Causal y Condiciones de Terminación del Servicio:
+CENTRAL se reserva la facultad de denegar, suspender, bloquear, modificar o terminar de forma inmediata el acceso a los servicios (o transferir su titularidad) en los siguientes casos:
+
+1. Órdenes legales: Requerimientos judiciales, administrativos o arbitrales.
+2. Prevención: Investigaciones internas para evitar fraudes o abusos a terceros.
+3. Protección legal: Evitar responsabilidad civil o penal para CENTRAL, sus directivos o colaboradores.
+4. Correcciones: Corregir errores en la oferta o prestación de los servicios según la normativa vigente.
+5. Requerimiento de autoridades/ICANN: Decisiones de proveedores mayoristas, ICANN o autoridades gubernamentales.
+6. Uso inadecuado: Realización de actividades abusivas como spam, phishing, distribución de malware, virus o suplantación de identidad.
+7. Riesgos de seguridad: Infracciones que comprometan la estabilidad o seguridad de plataformas compartidas (Hosting, MiConstructor, Correo).
+8. Incumplimiento contractual: Violación de cualquiera de las cláusulas de los Términos y Condiciones.
+
+Notificación y reembolso:
+CENTRAL informará al usuario dentro de los treinta (30) días siguientes a la medida sobre los motivos del bloqueo o terminación. Cuando la terminación se derive de estas causales, NO habrá lugar a devolución o reembolso del dinero pagado.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: DOM-001
+[CATEGORY]: Condiciones de Dominios - Regulaciones y Políticas
+[TITLE]: Condiciones Específicas de Dominios: Normativa ICANN y Administradores de Extensiones
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S. / ICANN
+[KEYWORDS]: registro de dominios, ICANN, administradores de extensión, ccTLD, gTLD, proveedores de dominio
+[SUMMARY]: Declaraciones sobre el marco regulatorio internacional de dominios (ICANN, administradores de TLD) y límites de servicio.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.1.1. Declaraciones Generales sobre Registro de Dominios:
+- Sujeción a Administradores: Cada extensión de dominio (.co, .com, .net, etc.) está supeditada a un Administrador avalado por ICANN (Internet Corporation for Assigned Names and Numbers), el cual fija las reglas de registro, transferencia y ciclo de vida.
+- Intermediación: CENTRAL puede actuar mediante registradores acreditados o proveedores mayoristas.
+- Cumplimiento obligatorio: El usuario se compromete a respetar las normas de cada Administrador de TLD y el Anexo 1 de este contrato.
+
+2.1.2. Terminación o Limitación del Servicio de Dominio:
+El uso de un dominio puede ser suspendido, cancelado o limitado por orden de CENTRAL, sus proveedores, autoridades judiciales o la ICANN. CENTRAL notificará al Titular el motivo dentro de los 30 días posteriores a la medida.
+
+2.1.3. Integración de Políticas ICANN:
+Se entienden incorporadas al contrato todas las políticas vigentes y futuras emanadas de ICANN y los administradores de cada extensión de dominio.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: DOM-002
+[CATEGORY]: Condiciones de Dominios - Disputas y WHOIS
+[TITLE]: Condiciones Específicas de Dominios: Resolución de Disputas (UDRP), Notificaciones y Datos WHOIS
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: UDRP, URS, disputas de dominio, WHOIS, contacto administrativo, avisos de vencimiento, datos públicos
+[SUMMARY]: Sometimiento a políticas UDRP/URS, notificaciones al correo administrativo y publicación obligatoria de datos en WHOIS.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.1.4. Resolución de Disputas de Dominios:
+El USUARIO acepta someterse expresamente a:
+1. La Política Uniforme de Resolución de Disputas sobre Nombres de Dominio (UDRP) de la ICANN.
+2. El sistema de Suspensión Rápida Uniforme (URS) o mecanismos equivalentes.
+3. Las políticas específicas de resolución de controversias fijadas por Administradores de dominios (incluyendo las reglas del ccTLD .CO).
+4. Procedimientos arbitrales o judiciales por infracciones de marcas o propiedad intelectual.
+
+2.1.5. Correspondencia y Notificaciones:
+- Las notificaciones oficiales de la plataforma se remitirán al correo registrado como Contacto Administrativo en el WHOIS/Panel del dominio.
+- Los avisos de vencimiento se enviarán tanto al registrante como a los contactos de la cuenta.
+
+2.1.6. Publicación de Datos en WHOIS:
+El USUARIO autoriza la publicación en la base de datos pública WHOIS de los siguientes datos técnicos y administrativos:
+- Nombre, dirección postal, teléfono y correo electrónico del Registrante, Contacto Administrativo y Contacto Técnico.
+- Fecha de creación, última actualización y vencimiento del dominio.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: DOM-003
+[CATEGORY]: Condiciones de Dominios - Responsabilidades y Expiración
+[TITLE]: Condiciones Específicas de Dominios: Responsabilidad de Registro, Indemnidad y Vencimiento
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: obligación de medio, no garantía de marcas, indemnidad, vencimiento de dominio, pérdida de titularidad
+[SUMMARY]: Ausencia de garantía de registro exitoso, exoneración por conflicto con marcas de terceros y efectos de la expiración.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.1.7. Exoneración por Negación del Registro:
+- Los servicios de registro son obligaciones de MEDIO y NO de resultado. CENTRAL no garantiza la adjudicación o transferencia exitosa de un dominio si los administradores o entes lo rechazan.
+
+2.1.8. No Garantía de Legalidad sobre Marcas:
+El registro exitoso de un nombre de dominio no implica la legalidad de uso ni exime de infringir derechos de marca de terceros. El usuario asume plena responsabilidad ante litigios o demandas.
+
+2.1.9 y 2.1.10. Declaraciones del Usuario e Indemnidad:
+El USUARIO declara que el dominio no será utilizado para fines engañosos o ilícitos y se compromete a indemnizar y mantener indemne a CENTRAL, sus proveedores y operadoras de registro ante cualquier reclamación o gasto legal derivado del uso del dominio.
+
+2.1.11. Vencimiento del Dominio:
+- Al llegar la fecha de expiración sin pago recibido, el dominio cesa su funcionamiento y deja de ser propiedad del USUARIO.
+- Tras el vencimiento, CENTRAL queda facultada para disponer del dominio (incluyendo subastarlo, reasignarlo o asumir la titularidad).
+================================================================================
+
+================================================================================
+[CHUNK_ID]: DOM-004
+[CATEGORY]: Condiciones de Dominios - Soporte y Red
+[TITLE]: Condiciones Específicas de Dominios: Errores de Tipografía, Bloqueo de Transferencia y Zona DNS
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: corrección de dominio, error de escritura, ClientTransferProhibited, zona DNS gratuita, límite de peticiones DNS
+[SUMMARY]: Plazos para corregir dominios mal redactados, estado ClientTransferProhibited y límites técnicos de la Zona DNS.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.1.12. Modificación de Dominio por Error de Escritura:
+- Plazo: El USUARIO dispone de un plazo máximo de cuatro (4) días calendario contados desde el registro para solicitar la corrección de un dominio mal escrito.
+- Trámite: Debe enviar la solicitud a atulado@mi.com.co, sujeta a disponibilidad del nuevo nombre.
+
+2.1.13. Estado ClientTransferProhibited:
+El estado "ClientTransferProhibited" en consultas WHOIS indica que el dominio se encuentra bloqueado para evitar transferencias no autorizadas. El usuario puede modificar dicho estado desde su panel de control o mediante el área de soporte.
+
+2.1.14. Zona DNS:
+- El servicio de administración de Zona DNS brindado por CENTRAL es un servicio gratuito.
+- Límite técnico: El uso del DNS gratuito tiene un tope técnico de un máximo de 100 peticiones por segundo por dominio.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: HST-001
+[CATEGORY]: Hosting y Servicios - Usos Permitidos y Prohibidos
+[TITLE]: Hosting, MiConstructor y Correo: Destinación del Servicio y Actividades Prohibidas
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: usabilidad hosting, usos prohibidos, pornografía prohibida, warez, botnet, spam, proxies, contenido no permitido
+[SUMMARY]: Alcance permitido en el servicio de hosting y matriz detallada de aplicaciones y actividades estrictamente prohibidas.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.2.1. Destinación del Servicio:
+Los servicios de Hosting, MiConstructor y Correo Electrónico deben destinarse exclusivamente a actividades legales. Es causal inmediata de terminación sin reembolso el uso para fines ilícitos o violatorios de derechos de autor.
+
+Prohibición de contenido para adultos:
+Está estrictamente prohibido alojar o transmitir material pornográfico, erótico o para adultos.
+
+Tabla de Usos y Aplicaciones NO Permitidas:
+--------------------------------------------------------------------------------
+Categoría               | Ejemplos de Software / Actividades Prohibidas
+--------------------------------------------------------------------------------
+Sitios y redes          | Topsites, Proxy Scripts / Anonymizers, redes P2P
+Bots y automatización   | IRC Scripts/Bots, AutoSurf / PTC / PTS, sitios PPC
+Seguridad ofensiva      | Herramientas para escaneo de IPs, programas Brute Force
+Correo masivo           | Envíos masivos de e-mail, Mail Bombers, Scripts de Spam
+Publicidad y archivos   | Redes de banners publicitarios, File Dump / Mirror Scripts
+Streaming y finanzas    | Audio Streaming comercial, Aplicaciones de Escrow / Banca
+Inversión riesgosa      | HYIP, FOREX, Ponzi, Sistemas Multinivel/Pirámides, Loterías
+Juegos y contenidos     | MUDs / RPGs / PPBGs, Servidores de juego, Sitios de odio/racismo
+Ilegalidad / Piratería  | Distribución de software ilegal (Warez)
+--------------------------------------------------------------------------------
+================================================================================
+
+================================================================================
+[CHUNK_ID]: HST-002
+[CATEGORY]: Hosting y Servicios - Responsabilidad y Copias de Seguridad
+[TITLE]: Hosting, MiConstructor y Correo: Exoneración de SLA, Servicios de Terceros y Responsabilidad de Backups
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: no SLA, copias de seguridad, backups, pérdida de datos, responsabilidad cliente, interrupción de servicio
+[SUMMARY]: Exclusión de SLA explícito, obligación del cliente de mantener respaldos (backups) y deslinde de responsabilidad.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.2.2. Liberación de Responsabilidad (Ausencia de SLA):
+- Este acuerdo NO constituye un Acuerdo de Nivel de Servicio (SLA). CENTRAL no garantiza disponibilidad ininterrumpida ni niveles mínimos de calidad.
+- La prestación del servicio es una obligación de medio.
+- CENTRAL queda exonerada de responsabilidad por ataques informáticos (hackers), caídas de hardware/software, errores de aplicación o pérdida de datos.
+
+2.2.3. Aplicaciones de Terceros:
+Las herramientas de terceros integradas a las plataformas son provistas directamente por los fabricantes respectivos, quienes asumen la responsabilidad exclusiva por su estabilidad y funcionamiento.
+
+2.2.4. Pérdida de Información y Copias de Seguridad (Backups):
+- El contrato de hosting NO constituye un contrato de depósito de datos.
+- El USUARIO es el único responsable de generar copias de seguridad (backups) periódicas e independientes de sus sitios web, bases de datos y correos electrónicos.
+- CENTRAL no responderá por la pérdida, corrupción o borrado de datos bajo ninguna circunstancia.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: HST-003
+[CATEGORY]: Hosting y Servicios - Ciclo de Vida y Derechos
+[TITLE]: Hosting, MiConstructor y Correo: Tabla de Estados por Vencimiento, Tarifas de Restauración y Derechos
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: vencimiento hosting, estado suspendido, pendiente de eliminación, cobro restauración, $119.990, eliminación permanente
+[SUMMARY]: Tiempos de suspensión por mora, costo de restauración (COP $119.990) y derechos de la empresa sobre recursos.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.2.5. Rutas de Estado por Vencimiento de Hosting / Correo:
+
+--------------------------------------------------------------------------------
+Estado                  | Plazo desde Vencimiento | Condición del Servicio
+--------------------------------------------------------------------------------
+Suspendido              | 15 días calendario      | El servicio deja de funcionar pero puede renovarse al valor normal.
+Pendiente de eliminación | 30 días calendario add. | Requiere pago adicional por restauración de COP $119.990.
+Eliminación permanente  | 45 días calendario tot. | Se elimina definitivamente la información sin opción a recuperación.
+--------------------------------------------------------------------------------
+
+2.2.6 y 2.2.7. Derechos de CENTRAL e Indemnidad:
+CENTRAL se reserva el derecho de:
+1. Limitar o suspender recursos a cualquier cuenta sin previo aviso para proteger el rendimiento general de los servidores.
+2. Determinar unilateralmente si un uso es abusivo o perjudicial.
+3. El USUARIO mantendrá indemne a CENTRAL frente a reclamaciones por contenidos alojados o pérdida de datos.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: HST-004
+[CATEGORY]: Hosting y Servicios - Migración de Correos
+[TITLE]: Términos y Condiciones Oficiales para la Migración de Correo Corporativo (18 Reglas)
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: migración de correo, trasferencia de buzones, IMAP, cambio de MX, corporativo.mi.com.co, 18 condiciones
+[SUMMARY]: Las 18 normas y requisitos indispensables para ejecutar el proceso de migración de cuentas de correo hacia CENTRAL.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.2.8. Políticas de Migración:
+- Hosting Web: CENTRAL NO presta el servicio de migración de sitios web hosting. El usuario debe contratarlo o realizarlo de forma independiente.
+- Correo Corporativo: CENTRAL ofrece un servicio de migración de correo cuyas reglas obligatorias son las siguientes:
+
+Las 18 Condiciones del Proceso de Migración de Correo Corporativo:
+
+1. El usuario debe remitir una planilla en Excel con: dominio, cantidad de cuentas, servidor IMAP origen, puerto IMAP, tipo de cifrado (SSL/STARTTLS), y listado detallado de usuarios (nombre, apellido, e-mail y clave actual).
+2. Iniciado el proceso, el soporte remitirá las notificaciones al e-mail de contacto registrado.
+3. Está estrictamente prohibido cambiar las contraseñas de las cuentas durante la migración.
+4. El nombre y ortografía de las cuentas debe estar verificado. CENTRAL no asume correcciones por errores tipográficos entregados por el cliente.
+5. Por razones de confidencialidad, NO se migran Contactos ni Calendarios. El cliente debe exportarlos manualmente.
+6. El tiempo estimado de migración es de 1 hora por cada Gigabyte (1 GB) por buzón.
+7. El éxito del proceso depende del estado de respuesta del servidor origen.
+8. Dirección para ingresar al nuevo servicio de correo: corporativo.mi.com.co
+9. La recepción/envío en el servidor antiguo se mantiene intacta hasta que se modifiquen los registros MX en la DNS.
+10. El proceso consta de 3 fases: Creación de buzones -> Cambio de registros MX -> Sincronización de correos.
+11. Tras la modificación de los MX, se presentará una intermitencia de hasta 24 horas por propagación global DNS.
+12. Las migraciones se ejecutan únicamente de lunes a viernes, de 8:00 a.m. a 5:00 p.m.
+13. No se migrarán cuentas en estado bloqueado o suspendido en el servidor de origen.
+14. No se migran las carpetas de SPAM ni Papelera.
+15. Cuentas que superen las 30 carpetas o subcarpetas pueden sufrir migraciones parciales o errores de sincronización.
+16. Es indispensable activar la conectividad IMAP y habilitar el acceso a "aplicaciones menos seguras" en el servidor origen.
+17. Finalizada la migración, se enviará una notificación por correo electrónico.
+18. Pasadas 24 horas del cierre exitoso, se purgarán las cuentas del servidor antiguo (aplica para migraciones internas entre plataformas de CENTRAL).
+================================================================================
+
+================================================================================
+[CHUNK_ID]: HST-005
+[CATEGORY]: Hosting y Servicios - Límites de Recurso
+[TITLE]: Límites de Almacenamiento, Consumo de Recursos y Notificaciones de Exceso
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: límites de hosting, espacio en disco, ancho de banda, 80% consumo, suspensión por exceso, almacenamiento
+[SUMMARY]: Monitoreo del uso de espacio/recursos, alertas al 80% y 100%, y suspensión tras 3 días hábiles de sobreconsumo.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.2.9. Límites de Almacenamiento y Recursos Técnicos:
+Cada plan de Hosting o MiConstructor establece límites técnicos en:
+- Espacio en disco duro.
+- Ancho de banda mensual (transferencia de datos).
+- Procesamiento (CPU) y Memoria RAM.
+- Cantidad de bases de datos, buzones y ficheros (Inodes).
+
+Esquema de Notificaciones y Alertas:
+1. Alerta preventiva: Se envía un correo automático cuando la cuenta alcanza el 80% de capacidad.
+2. Alerta de sobrecupo: Se envía un segundo correo al superar el 100% de la capacidad asignada.
+3. Alerta en Dashboard: Se muestra un aviso en el panel de control del cliente.
+
+Suspensión por sobreconsumo:
+Si la cuenta excede el 100% del recurso y el usuario no realiza la limpieza de archivos o el upgrade de plan dentro de los tres (3) días hábiles posteriores a la primera notificación, el servicio podrá ser suspendido (restringiendo la carga de archivos, acceso web o rendimiento).
+================================================================================
+
+================================================================================
+[CHUNK_ID]: CFG-001
+[CATEGORY]: Servicios de Asesoría y Configuración
+[TITLE]: Servicios de Configuración de Plataformas de Terceros y Deslinde Empresarial
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: Google Apps, Microsoft, WIX, Blogger, Tumblr, asesoría de configuración, propiedad intelectual
+[SUMMARY]: Deslinde legal de afiliación comercial con Google/Microsoft y alcance de los servicios de asesoría de configuración.
+--------------------------------------------------------------------------------
+[CONTENT]:
+2.3.1 a 2.3.6. Configuraciones de Servicios de Terceros:
+
+- Alcance del Servicio: CENTRAL puede ofrecer asistencia técnica para vincular dominios con servicios de terceros (ejemplo: Google Apps, Microsoft Live, Blogger, Tumblr, WIX).
+- Responsabilidad del fabricante: La operatividad, disponibilidad y garantía de dichas plataformas depende exclusivamente de sus respectivos propietarios.
+- Ausencia de Vínculo Comercial: CENTRAL declara expresamente que NO posee vinculación societaria, laboral o comercial con GOOGLE Inc., Microsoft Corporation u otras marcas referenciadas.
+- Propiedad Intelectual: Los nombres comerciales y marcas registradas pertenecen a sus respectivos titulares. La mención pública obedece a fines meramente informativos sobre la prestación de asesorías técnicas.
+- Términos de Uso: El usuario debe aceptar y acatarse a los términos de servicio vigentes exigidos por cada plataforma de terceros.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: DAT-001
+[CATEGORY]: Protección de Datos - Política de Privacidad
+[TITLE]: Política de Tratamiento de Datos Personales: Finalidad, Responsable y Pasarela OpenPay
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: Ley 1581 de 2012, Decreto 1377 de 2013, tratamiento de datos, OpenPay, pasarela de pago, datos recolectados
+[SUMMARY]: Normativa legal de protección de datos (Ley 1581/2012), finalidades de la base de datos y procesamiento de pagos con OpenPay.
+--------------------------------------------------------------------------------
+[CONTENT]:
+3.1 a 3.3.1. Marco de Protección de Datos Personales:
+En cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, la Política de Privacidad de CENTRAL rige a partir del 9 de enero de 2014.
+
+Responsable del Tratamiento:
+- Razón Social: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+- NIT: 900.293.637-2
+- Domicilio: Bogotá, Carrera 6 No. 77-42
+- Correo: atulado@mi.com.co
+
+Finalidades del Tratamiento:
+a) Gestionar el registro formal de nombres de dominio ante registradores y coordinadores de internet.
+b) Dar cumplimiento a los requerimientos de publicación pública en bases WHOIS exigidos por ICANN y gobiernos.
+c) Notificar eventos sobre vencimientos, renovaciones y aspectos técnicos del servicio.
+d) Ejecutar labores administrativas, contables y de mejora de la plataforma.
+
+Datos Recolectados:
+Nombre o razón social, documento de identidad/NIT, fecha de nacimiento, dirección física, teléfono, e-mail, así como datos técnicos (dirección IP, cookies, especificaciones de navegador). Ningún dato solicitado tiene el carácter de Dato Sensible.
+
+Seguridad en Pasarela de Pagos (OpenPay):
+Mi.com.co NO captura, almacena ni transmite datos financieros ni tarjetas de crédito/débito. Las transacciones se procesan externamente mediante la pasarela OpenPay bajo estándares de encriptación segura.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: DAT-002
+[CATEGORY]: Protección de Datos - Derechos del Titular
+[TITLE]: Derechos de los Usuarios sobre sus Datos Personales (Habeas Data)
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: habeas data, derechos del titular, Ley 1581, conocer actualizar rectificar, revocación de datos, SIC
+[SUMMARY]: Enumeración de los derechos legales del titular de la información conforme al Artículo 8 de la Ley 1581 de 2012.
+--------------------------------------------------------------------------------
+[CONTENT]:
+3.4 a 3.6. Derechos de los Titulares conforme al Art. 8 de la Ley 1581 de 2012:
+
+El USUARIO, en su calidad de titular de los datos personales, cuenta con los siguientes derechos:
+1. Conocer, actualizar y rectificar sus datos personales frente a CENTRAL.
+2. Solicitar prueba de la autorización otorgada para el tratamiento de sus datos.
+3. Ser informado, previa solicitud, sobre el uso que se ha dado a sus datos personales.
+4. Presentar quejas o reclamos ante la Superintendencia de Industria y Comercio (SIC) por infracciones a la legislación de datos.
+5. Revocar la autorización y/o solicitar la supresión del dato cuando no exista un deber legal o contractual de permanecer en la base de datos.
+6. Acceder de forma gratuita a sus datos personales objeto de tratamiento.
+
+Almacenamiento:
+Los datos son almacenados en infraestructura de centros de datos de aliados tecnológicos que cumplen con altos estándares de seguridad física y lógica.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: DAT-003
+[CATEGORY]: Protección de Datos - Trámites y Anti-SPAM
+[TITLE]: Procedimiento para Peticiones de Habeas Data, Tiempos de Respuesta y Política Anti-SPAM
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: reclamos habeas data, plazos de respuesta, 10 días hábiles, 15 días hábiles, anti-spam, monitoreo de correos
+[SUMMARY]: Tiempos legales de atención a peticiones de datos (10 y 15 días hábiles) y la política de cero tolerancia al SPAM.
+--------------------------------------------------------------------------------
+[CONTENT]:
+3.6.1 a 3.10. Tiempos de Respuesta y Políticas de Privacidad:
+
+Área encargada:
+El área de Servicio al Cliente atiende las peticiones, consultas y reclamos sobre protección de datos personales.
+
+Plazos Legales de Atención:
+- Consultas sobre datos personales: Se resolverán en un plazo máximo de diez (10) días hábiles. Si no es posible atender la consulta en dicho término, se notificará al usuario antes del vencimiento justificando el motivo y se responderá en un plazo adicional no superior a cinco (5) días hábiles.
+- Reclamos, rectificaciones o revocatoria de autorización: Se formularán mediante solicitud escrita detallando identificación, hechos y documentos. El término máximo para responder es de quince (15) días hábiles contados desde el día siguiente a su recepción.
+
+Excepción a la Supresión de Datos:
+La solicitud de borrado no aplicará cuando exista una obligación legal o un contrato activo que exija mantener la información en la base de datos.
+
+Política Anti-SPAM:
+CENTRAL prohíbe terminantemente el uso de sus plataformas para el envío de correos no solicitados (SPAM). CENTRAL queda autorizada para monitorear y revisar los sistemas para prevenir conductas abusivas de correo masivo.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: PRV-001
+[CATEGORY]: Servicio de Privacidad - Whois Guard
+[TITLE]: Servicio de Privacidad de Dominio: Definición, Tarifas, Proveedores y Contactos de Abuso
+[ENTITY]: MI.COM.CO / Hello Internet Corp. / Privacy Protect LLC
+[KEYWORDS]: privacidad de dominio, WHOIS privacy, $6.000 COP, Hello Internet Corp, abuse@hello.co, support@hello.co
+[SUMMARY]: Detalles del servicio de ocultamiento de datos WHOIS, costo ($6.000 COP/año), proveedor externo y correos de abuso.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Sección 4. Servicio de Privacidad de Dominio:
+
+4.1. Definición:
+El Servicio de Privacidad oculta los datos personales de contacto del propietario del dominio en los registros públicos WHOIS / RDDS para prevenir llamadas spam, venta de bases de datos y suplantación de identidad.
+
+4.2. Tarifas y Condiciones:
+- Costo anual estándar: COP $6.000 por dominio/año.
+- Mi.com.co se reserva la facultad de eximir del cobro o reajustar esta tarifa.
+
+4.3. Contacto de Abuso y Proveedor de Privacidad:
+- Proveedor del servicio: Hello Internet Corp. (379 West Broadway Ofc 339, New York, NY, 10012, USA).
+- Correo para reportes de abuso sobre dominios en privacidad: abuse@hello.co
+- Correo para denuncias por infracción de marcas: abuse@hello.co
+- Correo de soporte del servicio de privacidad: support@hello.co
+
+4.4 y 4.5. Consideraciones adicionales:
+El servicio también puede ser provisto mediante Privacy Protect LLC (privacyprotect.org). Mi.com.co se reserva la facultad de levantar el velo de privacidad y revelar datos cuando existan ordenamientos judiciales o sospechas fundadas de actividades delictivas.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: ANX-001
+[CATEGORY]: Anexo 1 - Obligaciones del Registrante
+[TITLE]: Anexo 1: Declaraciones del Titular del Dominio e Información Obligatoria de Registro
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S. / ICANN
+[KEYWORDS]: Anexo 1, obligaciones registrante, plazo 7 días actualización, cancelación por datos falsos, datos obligatorios registro
+[SUMMARY]: Obligación de actualizar datos en 7 días, sanción por omisión y lista de campos obligatorios para registrar un dominio.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Anexo 1 - Declaraciones del Titular que Solicita Dominios:
+
+1.1. Suministro y Actualización de Información:
+El Titular se compromete a proveer información de contacto verídica y a rectificarla en un plazo no mayor a siete (7) días calendario posteriores a cualquier cambio durante la vigencia del registro.
+
+1.2. Incumplimiento Material:
+Constituyen causal para la cancelación inmediata del dominio:
+- Aportar datos inexactos o no confiables de forma deliberada.
+- Omitir la actualización de datos dentro de los 7 días posteriores al cambio.
+- No responder a las solicitudes de verificación del Registrador en un plazo de quince (15) días calendario.
+
+1.3 a 1.9. Responsabilidad por Terceros y Reglas ICANN:
+- Licencia a terceros: Si el Titular presta el uso del dominio a un tercero, el Titular mantendrá la responsabilidad legal total sobre los datos de contacto y la administración.
+- El Titular autoriza la transferencia o cancelación del dominio cuando sea ordenado por ICANN para solucionar controversias o corregir errores administrativos.
+
+2. Información Requerida para Registro:
+- Datos Obligatorios: Nombre, Apellido, Nombre de Empresa/Organización, Dirección, Ciudad, Estado/Departamento, País, Código Postal, Teléfono y Correo Electrónico.
+- Datos Voluntarios: Teléfono Celular, Fax, Teléfono Alternativo.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: ANX-002
+[CATEGORY]: Anexo 1 - Calendario y Control de Versiones
+[TITLE]: Anexo 1: Calendario de Avisos de Vencimiento de Dominios, Proceso de Restauración y Control de Versiones
+[ENTITY]: CENTRAL COMERCIALIZADORA DE INTERNET S.A.S.
+[KEYWORDS]: calendario de vencimiento, avisos de renovación, periodo de restauración, reportes de abuso, control de versiones
+[SUMMARY]: Cronograma de los 5 avisos de vencimiento previo, periodo de restauración y control de versiones de la Base de Conocimiento.
+--------------------------------------------------------------------------------
+[CONTENT]:
+3.1. Calendario Oficial de Avisos de Vencimiento de Dominios:
+Los avisos preventivos de expiración se remitirán a las direcciones de correo del Contacto Registrante y Contacto Administrativo con el siguiente esquema:
+
+--------------------------------------------------------------------------------
+Aviso de Expiración       | Momento de Envío
+--------------------------------------------------------------------------------
+Primer aviso              | 45 días antes de la fecha de vencimiento
+Segundo aviso             | 30 días antes de la fecha de vencimiento
+Tercer aviso              | 15 días antes de la fecha de vencimiento
+Cuarto aviso              | 7 días antes de la fecha de vencimiento
+Quinto aviso              | 1 día antes de la fecha de vencimiento
+--------------------------------------------------------------------------------
+
+Periodo de Restauración:
+Entre 30 y 40 días posteriores al vencimiento, CENTRAL tramitará la solicitud de eliminación del dominio ante los Registros Centrales. Una vez enviada la orden de eliminación, el titular solo podrá recuperar el dominio mediante un procedimiento especial denominado "Restauración", el cual acarrea tarifas adicionales publicadas en la web.
+
+3.2. Reportes de Abuso:
+Los reportes de abuso de cualquier tipo sobre dominios alojados se pueden radicar mediante el punto de contacto publicado en la web y serán procesados diligentemente por el equipo técnico.
+
+--------------------------------------------------------------------------------
+CONTROL DE VERSIONES DEL DOCUMENTO
+--------------------------------------------------------------------------------
+Versión: 1.0
+Fecha: Julio 2026
+Autor: Juan Villaneda
+Descripción: Creación de la Base de Conocimiento estandarizada y unificada de la plataforma de autogestión de MI.COM.CO.
+================================================================================
