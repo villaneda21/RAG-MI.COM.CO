@@ -181,14 +181,14 @@ body {
 }
 
 .avatar {
-    flex: 0 0 36px;
-    width: 36px;
-    height: 36px;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
     border-radius: 12px;
     display: grid;
     place-items: center;
     font-family: var(--font-display);
-    font-size: 0.78rem;
+    font-size: 1rem;
     font-weight: 700;
 }
 
@@ -204,9 +204,9 @@ body {
 }
 
 .bubble {
-    padding: 14px 16px;
+    padding: 16px 18px;
     border-radius: var(--radius-md);
-    line-height: 1.55;
+    line-height: 1.6;
     font-size: 0.97rem;
 }
 
@@ -215,6 +215,7 @@ body {
     border: 1px solid var(--border-color);
     color: var(--text-primary);
     border-top-left-radius: 6px;
+    max-width: 100%;
 }
 
 .user .bubble {
@@ -224,8 +225,38 @@ body {
     box-shadow: 0 10px 24px rgba(13, 110, 253, 0.28);
 }
 
+.bubble h2,
+.bubble h3,
+.bubble h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.35;
+    color: #fff;
+    margin: 1.05em 0 0.45em;
+}
+
+.bubble h2 {
+    font-size: 1.12rem;
+}
+
+.bubble h3 {
+    font-size: 1.02rem;
+}
+
+.bubble h4 {
+    font-size: 0.95rem;
+    color: #e2e8f0;
+}
+
+.bubble h2:first-child,
+.bubble h3:first-child,
+.bubble h4:first-child,
+.bubble p:first-child {
+    margin-top: 0;
+}
+
 .bubble p {
-    margin: 0 0 0.7em;
+    margin: 0 0 0.75em;
 }
 
 .bubble p:last-child {
@@ -234,8 +265,36 @@ body {
 
 .bubble ul,
 .bubble ol {
-    margin: 0.4em 0 0.2em 1.1em;
-    padding: 0;
+    margin: 0.15em 0 0.85em;
+    padding: 0 0 0 1.15em;
+}
+
+.bubble li {
+    margin: 0.28em 0;
+    padding-left: 0.15em;
+}
+
+.bubble li::marker {
+    color: var(--accent-color);
+}
+
+.bubble strong {
+    color: #fff;
+    font-weight: 650;
+}
+
+.bubble code {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.86em;
+    background: rgba(13, 110, 253, 0.18);
+    border: 1px solid rgba(13, 110, 253, 0.28);
+    border-radius: 6px;
+    padding: 0.08em 0.4em;
+}
+
+.welcome-hint {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 .suggestions {
@@ -260,14 +319,23 @@ body {
 .chip:focus-visible {
     background: rgba(13, 110, 253, 0.22);
     outline: none;
+    transform: translateY(-1px);
 }
 
 .sources {
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border-color);
+    margin-top: 14px;
+    padding: 10px 12px 8px;
+    border-top: 0;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid var(--border-color);
     color: var(--text-secondary);
     font-size: 0.8rem;
+}
+
+.sources ul {
+    margin: 0;
+    padding-left: 1.1em;
 }
 
 .sources strong {
@@ -279,7 +347,7 @@ body {
 }
 
 .sources li {
-    margin-left: 1rem;
+    margin-left: 0;
 }
 
 .thinking {
