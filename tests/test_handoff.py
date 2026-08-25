@@ -148,3 +148,13 @@ def test_home_mentions_human_advisor() -> None:
         response = client.get("/")
         assert response.status_code == 200
         assert "asesor humano" in response.text
+        assert "status-label" in response.text
+
+
+def test_frontend_keeps_status_label_binding() -> None:
+    from pathlib import Path
+
+    js = Path(__file__).resolve().parents[1] / "static" / "js" / "app.js"
+    source = js.read_text(encoding="utf-8")
+    assert 'getElementById("status-label")' in source
+    assert 'getElementById("composer-hint")' in source
