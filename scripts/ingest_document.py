@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-"""Indexa data/documents/documento.txt en ChromaDB.
+"""Indexa los archivos de data/documents/ en ChromaDB.
 
-Ejemplos:
+Uso típico:
     python scripts/ingest_document.py
-    python scripts/ingest_document.py --reset
     python scripts/ingest_document.py --status
+    python scripts/ingest_document.py --file guia_renovacion.txt
+    python scripts/ingest_document.py --reset
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ if str(ROOT) not in sys.path:
 
 from app.config.settings import settings  # noqa: E402
 from app.services.document_service import DocumentService  # noqa: E402
+from app.services.rag_service import RagService  # noqa: E402
 from app.services.vector_service import VectorService, VectorStoreError  # noqa: E402
 from app.utils.text_processor import DocumentProcessingError  # noqa: E402
 
@@ -32,86 +34,109 @@ logger = logging.getLogger("ingest")
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Crea o actualiza la base vectorial empresa_knowledge_base."
+        description="Indexa la carpeta data/documents/ en la base vectorial."
     )
     parser.add_argument(
         "--reset",
         action="store_true",
-        help="Elimina la colección anterior y la crea desde cero.",
+        help="Elimina la colección y vuelve a indexar todos los archivos.",
     )
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Reindexa aunque el documento no haya cambiado (no borra otras fuentes).",
+        help="Reindexa aunque el archivo no haya cambiado.",
     )
     parser.add_argument(
         "--status",
         action="store_true",
-        help="Muestra el estado de la colección y sale.",
+        help="Muestra el estado de cada archivo y sale.",
     )
     parser.add_argument(
+        "--file",
         "--document",
+        dest="document",
         type=str,
-        default=str(settings.default_document_path),
-        help="Ruta al archivo TXT a indexar.",
+        default=None,
+        help="Indexa solo este archivo (nombre o ruta).",
     )
     return parser.parse_args()
 
 
-def show_status(vector_service: VectorService) -> int:
+def resolve_file(raw: str, directory: Path) -> Path:
+    candidate = Path(raw)
+    if candidate.exists():
+        return candidate
+    nested = directory / raw
+    if nested.exists():
+        return nested
+    raise SystemExit(f"No encontré el archivo: {raw}")
+
+
+def show_status(rag: RagService) -> int:
     try:
-        vector_service.connect()
+        rag.vector_service.connect()
+        status = rag.index_status()
     except VectorStoreError as exc:
         logger.error("%s", exc)
         print(exc.user_message)
         return 1
 
-    count = vector_service.count()
-    meta = vector_service._read_meta()
-    print("Colección:", vector_service.collection_name)
-    print("Ruta:     ", vector_service.persist_directory)
-    print("Chunks:   ", count)
+    print("Carpeta:  ", status.directory)
+    print("Colección:", rag.vector_service.collection_name)
+    print("Chunks:   ", status.indexed_chunks)
     print("Modelo:   ", settings.embedding_model)
-    if meta:
-        print("Fuente:   ", meta.get("source"))
-        print("Hash:     ", str(meta.get("sha256", ""))[:16] + "...")
-        print("Fecha:    ", meta.get("indexed_at"))
-    else:
-        print("Aún no hay metadata de indexación.")
+    print("Pendiente:", "sí" if status.pending_changes else "no")
+    print()
+    if not status.files:
+        print("No hay archivos .txt o .md para indexar.")
+        return 0
+    print(f"{'Archivo':<42} {'Estado':<10} {'Chunks':>6}  Actualizado")
+    for item in status.files:
+        label = {
+            "indexed": "al día",
+            "changed": "cambió",
+            "new": "nuevo",
+            "error": "error",
+        }.get(item.status, item.status)
+        stamp = item.indexed_at or "-"
+        print(f"{item.name:<42} {label:<10} {item.chunks:>6}  {stamp}")
     return 0
 
 
 def main() -> int:
     args = parse_args()
-    document_path = Path(args.document)
     vector_service = VectorService()
-    document_service = DocumentService(document_path=document_path)
+    document_service = DocumentService()
+    rag = RagService(document_service=document_service, vector_service=vector_service)
 
     if args.status:
-        return show_status(vector_service)
+        return show_status(rag)
 
-    logger.info("Inicio de ingestión de %s", document_path)
-    if args.reset:
-        logger.info("Modo reset: se eliminará la colección %s", settings.chroma_collection_name)
+    if args.document:
+        only = resolve_file(args.document, document_service.documents_directory)
+        logger.info("Indexando solo %s", only)
+        try:
+            result = rag.reindex(reset=bool(args.reset), force=bool(args.force), only=only)
+        except (DocumentProcessingError, VectorStoreError) as exc:
+            logger.error("%s", exc)
+            print(exc.user_message)
+            return 1
+        print(result.message)
+        print(f"Fragmentos escritos: {result.chunks_indexed}")
+        print(f"Colección: {settings.chroma_collection_name}")
+        return 0
 
+    logger.info("Inicio de ingestión en %s", document_service.documents_directory)
     try:
-        chunks, characters, fingerprint = document_service.process()
-        logger.info("Caracteres leídos: %s", characters)
-        logger.info("Chunks a indexar: %s", len(chunks))
-
-        reset = bool(args.reset)
-        if args.force and not reset:
-            # Cambia el hash almacenado para forzar el upsert.
-            vector_service.connect()
-            indexed = vector_service.index_chunks(chunks, fingerprint + "-force", reset=False)
-        else:
-            indexed = vector_service.index_chunks(chunks, fingerprint, reset=reset)
+        result = rag.reindex(reset=bool(args.reset), force=bool(args.force))
     except (DocumentProcessingError, VectorStoreError) as exc:
         logger.error("%s", exc)
         print(exc.user_message)
         return 1
 
-    print(f"Indexación completada: {indexed} chunks ({characters} caracteres).")
+    print(result.message)
+    print(f"Fragmentos escritos: {result.chunks_indexed}")
+    print(f"Archivos indexados: {result.files_indexed} · omitidos: {result.files_skipped}")
     print(f"Colección: {settings.chroma_collection_name}")
     print(f"Persistencia: {settings.chroma_persist_directory}")
     return 0

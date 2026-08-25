@@ -113,20 +113,46 @@ class HealthResponse(BaseModel):
 
 
 class ReindexRequest(BaseModel):
-    """Opciones para reprocesar el documento de conocimiento."""
+    """Opciones para indexar la carpeta de conocimiento."""
 
     reset: bool = Field(
-        default=True,
-        description="Si es true, elimina la colección anterior antes de indexar.",
+        default=False,
+        description="Si es true, borra la colección y vuelve a indexar todos los archivos.",
+    )
+    force: bool = Field(
+        default=False,
+        description="Si es true, reindexa aunque el archivo no haya cambiado.",
     )
 
 
 class ReindexResponse(BaseModel):
-    """Resultado del proceso de reindexación."""
+    """Resultado del proceso de indexación."""
 
     status: str
     message: str
     chunks_indexed: int = 0
     characters: int = 0
     source: str = ""
+    sources: list[str] = Field(default_factory=list)
+    files_indexed: int = 0
+    files_skipped: int = 0
     reset: bool = False
+
+
+class IndexFileStatus(BaseModel):
+    """Estado de un archivo de la carpeta de conocimiento."""
+
+    name: str
+    status: str
+    chunks: int = 0
+    characters: int = 0
+    indexed_at: str = ""
+
+
+class IndexStatusResponse(BaseModel):
+    """Resumen de la base vectorial y de los archivos pendientes."""
+
+    directory: str
+    indexed_chunks: int = 0
+    pending_changes: bool = False
+    files: list[IndexFileStatus] = Field(default_factory=list)

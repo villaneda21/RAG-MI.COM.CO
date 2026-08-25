@@ -198,7 +198,8 @@ El chat consulta la base de conocimiento (ChromaDB) en cada turno y responde con
 | `GET` | `/api/cases` | Historial de casos registrados |
 | `GET` | `/api/conversations` | Resumen de chats guardados |
 | `GET` | `/api/conversations/{session_id}` | Transcript completo de un chat |
-| `POST` | `/api/reindex` | Vuelve a procesar el TXT |
+| `POST` | `/api/reindex` | Indexa `data/documents/` (`reset` / `force`) |
+| `GET` | `/api/index` | Archivos de la base y cambios pendientes |
 
 Ejemplo de chat:
 
@@ -278,6 +279,37 @@ Si actualizas `data/documents/documento.txt`:
 2. `POST /api/reindex` con `{"reset": true}`.
 
 La interfaz mostrará en **Fuentes consultadas** el archivo y el número de fragmento usados en cada respuesta.
+
+## Indexar información nueva
+
+La base vive en `data/documents/`. Cualquier `.txt` o `.md` de esa carpeta se indexa; los archivos que empiezan por `_` (como `_plantilla_guia.txt`) no.
+
+1. Copia la guía nueva a `data/documents/` (puedes partir de `_plantilla_guia.txt`).
+2. Indexa los cambios, de la forma que te quede más fácil:
+   - En la interfaz: pestaña **📚 Base** → **Indexar cambios**
+   - O en consola: `python scripts/ingest_document.py`
+   - O reinicia con `py -3.12 run.py` (detecta archivos nuevos o modificados)
+
+Otras opciones:
+
+```bash
+python scripts/ingest_document.py --status
+python scripts/ingest_document.py --file guia_renovacion.txt
+python scripts/ingest_document.py --reset
+```
+
+`POST /api/reindex` con `{"reset": false}` aplica solo cambios. `{"reset": true}` recrea toda la colección.
+
+## Freshchat
+
+Sí se puede conectar este bot a Freshchat, pero no es un interruptor: hay que adaptar el canal.
+
+El backend ya habla por `POST /api/chat` (`question`, `session_id`, `history` → `answer`). Freshchat no usa esa forma nativa, así que hace falta uno de estos puentes:
+
+1. **Freddy (lo más simple):** en el bot builder de Freshchat, API library, llama a tu `/api/chat` por HTTPS y muestra `answer`. El widget sigue siendo el de Freshchat. Necesitas una URL pública (servidor o túnel).
+2. **Webhook + API de conversaciones:** Freshchat avisa un mensaje nuevo; tu servidor responde con la Conversation API (token en Admin → API Tokens). Hay que guardar el `conversation_id` de Freshchat como `session_id`.
+
+No está cableado todavía. El RAG, el historial y los casos no hay que rehacerlos; solo el adaptador del canal. Cuando lo vayas a hacer, hace falta el token, el datacenter (US/EU/IN/AU) y una URL HTTPS pública.
 
 ## Configuración centralizada
 

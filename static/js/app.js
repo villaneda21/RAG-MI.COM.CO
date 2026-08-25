@@ -3,6 +3,9 @@ const chatPanel = document.getElementById("chat-panel");
 const historyPanel = document.getElementById("history-panel");
 const historyListEl = document.getElementById("history-list");
 const historyDetailEl = document.getElementById("history-detail");
+const indexPanel = document.getElementById("index-panel");
+const indexFilesEl = document.getElementById("index-files");
+const indexFeedback = document.getElementById("index-feedback");
 const composerWrap = document.getElementById("composer-wrap");
 const form = document.getElementById("chat-form");
 const input = document.getElementById("question-input");
@@ -283,25 +286,28 @@ function restoreConversation(conversation) {
 }
 
 function showView(view, { updateHash = true } = {}) {
-    activeView = view === "history" ? "history" : "chat";
-    const onHistory = activeView === "history";
-    chatPanel.hidden = onHistory;
-    historyPanel.hidden = !onHistory;
-    composerWrap.hidden = onHistory;
+    activeView = ["history", "index"].includes(view) ? view : "chat";
+    chatPanel.hidden = activeView !== "chat";
+    historyPanel.hidden = activeView !== "history";
+    indexPanel.hidden = activeView !== "index";
+    composerWrap.hidden = activeView !== "chat";
     document.querySelectorAll(".nav-link").forEach((button) => {
         button.classList.toggle("is-active", button.dataset.view === activeView);
     });
     if (updateHash) {
-        const hash = onHistory
-            ? selectedHistoryId
+        let hash = "#chat";
+        if (activeView === "history") {
+            hash = selectedHistoryId
                 ? `#historial/${encodeURIComponent(selectedHistoryId)}`
-                : "#historial"
-            : "#chat";
+                : "#historial";
+        } else if (activeView === "index") {
+            hash = "#base";
+        }
         if (window.location.hash !== hash) {
             window.history.replaceState(null, "", hash);
         }
     }
-    if (onHistory) {
+    if (activeView === "history") {
         if (selectedHistoryId) {
             historyPanel.classList.add("showing-detail");
         } else {
@@ -311,6 +317,9 @@ function showView(view, { updateHash = true } = {}) {
         if (selectedHistoryId) {
             loadHistoryDetail(selectedHistoryId);
         }
+    }
+    if (activeView === "index") {
+        loadIndexStatus();
     }
 }
 
@@ -322,7 +331,81 @@ function parseHash() {
     if (raw === "historial") {
         return { view: "history", sessionId: "" };
     }
+    if (raw === "base" || raw === "indexar") {
+        return { view: "index", sessionId: "" };
+    }
     return { view: "chat", sessionId: "" };
+}
+
+function indexStatusLabel(status) {
+    if (status === "new") {
+        return "nuevo";
+    }
+    if (status === "changed") {
+        return "cambió";
+    }
+    if (status === "error") {
+        return "error";
+    }
+    return "al día";
+}
+
+async function loadIndexStatus() {
+    indexFilesEl.innerHTML = `<p class="history-loading">Revisando archivos…</p>`;
+    try {
+        const response = await fetch("/api/index");
+        const payload = await response.json();
+        if (!response.ok) {
+            throw new Error("index status failed");
+        }
+        if (!payload.files || !payload.files.length) {
+            indexFilesEl.innerHTML = `<p class="history-loading">No hay .txt o .md en data/documents/. Copia una guía ahí y vuelve a indexar.</p>`;
+            return;
+        }
+        indexFilesEl.innerHTML = payload.files
+            .map((item) => {
+                const pending = item.status === "new" || item.status === "changed";
+                return `
+                    <article class="index-file">
+                        <strong>${escapeHtml(item.name)}</strong>
+                        <span class="index-file-status${pending ? " is-pending" : ""}">${escapeHtml(indexStatusLabel(item.status))}</span>
+                        <span class="index-file-meta">${Number(item.chunks || 0)} fragmentos · ${Number(item.characters || 0)} caracteres</span>
+                    </article>
+                `;
+            })
+            .join("");
+    } catch (_error) {
+        indexFilesEl.innerHTML = `<p class="history-loading">No se pudo leer el estado de la base.</p>`;
+    }
+}
+
+async function runIndex({ reset = false } = {}) {
+    const changesButton = document.getElementById("index-changes");
+    const resetButton = document.getElementById("index-reset");
+    changesButton.disabled = true;
+    resetButton.disabled = true;
+    indexFeedback.hidden = false;
+    indexFeedback.textContent = "Indexando… esto puede tardar un momento.";
+    try {
+        const response = await fetch("/api/reindex", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ reset, force: reset }),
+        });
+        const payload = await response.json();
+        if (!response.ok) {
+            indexFeedback.textContent = payload.detail || "No se pudo indexar.";
+            return;
+        }
+        indexFeedback.textContent = payload.message || "Indexación lista.";
+        await loadIndexStatus();
+        refreshHealth();
+    } catch (_error) {
+        indexFeedback.textContent = "No se pudo contactar al servidor para indexar.";
+    } finally {
+        changesButton.disabled = false;
+        resetButton.disabled = false;
+    }
 }
 
 function statusLabelFor(item) {
@@ -547,6 +630,13 @@ historyDetailEl.addEventListener("click", (event) => {
     historyDetailEl.innerHTML = `<div class="history-empty"><p>Elige un chat a la izquierda para ver el resumen y el transcript completo.</p></div>`;
     window.history.replaceState(null, "", "#historial");
     document.querySelectorAll(".history-item").forEach((button) => button.classList.remove("is-active"));
+});
+
+document.getElementById("index-changes").addEventListener("click", () => {
+    runIndex({ reset: false });
+});
+document.getElementById("index-reset").addEventListener("click", () => {
+    runIndex({ reset: true });
 });
 
 window.addEventListener("hashchange", () => {

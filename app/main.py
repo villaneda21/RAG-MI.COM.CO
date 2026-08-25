@@ -11,7 +11,13 @@ from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError
 
 from app.config.settings import PROJECT_ROOT, settings
-from app.models.schemas import ChatRequest, HealthResponse, ReindexRequest, ReindexResponse
+from app.models.schemas import (
+    ChatRequest,
+    HealthResponse,
+    IndexStatusResponse,
+    ReindexRequest,
+    ReindexResponse,
+)
 from app.services.claude_service import ClaudeService, ClaudeServiceError
 from app.services.document_service import DocumentService
 from app.services.rag_service import RagService
@@ -161,11 +167,18 @@ async def chat(payload: ChatRequest, request: Request):
 
 @app.post("/api/reindex", response_model=ReindexResponse)
 async def reindex(request: Request, payload: ReindexRequest | None = None) -> ReindexResponse:
-    """Vuelve a procesar data/documents/documento.txt y actualiza ChromaDB."""
+    """Indexa los TXT/MD de data/documents/. Por defecto solo aplica cambios."""
     options = payload or ReindexRequest()
     rag = get_rag(request)
-    logger.info("Endpoint /api/reindex (reset=%s).", options.reset)
-    return rag.reindex(reset=options.reset)
+    logger.info("Endpoint /api/reindex (reset=%s, force=%s).", options.reset, options.force)
+    return rag.reindex(reset=options.reset, force=options.force)
+
+
+@app.get("/api/index", response_model=IndexStatusResponse)
+async def index_status(request: Request) -> IndexStatusResponse:
+    """Lista los archivos de conocimiento y si hay cambios pendientes."""
+    rag = get_rag(request)
+    return rag.index_status()
 
 
 @app.get("/api/cases")

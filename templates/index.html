@@ -23,6 +23,7 @@
             <nav class="view-nav" aria-label="Pantallas">
                 <button type="button" class="nav-link is-active" data-view="chat">💬 Chat</button>
                 <button type="button" class="nav-link" data-view="history">🗂️ Historial</button>
+                <button type="button" class="nav-link" data-view="index">📚 Base</button>
             </nav>
             <div id="status-pill" class="status-pill" data-state="checking" aria-live="polite">
                 <span class="status-dot"></span>
@@ -47,6 +48,21 @@
                     <p>Elige un chat a la izquierda para ver el resumen y el transcript completo.</p>
                 </div>
             </section>
+        </main>
+
+        <main class="index-panel" id="index-panel" hidden>
+            <div class="index-card">
+                <div class="index-head">
+                    <h2>📚 Base de conocimiento</h2>
+                    <p>Para agregar información nueva, copia un archivo <strong>.txt</strong> o <strong>.md</strong> en <code>data/documents/</code> y pulsa <strong>Indexar cambios</strong>. Los archivos que empiezan por <code>_</code> no se indexan (sirven de plantilla).</p>
+                </div>
+                <div class="index-actions">
+                    <button type="button" class="index-button" id="index-changes">Indexar cambios</button>
+                    <button type="button" class="index-button secondary" id="index-reset">Indexar todo de nuevo</button>
+                </div>
+                <p id="index-feedback" class="index-feedback" hidden></p>
+                <div id="index-files" class="index-files"></div>
+            </div>
         </main>
 
         <footer class="composer-wrap" id="composer-wrap">

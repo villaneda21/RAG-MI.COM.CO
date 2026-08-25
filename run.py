@@ -232,12 +232,14 @@ def ensure_index_and_preload() -> None:
 
     vector_service = VectorService()
     vector_service.connect()
-    if vector_service.count() == 0:
-        log("La base vectorial está vacía. Indexando data/documents/documento.txt ...")
-        RagService(vector_service=vector_service).reindex(reset=True)
-        log("Indexación inicial lista.")
+    rag = RagService(vector_service=vector_service)
+    status = rag.index_status()
+    if vector_service.count() == 0 or status.pending_changes:
+        log("Indexando archivos nuevos o modificados en data/documents/ ...")
+        result = rag.reindex(reset=vector_service.count() == 0)
+        log(result.message)
     else:
-        log(f"ChromaDB ya tiene {vector_service.count()} fragmentos indexados.")
+        log(f"ChromaDB ya tiene {vector_service.count()} fragmentos al día.")
     log("Precargando el modelo de embeddings...")
     vector_service.get_collection()
     log("Modelo de embeddings listo.")

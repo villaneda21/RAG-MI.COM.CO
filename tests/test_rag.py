@@ -116,7 +116,7 @@ def test_chromadb_stores_information(tmp_path: Path) -> None:
 
     # Segunda ingestión con el mismo hash no duplica.
     stored_again = vector_service.index_chunks(chunks, fingerprint, reset=False)
-    assert vector_service.count() == stored_again
+    assert stored_again == 0
     assert vector_service.count() == len(chunks)
 
 
@@ -255,6 +255,7 @@ def test_home_renders_chatbot() -> None:
         assert response.status_code == 200
         assert "Soporte" in response.text or "Asistente" in response.text
         assert "Historial" in response.text
+        assert "Base" in response.text
         assert "/static/css/style.css" in response.text
 
 

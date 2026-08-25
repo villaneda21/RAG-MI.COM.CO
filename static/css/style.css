@@ -195,8 +195,109 @@ body {
 
 .chat-panel[hidden],
 .history-panel[hidden],
+.index-panel[hidden],
 .composer-wrap[hidden] {
     display: none !important;
+}
+
+.index-panel {
+    flex: 1;
+    overflow: auto;
+    padding: 18px 22px 24px;
+}
+
+.index-card {
+    max-width: 720px;
+}
+
+.index-head h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+}
+
+.index-head p {
+    margin: 8px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.index-head code {
+    font-size: 0.84em;
+    background: rgba(13, 110, 253, 0.18);
+    border-radius: 6px;
+    padding: 0.08em 0.35em;
+}
+
+.index-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 12px;
+}
+
+.index-button {
+    border: 0;
+    border-radius: 12px;
+    padding: 10px 16px;
+    background: var(--primary-color);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.index-button.secondary {
+    background: transparent;
+    color: #dbeafe;
+    border: 1px solid rgba(13, 110, 253, 0.45);
+}
+
+.index-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.index-feedback {
+    margin: 0 0 12px;
+    color: #d1fae5;
+    font-size: 0.88rem;
+}
+
+.index-files {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.index-file {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--surface-elevated);
+}
+
+.index-file strong {
+    font-size: 0.92rem;
+}
+
+.index-file-status {
+    font-size: 0.78rem;
+    color: #d1fae5;
+}
+
+.index-file-status.is-pending {
+    color: #fde68a;
+}
+
+.index-file-meta {
+    grid-column: 1 / -1;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
 }
 
 .history-panel {
@@ -681,7 +782,8 @@ body {
     .messages,
     .composer-wrap,
     .history-list-head,
-    .history-detail-head {
+    .history-detail-head,
+    .index-panel {
         padding-left: 14px;
         padding-right: 14px;
     }

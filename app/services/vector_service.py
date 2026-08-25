@@ -145,12 +145,11 @@ class VectorService:
         chunks: list[TextChunk],
         fingerprint: str,
         reset: bool = False,
+        force: bool = False,
     ) -> int:
-        """Indexa fragmentos evitando duplicados entre ejecuciones.
+        """Indexa fragmentos de una fuente.
 
-        - Si `reset` es True, borra la colección y la vuelve a crear.
-        - Si el hash del documento no cambió, no reindexa.
-        - Si el documento cambió, reemplaza los chunks de esa fuente.
+        Devuelve cuántos chunks se escribieron en esta llamada (0 si no había cambios).
         """
         if not chunks:
             raise VectorStoreError(
@@ -158,16 +157,16 @@ class VectorService:
                 user_message="No hay fragmentos para guardar en la base de conocimiento.",
             )
 
-        logger.info("Inicio de la indexación (%s chunks, reset=%s).", len(chunks), reset)
+        logger.info("Inicio de la indexación (%s chunks, reset=%s, force=%s).", len(chunks), reset, force)
+        source = chunks[0].source
 
         if reset:
             self.reset_collection()
-        elif self._same_fingerprint(fingerprint) and self.count() > 0:
-            logger.info("El documento no cambió (hash=%s). Se omite la reindexación.", fingerprint[:12])
-            return self.count()
+        elif not force and self.source_fingerprint(source) == fingerprint and self.count() > 0:
+            logger.info("La fuente %s no cambió (hash=%s). Se omite.", source, fingerprint[:12])
+            return 0
 
         collection = self.get_collection(create=True)
-        source = chunks[0].source
         self._delete_source(collection, source)
 
         ids: list[str] = []
@@ -188,9 +187,18 @@ class VectorService:
                 user_message="No se pudieron guardar los fragmentos en la base vectorial.",
             ) from exc
 
-        self._write_meta(fingerprint, len(chunks), source)
-        logger.info("Indexación finalizada: %s chunks en '%s'.", len(chunks), self.collection_name)
+        self._write_source_meta(source, fingerprint, len(chunks))
+        logger.info("Indexación finalizada: %s chunks de '%s'.", len(chunks), source)
         return len(chunks)
+
+    def source_fingerprint(self, source: str) -> str | None:
+        meta = self._normalized_meta()
+        entry = (meta.get("sources") or {}).get(source) or {}
+        return entry.get("sha256")
+
+    def source_meta(self, source: str) -> dict[str, Any]:
+        meta = self._normalized_meta()
+        return dict((meta.get("sources") or {}).get(source) or {})
 
     def query(self, question: str, n_results: int | None = None) -> list[dict[str, Any]]:
         """Busca los fragmentos más relevantes y sus distancias."""
@@ -200,7 +208,7 @@ class VectorService:
                 "La colección está vacía.",
                 user_message=(
                     "La base de conocimiento aún no tiene información indexada. "
-                    "Ejecuta python scripts/ingest_document.py o usa Reindexar."
+                    "Ejecuta python scripts/ingest_document.py o usa la pestaña Base para indexar."
                 ),
             )
 
@@ -274,9 +282,23 @@ class VectorService:
         except Exception:  # noqa: BLE001
             logger.info("No había chunks previos que eliminar para '%s'.", source)
 
-    def _same_fingerprint(self, fingerprint: str) -> bool:
+    def _same_fingerprint(self, fingerprint: str, source: str | None = None) -> bool:
+        if source:
+            return self.source_fingerprint(source) == fingerprint
+        meta = self._normalized_meta()
+        sources = meta.get("sources") or {}
+        return any(entry.get("sha256") == fingerprint for entry in sources.values())
+
+    def _normalized_meta(self) -> dict[str, Any]:
         meta = self._read_meta()
-        return bool(meta) and meta.get("sha256") == fingerprint
+        sources = dict(meta.get("sources") or {})
+        if meta.get("source") and meta.get("source") not in sources:
+            sources[str(meta["source"])] = {
+                "sha256": meta.get("sha256"),
+                "chunks": meta.get("chunks") or 0,
+                "indexed_at": meta.get("indexed_at") or "",
+            }
+        return {**meta, "sources": sources}
 
     def _read_meta(self) -> dict[str, Any]:
         if not self.meta_path.exists():
@@ -286,14 +308,21 @@ class VectorService:
         except (OSError, json.JSONDecodeError):
             return {}
 
-    def _write_meta(self, fingerprint: str, chunks: int, source: str) -> None:
-        payload = {
+    def _write_source_meta(self, source: str, fingerprint: str, chunks: int) -> None:
+        now = datetime.now(timezone.utc).isoformat()
+        meta = self._normalized_meta()
+        sources = dict(meta.get("sources") or {})
+        sources[source] = {
             "sha256": fingerprint,
             "chunks": chunks,
-            "source": source,
+            "indexed_at": now,
+        }
+        payload = {
+            "sources": sources,
             "collection": self.collection_name,
             "embedding_model": settings.embedding_model,
-            "indexed_at": datetime.now(timezone.utc).isoformat(),
+            "total_chunks": self.count(),
+            "indexed_at": now,
         }
         self.meta_path.parent.mkdir(parents=True, exist_ok=True)
         self.meta_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")

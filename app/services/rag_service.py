@@ -3,10 +3,18 @@
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from typing import Any
 
 from app.config.settings import settings
-from app.models.schemas import CaseSummary, ChatResponse, ReindexResponse, SourceChunk
+from app.models.schemas import (
+    CaseSummary,
+    ChatResponse,
+    IndexFileStatus,
+    IndexStatusResponse,
+    ReindexResponse,
+    SourceChunk,
+)
 from app.services.case_service import CaseService
 from app.services.claude_service import ClaudeService, ClaudeServiceError, SupportTurn
 from app.services.conversation_service import ConversationService
@@ -127,27 +135,133 @@ class RagService:
             return [], []
         return hits, self.vector_service.hits_to_sources(hits)
 
-    def reindex(self, reset: bool = True) -> ReindexResponse:
-        """Vuelve a procesar el TXT y actualizar ChromaDB."""
-        logger.info("Reindexación solicitada (reset=%s).", reset)
+    def reindex(
+        self,
+        reset: bool = False,
+        force: bool = False,
+        only: Path | None = None,
+    ) -> ReindexResponse:
+        """Indexa todos los TXT/MD de data/documents/. Omite archivos sin cambios."""
+        logger.info("Indexación solicitada (reset=%s, force=%s, only=%s).", reset, force, only)
+        if only is not None and reset:
+            logger.warning("Indexar un solo archivo no borra el resto de la colección.")
+            reset = False
+            force = True
+        files = [Path(only)] if only is not None else self.document_service.list_knowledge_files()
+        if not files:
+            raise DocumentProcessingError(
+                "No hay documentos para indexar.",
+                user_message=(
+                    "No hay archivos .txt o .md en data/documents/. "
+                    "Copia tu guía ahí y vuelve a indexar."
+                ),
+            )
+
+        if reset:
+            self.vector_service.reset_collection()
+
+        written = 0
+        characters = 0
+        indexed_names: list[str] = []
+        skipped_names: list[str] = []
+
         try:
-            chunks, characters, fingerprint = self.document_service.process()
-            indexed = self.vector_service.index_chunks(chunks, fingerprint, reset=reset)
+            for path in files:
+                service = DocumentService(
+                    document_path=path,
+                    documents_directory=self.document_service.documents_directory,
+                )
+                raw = service.load_raw_text()
+                fingerprint = service.fingerprint(raw)
+                characters += len(raw)
+                if (
+                    not reset
+                    and not force
+                    and self.vector_service.source_fingerprint(path.name) == fingerprint
+                    and self.vector_service.count() > 0
+                ):
+                    skipped_names.append(path.name)
+                    continue
+                chunks = service.chunk_text(raw, source=path.name)
+                stored = self.vector_service.index_chunks(
+                    chunks,
+                    fingerprint,
+                    reset=False,
+                    force=True,
+                )
+                written += stored
+                indexed_names.append(path.name)
         except (DocumentProcessingError, VectorStoreError):
             raise
 
-        message = (
-            "Base de conocimiento recreada desde cero."
-            if reset
-            else "Documento procesado. Los chunks previos de la misma fuente fueron reemplazados si el contenido cambió."
-        )
+        if indexed_names:
+            if reset:
+                message = (
+                    f"Base recreada. Se indexaron {len(indexed_names)} archivo(s) "
+                    f"({written} fragmentos)."
+                )
+            else:
+                message = (
+                    f"Se indexaron {len(indexed_names)} archivo(s) con cambios "
+                    f"({written} fragmentos)."
+                )
+                if skipped_names:
+                    message += f" Sin cambios: {', '.join(skipped_names)}."
+        else:
+            message = "Nada que indexar: los archivos ya estaban al día."
+
         return ReindexResponse(
             status="ok",
             message=message,
-            chunks_indexed=indexed,
+            chunks_indexed=written,
             characters=characters,
-            source=self.document_service.document_path.name,
+            source=", ".join(indexed_names or skipped_names),
+            sources=indexed_names or skipped_names,
+            files_indexed=len(indexed_names),
+            files_skipped=len(skipped_names),
             reset=reset,
+        )
+
+    def index_status(self) -> IndexStatusResponse:
+        """Compara los archivos de la carpeta con lo que ya está en ChromaDB."""
+        files = self.document_service.list_knowledge_files()
+        items: list[IndexFileStatus] = []
+        pending = False
+        for path in files:
+            service = DocumentService(
+                document_path=path,
+                documents_directory=self.document_service.documents_directory,
+            )
+            try:
+                raw = service.load_raw_text()
+            except DocumentProcessingError:
+                pending = True
+                items.append(IndexFileStatus(name=path.name, status="error"))
+                continue
+            fingerprint = service.fingerprint(raw)
+            stored = self.vector_service.source_meta(path.name)
+            if not stored:
+                status = "new"
+                pending = True
+            elif stored.get("sha256") != fingerprint:
+                status = "changed"
+                pending = True
+            else:
+                status = "indexed"
+            items.append(
+                IndexFileStatus(
+                    name=path.name,
+                    status=status,
+                    chunks=int(stored.get("chunks") or 0),
+                    characters=len(raw),
+                    indexed_at=str(stored.get("indexed_at") or ""),
+                )
+            )
+        return IndexStatusResponse(
+            directory=str(self.document_service.documents_directory),
+            indexed_chunks=self.vector_service.count(),
+            pending_changes=pending,
+            files=items,
         )
 
 
