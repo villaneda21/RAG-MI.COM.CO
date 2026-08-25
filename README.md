@@ -222,7 +222,31 @@ Respuesta típica:
       "source": "documento.txt",
       "title": "Cómo crear tu cuenta en Mi.com.co"
     }
-  ]
+  ],
+  "intake": null,
+  "case": null
+}
+```
+
+Si el cliente pide un **asesor** o dejar un caso, el chat pide el correo, clasifica la ayuda (**Correo electrónico**, **Dominio**, **Hosting**, **Factura o Compra**), orienta con la **base de conocimiento** y al cerrar guarda el historial con estado **Cerrado**. No diagnostica DNS, SPF/DKIM/DMARC, ping ni red.
+
+```json
+{
+  "answer": "Listo, ya quedó registrado en el historial de tu cuenta con estado Cerrado...",
+  "sources": [],
+  "intake": {
+    "registered": true,
+    "status": "Cerrado"
+  },
+  "case": {
+    "case_id": "CAS-20260825-0001",
+    "email": "ana@empresa.com",
+    "help_type": "correo",
+    "help_type_label": "Correo electrónico",
+    "summary": "No le llega el correo corporativo.",
+    "registered_at_display": "25/08/2026, 09:15 a. m. (Colombia)",
+    "status": "Cerrado"
+  }
 }
 ```
 
@@ -256,6 +280,9 @@ Preguntas sugeridas (también aparecen como atajos en la interfaz):
 - ¿Cómo accedo a cPanel?
 - ¿Qué dice el documento sobre la autenticación de dos factores?
 - ¿Cuáles son los avisos de vencimiento de un dominio?
+- Quiero comunicarme con un asesor humano
+
+Si pides un asesor, el chat pide tu correo, orienta con la base según **correo, dominio, hosting o factura/compra**, y al final registra el caso como **Cerrado** en el historial. No hace diagnósticos de DNS ni de red.
 
 Pruebas automatizadas (no requieren API key; Claude se sustituye por un mock):
 
@@ -296,10 +323,13 @@ RAG-MI.COM.CO/
 │   │   ├── document_service.py # Lectura del TXT
 │   │   ├── vector_service.py   # ChromaDB persistente
 │   │   ├── rag_service.py      # Flujo de recuperación + generación
-│   │   └── claude_service.py   # Único cliente de Anthropic
+│   │   ├── claude_service.py   # Único cliente de Anthropic
+│   │   ├── intake_service.py   # Atención, orientación y cierre de casos
+│   │   └── case_store.py       # Historial persistente de casos
 │   ├── models/schemas.py       # Contratos de la API
 │   └── utils/text_processor.py # Limpieza y chunking
 ├── data/documents/documento.txt
+├── data/cases/                 # Historial de casos (JSON generado)
 ├── chroma_db/                  # Base vectorial (generada)
 ├── static/                     # CSS, JS y logo
 ├── templates/index.html

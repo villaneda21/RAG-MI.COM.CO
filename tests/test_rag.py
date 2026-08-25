@@ -188,12 +188,14 @@ def test_health_endpoint() -> None:
         assert "vector_database" in payload
 
 
-def test_system_prompt_asks_for_structured_markdown() -> None:
+def test_system_prompt_keeps_knowledge_and_blocks_connections() -> None:
     from app.services.claude_service import SYSTEM_PROMPT
 
-    assert "##" in SYSTEM_PROMPT
-    assert "emoji" in SYSTEM_PROMPT.lower()
+    assert "base de conocimiento" in SYSTEM_PROMPT.lower()
+    assert "dns" in SYSTEM_PROMPT.lower()
+    assert "spf" in SYSTEM_PROMPT.lower()
     assert "Markdown" in SYSTEM_PROMPT
+    assert "asesor" in SYSTEM_PROMPT.lower()
 
 
 def test_home_renders_chatbot() -> None:

@@ -974,8 +974,29 @@ Los reportes de abuso de cualquier tipo sobre dominios alojados se pueden radica
 --------------------------------------------------------------------------------
 CONTROL DE VERSIONES DEL DOCUMENTO
 --------------------------------------------------------------------------------
-Versión: 1.0
-Fecha: Julio 2026
+Versión: 1.2
+Fecha: Agosto 2026
 Autor: Juan Villaneda
-Descripción: Creación de la Base de Conocimiento estandarizada y unificada de la plataforma de autogestión de MI.COM.CO.
+Descripción: Flujo de atención con base de conocimiento y registro de casos cerrados (correo, dominio, hosting, factura/compra), sin diagnósticos de conexiones.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: SOP-CASE-001
+[CATEGORY]: Guías Operativas - Soporte y Cuenta
+[TITLE]: Flujo de atención, orientación y registro de casos
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: asesor, caso de soporte, historial de caso, correo electrónico, dominio, hosting, factura, compra, atención al cliente
+[SUMMARY]: El asistente identifica la cuenta con el correo del cliente, orienta con la base de conocimiento según el tipo de ayuda y deja el caso registrado y cerrado en el historial.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Si deseas atención personalizada, puedes pedir en el chat hablar con un asesor o dejar un caso. El asistente:
+
+1. Te saluda y te pide el correo electrónico con el que estás registrado para identificar tu cuenta.
+2. Consulta el motivo y lo clasifica en una de estas ayudas: Correo electrónico, Dominio, Hosting, o Factura o Compra.
+3. Te orienta con la base de conocimiento de MI.COM.CO para resolver la duda (creación de buzones, acceso a cPanel, facturación, administración de cuenta, etc.).
+4. Cuando la solicitud está atendida, cierra el caso y lo guarda en el historial de tu cuenta con estado Cerrado.
+
+El historial interno del caso incluye: correo del cliente, tipo de ayuda, detalle o resumen de la interacción, fecha y hora de registro, y estado Cerrado.
+
+Importante: el chat no realiza cambios, ajustes, diagnósticos ni verificaciones de conexiones. No revisa DNS, SPF, DKIM, DMARC, ping, IP ni el estado de red o servidores. Esos temas se anotan en el caso para el equipo, sin diagnosticarlos desde el asistente.
 ================================================================================
