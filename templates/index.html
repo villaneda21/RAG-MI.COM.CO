@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente MI.COM.CO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <img class="brand-logo" src="/static/img/logo.png" alt="mi.com.co">
+                <div class="brand-copy">
+                    <p class="brand-kicker">Base de conocimiento</p>
+                    <h1>Asistente virtual</h1>
+                </div>
+            </div>
+            <div id="status-pill" class="status-pill" data-state="checking" aria-live="polite">
+                <span class="status-dot"></span>
+                <span id="status-label">Comprobando conexión…</span>
+            </div>
+        </header>
+
+        <main class="chat-panel" id="chat-panel">
+            <div id="messages" class="messages" role="log" aria-live="polite"></div>
+        </main>
+
+        <footer class="composer-wrap">
+            <form id="chat-form" class="composer" autocomplete="off">
+                <label class="sr-only" for="question-input">Escribe tu pregunta</label>
+                <textarea
+                    id="question-input"
+                    name="question"
+                    rows="1"
+                    maxlength="2000"
+                    placeholder="Escribe tu pregunta sobre MI.COM.CO…"
+                    required
+                ></textarea>
+                <button type="submit" id="send-button" class="send-button" aria-label="Enviar pregunta">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3.4 20.6 21 12 3.4 3.4 3.2 10l11 2-11 2z"/>
+                    </svg>
+                </button>
+            </form>
+            <p class="composer-hint">Las respuestas se generan solo con la información indexada del documento.</p>
+        </footer>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
