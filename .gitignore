@@ -38,6 +38,8 @@ chroma_db/*
 data/cases/*.jsonl
 data/cases/*.json
 !data/cases/.gitkeep
+data/cases/conversations/*.json
+!data/cases/conversations/.gitkeep
 
 # IDE / OS
 .idea/

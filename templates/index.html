@@ -20,6 +20,10 @@
                     <h1>💬 Soporte MI.COM.CO</h1>
                 </div>
             </div>
+            <nav class="view-nav" aria-label="Pantallas">
+                <button type="button" class="nav-link is-active" data-view="chat">💬 Chat</button>
+                <button type="button" class="nav-link" data-view="history">🗂️ Historial</button>
+            </nav>
             <div id="status-pill" class="status-pill" data-state="checking" aria-live="polite">
                 <span class="status-dot"></span>
                 <span id="status-label">Comprobando conexión…</span>
@@ -30,7 +34,22 @@
             <div id="messages" class="messages" role="log" aria-live="polite"></div>
         </main>
 
-        <footer class="composer-wrap">
+        <main class="history-panel" id="history-panel" hidden>
+            <aside class="history-list-wrap">
+                <div class="history-list-head">
+                    <h2>🗂️ Historial de chats</h2>
+                    <p>Se guarda cada conversación, abierta o cerrada.</p>
+                </div>
+                <div id="history-list" class="history-list"></div>
+            </aside>
+            <section class="history-detail" id="history-detail" aria-live="polite">
+                <div class="history-empty">
+                    <p>Elige un chat a la izquierda para ver el resumen y el transcript completo.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="composer-wrap" id="composer-wrap">
             <form id="chat-form" class="composer" autocomplete="off">
                 <label class="sr-only" for="question-input">Escribe tu pregunta</label>
                 <textarea

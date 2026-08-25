@@ -46,6 +46,7 @@ async def lifespan(app: FastAPI):
     rag = _build_rag_service()
     app.state.rag = rag
     app.state.cases = rag.case_service
+    app.state.conversations = rag.conversation_service
     try:
         rag.vector_service.connect()
         logger.info(
@@ -173,6 +174,26 @@ async def list_cases(request: Request, limit: int = 20):
     rag = get_rag(request)
     records = rag.case_service.list_cases(limit=max(1, min(limit, 100)))
     return [record.to_dict() for record in records]
+
+
+@app.get("/api/conversations")
+async def list_conversations(request: Request, limit: int = 50):
+    """Lista los chats guardados (resumen) para la pantalla de historial."""
+    rag = get_rag(request)
+    records = rag.conversation_service.list_conversations(limit=max(1, min(limit, 200)))
+    return [record.to_list_item() for record in records]
+
+
+@app.get("/api/conversations/{session_id}")
+async def get_conversation(session_id: str, request: Request):
+    """Devuelve el transcript completo de un chat."""
+    rag = get_rag(request)
+    record = rag.conversation_service.get(session_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="No encontramos esa conversación.")
+    payload = record.to_dict()
+    payload["message_count"] = len(record.messages)
+    return payload
 
 
 @app.exception_handler(ValidationError)

@@ -14,6 +14,7 @@ from fastapi.testclient import TestClient
 
 from app.models.schemas import ChatResponse
 from app.services.claude_service import ClaudeService, SupportTurn
+from app.services.conversation_service import ConversationService
 from app.services.document_service import DocumentService
 from app.services.rag_service import RagService
 from app.utils.text_processor import (
@@ -163,11 +164,16 @@ async def test_ask_uses_mock_claude(tmp_path: Path) -> None:
         document_service=DocumentService(document_path=path),
         vector_service=vector_service,
         claude_service=claude,
+        conversation_service=ConversationService(store_dir=tmp_path / "conversations"),
     )
     response = await rag.ask("Hola, tengo un problema con el correo")
     assert isinstance(response, ChatResponse)
     assert "correo" in response.answer.lower()
     assert response.sources == []
+    assert response.session_id
+    stored = rag.conversation_service.get(response.session_id)
+    assert stored is not None
+    assert stored.messages[-1]["content"] == response.answer
     claude.generate_support_reply.assert_awaited()
 
 
@@ -205,6 +211,7 @@ def test_home_renders_chatbot() -> None:
         response = client.get("/")
         assert response.status_code == 200
         assert "Soporte" in response.text or "Asistente" in response.text
+        assert "Historial" in response.text
         assert "/static/css/style.css" in response.text
 
 

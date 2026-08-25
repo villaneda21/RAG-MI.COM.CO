@@ -93,6 +93,7 @@ class Settings:
     # --- Casos de soporte ---
     cases_directory: Path = PROJECT_ROOT / "data" / "cases"
     cases_file: Path = cases_directory / "casos.jsonl"
+    conversations_directory: Path = cases_directory / "conversations"
 
     # --- Servidor ---
     host: str = os.getenv("HOST", "0.0.0.0").strip()

@@ -9,6 +9,7 @@ from app.config.settings import settings
 from app.models.schemas import CaseSummary, ChatResponse, ReindexResponse, SourceChunk
 from app.services.case_service import CaseService
 from app.services.claude_service import ClaudeService, ClaudeServiceError, SupportTurn
+from app.services.conversation_service import ConversationService
 from app.services.document_service import DocumentService
 from app.services.vector_service import VectorService, VectorStoreError
 from app.utils.text_processor import DocumentProcessingError
@@ -29,11 +30,13 @@ class RagService:
         vector_service: VectorService | None = None,
         claude_service: ClaudeService | None = None,
         case_service: CaseService | None = None,
+        conversation_service: ConversationService | None = None,
     ) -> None:
         self.document_service = document_service or DocumentService()
         self.vector_service = vector_service or VectorService()
         self.claude_service = claude_service or ClaudeService()
         self.case_service = case_service or CaseService()
+        self.conversation_service = conversation_service or ConversationService()
 
     def build_context(self, hits: list[dict[str, Any]]) -> str:
         """Concatena los fragmentos recuperados en un contexto delimitado."""
@@ -66,11 +69,14 @@ class RagService:
             raise ValueError("La pregunta no puede estar vacía.")
 
         logger.info("Consulta de soporte recibida (%s caracteres).", len(cleaned))
+        active_session, started_new = self.conversation_service.resolve_session(session_id)
+        history_for_claude = [] if started_new else (history or [])
+
         try:
             turn: SupportTurn = await self.claude_service.generate_support_reply(
                 cleaned,
-                history=history or [],
-                session_id=session_id or "",
+                history=history_for_claude,
+                session_id=active_session,
                 case_service=self.case_service,
             )
         except ClaudeServiceError:
@@ -86,11 +92,21 @@ class RagService:
                 registrado_en=turn.case.registrado_en,
                 estado=turn.case.estado,
             )
+
+        self.conversation_service.record_turn(
+            session_id=active_session,
+            question=cleaned,
+            answer=turn.text,
+            history=history_for_claude,
+            case=turn.case,
+        )
         return ChatResponse(
             answer=turn.text,
             sources=[],
-            session_id=session_id,
+            session_id=active_session,
             case=case_summary,
+            case_closed=case_summary is not None,
+            new_chat=started_new,
         )
 
     def reindex(self, reset: bool = True) -> ReindexResponse:

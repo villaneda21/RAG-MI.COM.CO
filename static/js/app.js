@@ -1,5 +1,9 @@
 const messagesEl = document.getElementById("messages");
 const chatPanel = document.getElementById("chat-panel");
+const historyPanel = document.getElementById("history-panel");
+const historyListEl = document.getElementById("history-list");
+const historyDetailEl = document.getElementById("history-detail");
+const composerWrap = document.getElementById("composer-wrap");
 const form = document.getElementById("chat-form");
 const input = document.getElementById("question-input");
 const sendButton = document.getElementById("send-button");
@@ -25,17 +29,27 @@ const SUGGESTIONS = [
     },
 ];
 
-const sessionId = (() => {
-    const existing = window.sessionStorage.getItem("micomco-session");
-    if (existing) {
-        return existing;
-    }
-    const created = `ses-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
-    window.sessionStorage.setItem("micomco-session", created);
-    return created;
-})();
-
+const SESSION_KEY = "micomco-session";
+let sessionId = "";
+let caseJustClosed = false;
 const conversationHistory = [];
+let activeView = "chat";
+let selectedHistoryId = "";
+
+function createSessionId() {
+    return `ses-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+}
+
+function persistSessionId(value) {
+    sessionId = value;
+    window.sessionStorage.setItem(SESSION_KEY, value);
+}
+
+function beginNewSession() {
+    persistSessionId(createSessionId());
+    conversationHistory.length = 0;
+    caseJustClosed = false;
+}
 
 function extractErrorMessage(payload) {
     const detail = payload && payload.detail;
@@ -159,9 +173,6 @@ function renderCaseCard(caseInfo) {
 
 function rememberTurn(role, content) {
     conversationHistory.push({ role, content });
-    if (conversationHistory.length > 24) {
-        conversationHistory.splice(0, conversationHistory.length - 24);
-    }
 }
 
 function renderSources(sources) {
@@ -243,10 +254,182 @@ function showThinking() {
     });
 }
 
+function resetLiveChat() {
+    messagesEl.innerHTML = "";
+    beginNewSession();
+    showWelcome();
+}
+
+function restoreConversation(conversation) {
+    messagesEl.innerHTML = "";
+    conversationHistory.length = 0;
+    persistSessionId(conversation.session_id);
+    caseJustClosed = conversation.status === "closed";
+    for (const message of conversation.messages || []) {
+        const role = message.role === "user" ? "user" : "bot";
+        const content = message.content || "";
+        appendMessage({
+            role,
+            html: role === "user" ? `<p>${escapeHtml(content)}</p>` : formatAnswer(content),
+        });
+        rememberTurn(message.role === "user" ? "user" : "assistant", content);
+    }
+    if (caseJustClosed) {
+        appendMessage({
+            role: "bot",
+            html: "<p>Este caso ya quedó registrado. Cuando escribas de nuevo, empezamos un chat nuevo y te pediré el correo otra vez.</p>",
+        });
+    }
+}
+
+function showView(view, { updateHash = true } = {}) {
+    activeView = view === "history" ? "history" : "chat";
+    const onHistory = activeView === "history";
+    chatPanel.hidden = onHistory;
+    historyPanel.hidden = !onHistory;
+    composerWrap.hidden = onHistory;
+    document.querySelectorAll(".nav-link").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.view === activeView);
+    });
+    if (updateHash) {
+        const hash = onHistory
+            ? selectedHistoryId
+                ? `#historial/${encodeURIComponent(selectedHistoryId)}`
+                : "#historial"
+            : "#chat";
+        if (window.location.hash !== hash) {
+            window.history.replaceState(null, "", hash);
+        }
+    }
+    if (onHistory) {
+        if (selectedHistoryId) {
+            historyPanel.classList.add("showing-detail");
+        } else {
+            historyPanel.classList.remove("showing-detail");
+        }
+        loadHistoryList();
+        if (selectedHistoryId) {
+            loadHistoryDetail(selectedHistoryId);
+        }
+    }
+}
+
+function parseHash() {
+    const raw = (window.location.hash || "").replace(/^#/, "");
+    if (raw.startsWith("historial/")) {
+        return { view: "history", sessionId: decodeURIComponent(raw.slice("historial/".length)) };
+    }
+    if (raw === "historial") {
+        return { view: "history", sessionId: "" };
+    }
+    return { view: "chat", sessionId: "" };
+}
+
+function statusLabelFor(item) {
+    if (item.status === "closed") {
+        return item.case_id ? `✅ ${item.case_id}` : "✅ Cerrado";
+    }
+    return "🟢 En curso";
+}
+
+async function loadHistoryList() {
+    historyListEl.innerHTML = `<p class="history-loading">Cargando chats…</p>`;
+    try {
+        const response = await fetch("/api/conversations?limit=100");
+        const items = await response.json();
+        if (!response.ok) {
+            throw new Error("list failed");
+        }
+        if (!items.length) {
+            historyListEl.innerHTML = `<p class="history-loading">Aún no hay conversaciones guardadas. Escribe en el chat para crear la primera.</p>`;
+            return;
+        }
+        historyListEl.innerHTML = items
+            .map((item) => {
+                const active = item.session_id === selectedHistoryId ? " is-active" : "";
+                const summary = item.summary || "Conversación de soporte";
+                const meta = item.updated_at || item.created_at || "";
+                return `
+                    <button type="button" class="history-item${active}" data-session="${escapeHtml(item.session_id)}">
+                        <span class="history-item-status">${escapeHtml(statusLabelFor(item))}</span>
+                        <strong>${escapeHtml(summary)}</strong>
+                        <span class="history-item-meta">${escapeHtml(meta)} · ${Number(item.message_count || 0)} mensajes</span>
+                    </button>
+                `;
+            })
+            .join("");
+    } catch (_error) {
+        historyListEl.innerHTML = `<p class="history-loading">No se pudo cargar el historial. Reintenta en un momento.</p>`;
+    }
+}
+
+async function loadHistoryDetail(id) {
+    selectedHistoryId = id;
+    historyDetailEl.innerHTML = `<div class="history-empty"><p>Cargando transcript…</p></div>`;
+    document.querySelectorAll(".history-item").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.session === id);
+    });
+    try {
+        const response = await fetch(`/api/conversations/${encodeURIComponent(id)}`);
+        const conversation = await response.json();
+        if (!response.ok) {
+            throw new Error("missing");
+        }
+        const messagesHtml = (conversation.messages || [])
+            .map((message) => {
+                const role = message.role === "user" ? "user" : "bot";
+                const content = message.content || "";
+                const body = role === "user" ? `<p>${escapeHtml(content)}</p>` : formatAnswer(content);
+                const avatar = role === "user" ? "👤" : "💬";
+                return `
+                    <article class="message ${role}">
+                        <div class="avatar" aria-hidden="true">${avatar}</div>
+                        <div class="bubble">${body}</div>
+                    </article>
+                `;
+            })
+            .join("");
+        historyDetailEl.innerHTML = `
+            <div class="history-detail-head">
+                <button type="button" class="back-to-list" id="back-to-list">← Chats</button>
+                <h3>${escapeHtml(conversation.summary || "Conversación")}</h3>
+                <p>${escapeHtml(statusLabelFor(conversation))} · ${escapeHtml(conversation.updated_at || "")}</p>
+                ${
+                    conversation.correo
+                        ? `<p class="history-detail-meta">📧 ${escapeHtml(conversation.correo)}${
+                              conversation.categoria ? ` · 🗂️ ${escapeHtml(conversation.categoria)}` : ""
+                          }</p>`
+                        : ""
+                }
+            </div>
+            <div class="messages history-messages">${messagesHtml || "<p>Esta conversación aún no tiene mensajes.</p>"}</div>
+        `;
+        if (window.location.hash !== `#historial/${encodeURIComponent(id)}`) {
+            window.history.replaceState(null, "", `#historial/${encodeURIComponent(id)}`);
+        }
+    } catch (_error) {
+        historyDetailEl.innerHTML = `<div class="history-empty"><p>No encontramos esa conversación.</p></div>`;
+    }
+}
+
+function applyClosedCase(payload) {
+    if (payload.case_closed || payload.case) {
+        caseJustClosed = true;
+        appendMessage({
+            role: "bot",
+            html: "<p>Si escribes de nuevo, abriremos un chat nuevo y te pediré el correo otra vez.</p>",
+        });
+    }
+}
+
 async function sendQuestion(question) {
     const cleaned = question.trim();
     if (!cleaned) {
         return;
+    }
+
+    if (caseJustClosed) {
+        resetLiveChat();
     }
 
     appendMessage({ role: "user", html: `<p>${escapeHtml(cleaned)}</p>` });
@@ -277,6 +460,10 @@ async function sendQuestion(question) {
             return;
         }
 
+        if (payload.session_id) {
+            persistSessionId(payload.session_id);
+        }
+
         const answer =
             payload.answer ||
             "Cuéntame un poco más para dejar tu solicitud registrada.";
@@ -287,6 +474,7 @@ async function sendQuestion(question) {
             caseInfo: payload.case,
         });
         rememberTurn("assistant", answer);
+        applyClosedCase(payload);
     } catch (_error) {
         thinking.remove();
         appendMessage({
@@ -329,6 +517,67 @@ messagesEl.addEventListener("click", (event) => {
     sendQuestion(chip.dataset.question || chip.textContent);
 });
 
-showWelcome();
+document.querySelectorAll(".nav-link").forEach((button) => {
+    button.addEventListener("click", () => {
+        showView(button.dataset.view);
+    });
+});
+
+historyListEl.addEventListener("click", (event) => {
+    const item = event.target.closest(".history-item");
+    if (!item) {
+        return;
+    }
+    loadHistoryDetail(item.dataset.session);
+    historyPanel.classList.add("showing-detail");
+});
+
+historyDetailEl.addEventListener("click", (event) => {
+    if (!event.target.closest("#back-to-list")) {
+        return;
+    }
+    selectedHistoryId = "";
+    historyPanel.classList.remove("showing-detail");
+    historyDetailEl.innerHTML = `<div class="history-empty"><p>Elige un chat a la izquierda para ver el resumen y el transcript completo.</p></div>`;
+    window.history.replaceState(null, "", "#historial");
+    document.querySelectorAll(".history-item").forEach((button) => button.classList.remove("is-active"));
+});
+
+window.addEventListener("hashchange", () => {
+    const parsed = parseHash();
+    if (parsed.sessionId) {
+        selectedHistoryId = parsed.sessionId;
+    }
+    showView(parsed.view, { updateHash: false });
+});
+
+async function bootstrapChat() {
+    const existing = window.sessionStorage.getItem(SESSION_KEY);
+    if (existing) {
+        try {
+            const response = await fetch(`/api/conversations/${encodeURIComponent(existing)}`);
+            if (response.ok) {
+                const conversation = await response.json();
+                if (conversation.status === "open" && (conversation.messages || []).length) {
+                    restoreConversation(conversation);
+                    return;
+                }
+                if (conversation.status === "closed") {
+                    resetLiveChat();
+                    return;
+                }
+            }
+        } catch (_error) {
+            // Si el historial no carga, arrancamos un chat nuevo.
+        }
+    }
+    beginNewSession();
+    showWelcome();
+}
+
+const initial = parseHash();
+selectedHistoryId = initial.sessionId;
+showView(initial.view, { updateHash: false });
+bootstrapChat();
 refreshHealth();
 setInterval(refreshHealth, 30000);

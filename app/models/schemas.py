@@ -71,6 +71,36 @@ class ChatResponse(BaseModel):
     sources: list[SourceChunk] = Field(default_factory=list)
     session_id: Optional[str] = None
     case: Optional[CaseSummary] = None
+    case_closed: bool = False
+    new_chat: bool = False
+
+
+class ConversationMessage(BaseModel):
+    """Turno persistido de un chat."""
+
+    role: str
+    content: str
+    created_at: str = ""
+
+
+class ConversationSummary(BaseModel):
+    """Resumen de un chat para la pantalla de historial."""
+
+    session_id: str
+    created_at: str
+    updated_at: str
+    status: str
+    case_id: str = ""
+    correo: str = ""
+    categoria: str = ""
+    summary: str = ""
+    message_count: int = 0
+
+
+class ConversationDetail(ConversationSummary):
+    """Chat completo, con todos los mensajes."""
+
+    messages: list[ConversationMessage] = Field(default_factory=list)
 
 
 class HealthResponse(BaseModel):

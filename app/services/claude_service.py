@@ -146,6 +146,7 @@ SUPPORT_SYSTEM_PROMPT = """Eres un compañero de soporte de MI.COM.CO. Estás co
    - Incluye de forma breve el número de caso si el sistema te lo devolvió.
 
 No registres el caso hasta que el cliente haya confirmado. No inventes un correo ni una categoría.
+Cada conversación es independiente. Si en este chat todavía no hay correo, pídelo de nuevo aunque el cliente diga que ya lo dio en un caso anterior.
 """
 
 RAG_SYSTEM_PROMPT = """Eres el asistente virtual de MI.COM.CO.
