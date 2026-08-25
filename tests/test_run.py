@@ -40,3 +40,19 @@ def test_placeholder_api_key_is_rejected() -> None:
     assert is_usable_anthropic_key("") is False
     assert is_usable_anthropic_key("tu_api_key_aqui") is False
     assert is_usable_anthropic_key("sk-ant-api03-realish-value") is True
+
+
+def test_retired_model_gets_clear_user_message() -> None:
+    from app.services.claude_service import models_to_try, user_message_for_api_status
+
+    message = user_message_for_api_status(
+        404,
+        "model: claude-sonnet-4-20250514",
+        "claude-sonnet-4-20250514",
+    )
+    assert "claude-sonnet-5" in message
+    assert "retiró" in message or "retirado" in message
+    assert models_to_try("claude-sonnet-4-20250514", ("claude-sonnet-5",)) == [
+        "claude-sonnet-4-20250514",
+        "claude-sonnet-5",
+    ]

@@ -59,9 +59,15 @@ class Settings:
 
     # --- API Anthropic ---
     anthropic_api_key: str = os.getenv("ANTHROPIC_API_KEY", "").strip()
-    claude_model: str = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514").strip()
+    claude_model: str = os.getenv("CLAUDE_MODEL", "claude-sonnet-5").strip()
     claude_max_tokens: int = int(os.getenv("CLAUDE_MAX_TOKENS", "1200"))
     claude_temperature: float = float(os.getenv("CLAUDE_TEMPERATURE", "0.2"))
+    # Si el modelo configurado fue retirado (p. ej. Sonnet 4 en junio 2026), se prueban estos.
+    claude_fallback_models: tuple[str, ...] = (
+        "claude-sonnet-5",
+        "claude-sonnet-4-6",
+        "claude-sonnet-4-5-20250929",
+    )
 
     # --- Embeddings ---
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2").strip()
