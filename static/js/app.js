@@ -4,6 +4,7 @@ const form = document.getElementById("chat-form");
 const input = document.getElementById("question-input");
 const sendButton = document.getElementById("send-button");
 const statusPill = document.getElementById("status-pill");
+const statusLabel = document.getElementById("status-label");
 const composerHint = document.getElementById("composer-hint");
 
 const SUGGESTIONS = [
