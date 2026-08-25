@@ -1,9 +1,10 @@
 from app.models.schemas import (
+    CaseRecord,
     ChatRequest,
     ChatResponse,
     ChatTurn,
-    HandoffInfo,
     HealthResponse,
+    IntakeState,
     ReindexRequest,
     ReindexResponse,
     SourceChunk,
@@ -11,11 +12,12 @@ from app.models.schemas import (
 )
 
 __all__ = [
+    "CaseRecord",
     "ChatRequest",
     "ChatResponse",
     "ChatTurn",
-    "HandoffInfo",
     "HealthResponse",
+    "IntakeState",
     "ReindexRequest",
     "ReindexResponse",
     "SourceChunk",

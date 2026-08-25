@@ -7,7 +7,15 @@ from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, Field, field_validator
 
-SupportAreaId = Literal["correo", "hdr", "facturacion", "ventas"]
+HelpTypeId = Literal["correo", "dominio", "hosting", "facturacion"]
+IntakeStep = Literal[
+    "idle",
+    "awaiting_email",
+    "awaiting_reason",
+    "helping",
+    "awaiting_close",
+    "closed",
+]
 
 
 @dataclass
@@ -21,10 +29,46 @@ class TextChunk:
 
 
 class ChatTurn(BaseModel):
-    """Turno previo de la conversación, para ruteo a un asesor humano."""
+    """Turno previo de la conversación, para el flujo de atención."""
 
     role: Literal["user", "assistant"]
     content: str = Field(..., min_length=1, max_length=4000)
+
+
+class IntakeState(BaseModel):
+    """Estado del flujo de captura, orientación y cierre de caso."""
+
+    active: bool = False
+    step: IntakeStep = "idle"
+    email: Optional[str] = None
+    category: Optional[HelpTypeId] = None
+    category_label: Optional[str] = None
+    notes: Optional[str] = None
+    summary: Optional[str] = None
+    case_id: Optional[str] = None
+    status: Optional[str] = None
+    registered_at: Optional[str] = None
+    registered_at_display: Optional[str] = None
+    turn: int = 0
+    needs_email: bool = False
+    needs_reason: bool = False
+    needs_close: bool = False
+    show_categories: bool = False
+    registered: bool = False
+    blocked_connection: bool = False
+
+
+class CaseRecord(BaseModel):
+    """Registro persistido en el historial de la cuenta."""
+
+    case_id: str
+    email: str
+    help_type: HelpTypeId | str
+    help_type_label: str
+    summary: str
+    registered_at: str
+    registered_at_display: str
+    status: str = "Cerrado"
 
 
 class ChatRequest(BaseModel):
@@ -32,14 +76,11 @@ class ChatRequest(BaseModel):
 
     question: str = Field(..., min_length=1, description="Pregunta del usuario")
     history: list[ChatTurn] = Field(default_factory=list)
-    requested_area: Optional[SupportAreaId] = Field(
+    requested_category: Optional[HelpTypeId] = Field(
         default=None,
-        description="Área elegida por el usuario para hablar con un asesor humano.",
+        description="Tipo de ayuda elegido: correo, dominio, hosting o facturación/compra.",
     )
-    handed_off_area: Optional[SupportAreaId] = Field(
-        default=None,
-        description="Área ya asignada si la conversación fue transferida.",
-    )
+    intake: Optional[IntakeState] = None
 
     @field_validator("question")
     @classmethod
@@ -67,25 +108,13 @@ class SourceChunk(BaseModel):
     distance: Optional[float] = None
 
 
-class HandoffInfo(BaseModel):
-    """Estado de la conexión con un asesor humano."""
-
-    requested: bool = False
-    connected: bool = False
-    needs_area: bool = False
-    queued_message: bool = False
-    area: Optional[SupportAreaId] = None
-    area_label: Optional[str] = None
-    assigned_label: Optional[str] = None
-    area_description: Optional[str] = None
-
-
 class ChatResponse(BaseModel):
     """Respuesta del asistente junto con las fuentes recuperadas."""
 
     answer: str
     sources: list[SourceChunk] = Field(default_factory=list)
-    handoff: Optional[HandoffInfo] = None
+    intake: Optional[IntakeState] = None
+    case: Optional[CaseRecord] = None
 
 
 class HealthResponse(BaseModel):

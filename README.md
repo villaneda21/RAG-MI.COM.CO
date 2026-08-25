@@ -223,25 +223,29 @@ Respuesta típica:
       "title": "Cómo crear tu cuenta en Mi.com.co"
     }
   ],
-  "handoff": null
+  "intake": null,
+  "case": null
 }
 ```
 
-Si el cliente pide un **asesor humano**, `/api/chat` no llama a Claude: hace la conexión y asigna el caso al área de **Correo**, **HDR (dominio y hosting)**, **Facturación** o **Ventas**.
+Si el cliente pide un **asesor** o dejar un caso, el chat pide el correo, clasifica la ayuda (**Correo electrónico**, **Dominio**, **Hosting**, **Factura o Compra**), orienta con la **base de conocimiento** y al cerrar guarda el historial con estado **Cerrado**. No diagnostica DNS, SPF/DKIM/DMARC, ping ni red.
 
 ```json
 {
-  "answer": "Listo. Estoy haciendo la conexión con un especialista...",
+  "answer": "Listo, ya quedó registrado en el historial de tu cuenta con estado Cerrado...",
   "sources": [],
-  "handoff": {
-    "requested": true,
-    "connected": true,
-    "needs_area": false,
-    "queued_message": false,
-    "area": "correo",
-    "area_label": "Correo",
-    "assigned_label": "área de Correo",
-    "area_description": "Buzones, webmail, registros MX y correo corporativo."
+  "intake": {
+    "registered": true,
+    "status": "Cerrado"
+  },
+  "case": {
+    "case_id": "CAS-20260825-0001",
+    "email": "ana@empresa.com",
+    "help_type": "correo",
+    "help_type_label": "Correo electrónico",
+    "summary": "No le llega el correo corporativo.",
+    "registered_at_display": "25/08/2026, 09:15 a. m. (Colombia)",
+    "status": "Cerrado"
   }
 }
 ```
@@ -278,7 +282,7 @@ Preguntas sugeridas (también aparecen como atajos en la interfaz):
 - ¿Cuáles son los avisos de vencimiento de un dominio?
 - Quiero comunicarme con un asesor humano
 
-Si pides un asesor, el chat **hace la conexión** y muestra *Asignado al área de Correo / HDR (Dominio y Hosting) / Facturación / Ventas* según el tema. Si el área no es clara, te deja elegirla.
+Si pides un asesor, el chat pide tu correo, orienta con la base según **correo, dominio, hosting o factura/compra**, y al final registra el caso como **Cerrado** en el historial. No hace diagnósticos de DNS ni de red.
 
 Pruebas automatizadas (no requieren API key; Claude se sustituye por un mock):
 
@@ -320,10 +324,12 @@ RAG-MI.COM.CO/
 │   │   ├── vector_service.py   # ChromaDB persistente
 │   │   ├── rag_service.py      # Flujo de recuperación + generación
 │   │   ├── claude_service.py   # Único cliente de Anthropic
-│   │   └── handoff_service.py  # Conexión con asesor humano y ruteo de área
+│   │   ├── intake_service.py   # Atención, orientación y cierre de casos
+│   │   └── case_store.py       # Historial persistente de casos
 │   ├── models/schemas.py       # Contratos de la API
 │   └── utils/text_processor.py # Limpieza y chunking
 ├── data/documents/documento.txt
+├── data/cases/                 # Historial de casos (JSON generado)
 ├── chroma_db/                  # Base vectorial (generada)
 ├── static/                     # CSS, JS y logo
 ├── templates/index.html

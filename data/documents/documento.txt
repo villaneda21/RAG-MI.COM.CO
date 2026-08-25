@@ -974,33 +974,29 @@ Los reportes de abuso de cualquier tipo sobre dominios alojados se pueden radica
 --------------------------------------------------------------------------------
 CONTROL DE VERSIONES DEL DOCUMENTO
 --------------------------------------------------------------------------------
-Versión: 1.1
+Versión: 1.2
 Fecha: Agosto 2026
 Autor: Juan Villaneda
-Descripción: Se documenta la conexión del chat con un asesor humano y la asignación a Correo, HDR, Facturación o Ventas.
+Descripción: Flujo de atención con base de conocimiento y registro de casos cerrados (correo, dominio, hosting, factura/compra), sin diagnósticos de conexiones.
 ================================================================================
 
 ================================================================================
-[CHUNK_ID]: SOP-HANDOFF-001
+[CHUNK_ID]: SOP-CASE-001
 [CATEGORY]: Guías Operativas - Soporte y Cuenta
-[TITLE]: Cómo comunicarte con un asesor humano y áreas de asignación
+[TITLE]: Flujo de atención, orientación y registro de casos
 [ENTITY]: MI.COM.CO
-[KEYWORDS]: asesor humano, hablar con un asesor, transferir chat, área de correo, HDR, dominio hosting, facturación, ventas, conexión con soporte
-[SUMMARY]: El chatbot puede conectar al cliente con un asesor humano y asignar la conversación al área de Correo, HDR (dominio y hosting), Facturación o Ventas.
+[KEYWORDS]: asesor, caso de soporte, historial de caso, correo electrónico, dominio, hosting, factura, compra, atención al cliente
+[SUMMARY]: El asistente identifica la cuenta con el correo del cliente, orienta con la base de conocimiento según el tipo de ayuda y deja el caso registrado y cerrado en el historial.
 --------------------------------------------------------------------------------
 [CONTENT]:
-Si necesitas hablar con una persona, puedes pedir en el chat comunicarte con un asesor humano. El sistema hace la conexión y asigna la conversación al área que corresponda:
+Si deseas atención personalizada, puedes pedir en el chat hablar con un asesor o dejar un caso. El asistente:
 
-- Área de Correo: buzones, webmail, registros MX, spam y correo corporativo.
-- Área HDR (Dominio y Hosting): dominios, DNS, hosting, cPanel, SSL y sitios web.
-- Área de Facturación: facturas, pagos, cobros, renovaciones y saldos.
-- Área de Ventas: cotizaciones, planes nuevos y contratación de servicios.
+1. Te saluda y te pide el correo electrónico con el que estás registrado para identificar tu cuenta.
+2. Consulta el motivo y lo clasifica en una de estas ayudas: Correo electrónico, Dominio, Hosting, o Factura o Compra.
+3. Te orienta con la base de conocimiento de MI.COM.CO para resolver la duda (creación de buzones, acceso a cPanel, facturación, administración de cuenta, etc.).
+4. Cuando la solicitud está atendida, cierra el caso y lo guarda en el historial de tu cuenta con estado Cerrado.
 
-Cómo solicitarlo:
-1. Escribe que deseas un asesor humano, un agente o una persona real.
-2. Si el tema ya está claro en la conversación (por ejemplo un problema de correo o una factura), la conversación queda asignada de inmediato a esa área.
-3. Si el área no es evidente, el asistente te pedirá elegir entre Correo, HDR, Facturación o Ventas.
-4. Verás la confirmación de conexión y el texto "Asignado al área de..." según el equipo que te atenderá.
+El historial interno del caso incluye: correo del cliente, tipo de ayuda, detalle o resumen de la interacción, fecha y hora de registro, y estado Cerrado.
 
-Puedes seguir dejando mensajes para el asesor mientras esperas. También puedes volver al asistente virtual cuando lo desees.
+Importante: el chat no realiza cambios, ajustes, diagnósticos ni verificaciones de conexiones. No revisa DNS, SPF, DKIM, DMARC, ping, IP ni el estado de red o servidores. Esos temas se anotan en el caso para el equipo, sin diagnosticarlos desde el asistente.
 ================================================================================

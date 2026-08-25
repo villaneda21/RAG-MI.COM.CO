@@ -141,8 +141,8 @@ async def chat(payload: ChatRequest, request: Request):
         result = await rag.ask(
             payload.question,
             history=payload.history,
-            requested_area=payload.requested_area,
-            handed_off_area=payload.handed_off_area,
+            requested_category=payload.requested_category,
+            intake=payload.intake,
         )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc

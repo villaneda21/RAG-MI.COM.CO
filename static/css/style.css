@@ -378,7 +378,11 @@ body {
     margin-top: 12px;
 }
 
-.message.handoff .avatar {
+.case-history {
+    margin-top: 10px;
+}
+
+.message.case .avatar {
     background: linear-gradient(135deg, #10b981, #0d6efd);
 }
 

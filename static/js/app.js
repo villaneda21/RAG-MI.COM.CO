@@ -13,10 +13,6 @@ const SUGGESTIONS = [
         question: "¿Qué información contiene esta base de conocimiento?",
     },
     {
-        label: "🗂️ Resume los temas principales",
-        question: "Resume los temas principales.",
-    },
-    {
         label: "👤 ¿Cómo creo una cuenta?",
         question: "¿Cómo creo una cuenta en mi.com.co?",
     },
@@ -24,33 +20,37 @@ const SUGGESTIONS = [
         label: "🧑‍💼 Hablar con un asesor",
         question: "Quiero comunicarme con un asesor humano",
     },
+    {
+        label: "🧾 ¿Dónde veo mi factura?",
+        question: "¿Cómo consulto o recibo mi factura?",
+    },
 ];
 
-const AREA_CHOICES = [
+const CATEGORY_CHOICES = [
     {
         id: "correo",
-        label: "📧 Correo",
-        question: "Asignar al área de Correo",
+        label: "📧 Correo electrónico",
+        question: "Es de correo electrónico",
     },
     {
-        id: "hdr",
-        label: "🌐 HDR (Dominio y Hosting)",
-        question: "Asignar al área HDR (Dominio y Hosting)",
+        id: "dominio",
+        label: "🌐 Dominio",
+        question: "Es de dominio",
+    },
+    {
+        id: "hosting",
+        label: "🗂️ Hosting",
+        question: "Es de hosting",
     },
     {
         id: "facturacion",
-        label: "💳 Facturación",
-        question: "Asignar al área de Facturación",
-    },
-    {
-        id: "ventas",
-        label: "💼 Ventas",
-        question: "Asignar al área de Ventas",
+        label: "💳 Factura o compra",
+        question: "Es de factura o compra",
     },
 ];
 
 const conversation = [];
-let handedOffArea = null;
+let intakeState = null;
 
 function extractErrorMessage(payload) {
     const detail = payload && payload.detail;
@@ -145,7 +145,7 @@ function scrollToBottom() {
 function appendMessage({ role, html, sources, error, extraClass }) {
     const article = document.createElement("article");
     article.className = `message ${role}${error ? " error" : ""}${extraClass ? ` ${extraClass}` : ""}`;
-    const avatar = role === "user" ? "👤" : extraClass === "handoff" ? "🤝" : "💬";
+    const avatar = role === "user" ? "👤" : extraClass === "case" ? "🤝" : "💬";
     const sourcesHtml = renderSources(sources);
     article.innerHTML = `
         <div class="avatar" aria-hidden="true">${avatar}</div>
@@ -167,82 +167,104 @@ function rememberTurn(role, content) {
     }
 }
 
-function renderAreaChoices() {
-    return `<div class="area-choices">${AREA_CHOICES.map(
+function renderCategoryChoices() {
+    return `<div class="area-choices">${CATEGORY_CHOICES.map(
         (item) =>
-            `<button type="button" class="chip area-chip" data-area="${item.id}" data-question="${escapeHtml(item.question)}">${escapeHtml(item.label)}</button>`
+            `<button type="button" class="chip area-chip" data-category="${item.id}" data-question="${escapeHtml(item.question)}">${escapeHtml(item.label)}</button>`
     ).join("")}</div>`;
 }
 
-function renderHandoffCard(handoff, answerHtml) {
-    if (!handoff || !handoff.requested) {
+function renderCloseChoices() {
+    return `<div class="area-choices">
+        <button type="button" class="chip" data-question="Sí, registra el caso">Sí, registra el caso</button>
+        <button type="button" class="chip" data-question="Tengo otra duda">Tengo otra duda</button>
+    </div>`;
+}
+
+function renderCaseCard(intake, caseRecord, answerHtml) {
+    if (!intake || (!intake.active && !intake.registered)) {
         return answerHtml;
     }
 
-    if (handoff.needs_area) {
-        return `${answerHtml}${renderAreaChoices()}`;
+    if (intake.show_categories || intake.needs_reason) {
+        return `${answerHtml}${renderCategoryChoices()}`;
     }
 
-    if (handoff.queued_message) {
-        return `
-            <div class="handoff-card queued">
-                <p class="handoff-kicker">Mensaje en cola</p>
-                ${answerHtml}
-            </div>
-        `;
+    if (intake.needs_close && !intake.registered) {
+        return `${answerHtml}${renderCloseChoices()}`;
     }
 
-    if (!handoff.connected) {
+    if (!intake.registered || !caseRecord) {
         return answerHtml;
     }
 
-    const assigned = escapeHtml(handoff.assigned_label || "área de soporte");
-    const description = handoff.area_description
-        ? `<p class="handoff-detail">${escapeHtml(handoff.area_description)}</p>`
-        : "";
     return `
         <div class="handoff-card connected">
             <div class="handoff-pulse" aria-hidden="true"></div>
-            <p class="handoff-kicker">Conexión establecida</p>
+            <p class="handoff-kicker">Caso registrado</p>
             ${answerHtml}
-            <p class="handoff-assigned">Asignado al <strong>${assigned}</strong></p>
-            ${description}
-            <button type="button" class="chip return-chip" data-action="return-bot">Volver al asistente virtual</button>
+            <div class="case-history">
+                <p class="handoff-assigned">Estado: <strong>${escapeHtml(caseRecord.status || "Cerrado")}</strong></p>
+                <p class="handoff-detail"><strong>Correo:</strong> ${escapeHtml(caseRecord.email || "")}</p>
+                <p class="handoff-detail"><strong>Tipo de ayuda:</strong> ${escapeHtml(caseRecord.help_type_label || "")}</p>
+                <p class="handoff-detail"><strong>Fecha:</strong> ${escapeHtml(caseRecord.registered_at_display || "")}</p>
+                <p class="handoff-detail"><strong>Caso:</strong> ${escapeHtml(caseRecord.case_id || "")}</p>
+            </div>
+            <button type="button" class="chip return-chip" data-action="return-bot">Volver a consultar la base</button>
         </div>
     `;
 }
 
-function applyHandoffState(handoff) {
-    if (!handoff || !handoff.requested) {
+function applyIntakeState(intake) {
+    if (!intake) {
         return;
     }
-    if (handoff.connected && handoff.area) {
-        handedOffArea = handoff.area;
-        setStatus("ok", `🟢 Asignado · ${handoff.area_label || "Asesor"}`);
-        input.placeholder = "Escribe un mensaje para el asesor…";
+    intakeState = intake.active ? intake : intake.registered ? intake : null;
+    if (intake.registered) {
+        setStatus("ok", "🟢 Caso cerrado");
+        input.placeholder = "Escribe otra consulta o pide un nuevo caso…";
         if (composerHint) {
-            composerHint.textContent =
-                `🤝 Conversación asignada al ${handoff.assigned_label || "asesor humano"}.`;
+            composerHint.textContent = "📁 El caso quedó registrado en el historial de la cuenta.";
         }
         return;
     }
-    if (handoff.needs_area) {
-        setStatus("warn", "🟡 Elige el área del asesor");
-        input.placeholder = "Elige un área o escribe cuál necesitas…";
+    if (!intake.active) {
+        intakeState = null;
+        return;
+    }
+    if (intake.needs_email) {
+        setStatus("warn", "🟡 Identificando cuenta");
+        input.placeholder = "Escribe el correo de tu cuenta…";
+        if (composerHint) {
+            composerHint.textContent = "Para identificar tu cuenta solo necesitamos el correo de registro.";
+        }
+        return;
+    }
+    if (intake.needs_reason) {
+        setStatus("warn", "🟡 ¿En qué te ayudo?");
+        input.placeholder = "Cuéntame el motivo de tu contacto…";
+        return;
+    }
+    if (intake.needs_close) {
+        setStatus("ok", `🟢 Atención · ${intake.category_label || "caso"}`);
+        input.placeholder = "¿Registramos el caso o tienes otra duda?";
+        if (composerHint) {
+            composerHint.textContent = "Cuando quieras, lo dejamos registrado y cerrado en tu historial.";
+        }
     }
 }
 
 function returnToBot() {
-    handedOffArea = null;
-    input.placeholder = "Escribe tu pregunta sobre dominios, hosting, correo o soporte…";
+    intakeState = null;
+    input.placeholder = "Escribe tu pregunta o pide hablar con un asesor…";
     if (composerHint) {
         composerHint.textContent =
-            "🔒 Las respuestas se basan únicamente en la base de conocimiento indexada.";
+            "🔒 Las respuestas se basan en la base de conocimiento. Los casos quedan en tu historial.";
     }
     refreshHealth();
     appendMessage({
         role: "bot",
-        html: "<p>Volviste al <strong>asistente virtual</strong>. Puedes seguir consultando la base de conocimiento o pedir de nuevo un asesor humano.</p>",
+        html: "<p>Claro. Seguimos con la base de conocimiento. Si más adelante quieres dejar otro caso, dímelo y lo abrimos.</p>",
     });
 }
 
@@ -274,7 +296,7 @@ function setStatus(state, label) {
 }
 
 async function refreshHealth() {
-    if (handedOffArea) {
+    if (intakeState && intakeState.active) {
         return;
     }
     try {
@@ -305,7 +327,7 @@ async function refreshHealth() {
 function showWelcome() {
     const html = `
         <h3>👋 ¡Hola! Soy el asistente de MI.COM.CO</h3>
-        <p>Puedes consultarme la base de conocimiento sobre <strong>cuentas</strong>, <strong>DNS</strong>, <strong>hosting</strong>, <strong>correo</strong>, políticas y soporte. Si lo necesitas, también te conecto con un <strong>asesor humano</strong>.</p>
+        <p>Puedes consultarme la base de conocimiento sobre <strong>cuentas</strong>, <strong>hosting</strong>, <strong>correo</strong>, políticas y facturación. Si quieres dejar un caso con un asesor, también lo registramos juntos.</p>
         <p class="welcome-hint">Elige una pregunta rápida o escribe la tuya:</p>
         <div class="suggestions">
             ${SUGGESTIONS.map(
@@ -320,11 +342,11 @@ function showWelcome() {
 function showThinking() {
     return appendMessage({
         role: "bot",
-        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>${handedOffArea ? "🤝 Enviando tu mensaje al asesor…" : "⏳ Consultando la base de conocimiento…"}</p>`,
+        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>${intakeState && intakeState.active ? "✍️ Te leo…" : "⏳ Consultando la base de conocimiento…"}</p>`,
     });
 }
 
-async function sendQuestion(question, requestedArea) {
+async function sendQuestion(question, requestedCategory) {
     const cleaned = question.trim();
     if (!cleaned) {
         return;
@@ -333,12 +355,12 @@ async function sendQuestion(question, requestedArea) {
     appendMessage({ role: "user", html: `<p>${escapeHtml(cleaned)}</p>` });
     rememberTurn("user", cleaned);
     setBusy(true);
-    const looksLikeHandoff = /asesor|humano|asignar al área|asignar al area/i.test(cleaned);
-    const thinking = looksLikeHandoff && !handedOffArea
+    const looksLikeCase = /asesor|humano|caso|correo electrónico|factura o compra/i.test(cleaned);
+    const thinking = looksLikeCase && (!intakeState || !intakeState.active)
         ? appendMessage({
               role: "bot",
-              extraClass: "handoff",
-              html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>🤝 Conectando con un asesor humano…</p>`,
+              extraClass: "case",
+              html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>👋 Con gusto te atiendo…</p>`,
           })
         : showThinking();
 
@@ -349,8 +371,8 @@ async function sendQuestion(question, requestedArea) {
             body: JSON.stringify({
                 question: cleaned,
                 history: conversation.slice(0, -1),
-                requested_area: requestedArea || null,
-                handed_off_area: handedOffArea,
+                requested_category: requestedCategory || null,
+                intake: intakeState,
             }),
         });
         const payload = await response.json();
@@ -369,14 +391,18 @@ async function sendQuestion(question, requestedArea) {
             payload.answer ||
                 "No encontré información suficiente sobre esta pregunta en la base de conocimiento disponible."
         );
-        applyHandoffState(payload.handoff);
+        applyIntakeState(payload.intake);
+        const inCase = payload.intake && (payload.intake.active || payload.intake.registered);
         appendMessage({
             role: "bot",
-            extraClass: payload.handoff && payload.handoff.requested ? "handoff" : "",
-            html: renderHandoffCard(payload.handoff, answerHtml),
-            sources: payload.handoff && payload.handoff.requested ? [] : payload.sources,
+            extraClass: inCase ? "case" : "",
+            html: renderCaseCard(payload.intake, payload.case, answerHtml),
+            sources: inCase && payload.intake.registered ? [] : payload.sources,
         });
         rememberTurn("assistant", payload.answer || "");
+        if (payload.intake && payload.intake.registered) {
+            intakeState = null;
+        }
     } catch (_error) {
         thinking.remove();
         appendMessage({
@@ -387,7 +413,7 @@ async function sendQuestion(question, requestedArea) {
     } finally {
         setBusy(false);
         input.focus();
-        if (!handedOffArea) {
+        if (!intakeState || !intakeState.active) {
             refreshHealth();
         }
     }
@@ -423,7 +449,7 @@ messagesEl.addEventListener("click", (event) => {
     if (!chip) {
         return;
     }
-    sendQuestion(chip.dataset.question || chip.textContent, chip.dataset.area);
+    sendQuestion(chip.dataset.question || chip.textContent, chip.dataset.category);
 });
 
 showWelcome();
