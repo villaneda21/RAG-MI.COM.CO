@@ -12,20 +12,20 @@ const statusLabel = document.getElementById("status-label");
 
 const SUGGESTIONS = [
     {
-        label: "📧 Es sobre mi correo",
-        question: "Hola, necesito ayuda con mi correo electrónico.",
+        label: "🌐 Renovar o vencimiento de dominio",
+        question: "¿Por qué no pude renovar mi dominio y qué pasa cuando vence?",
     },
     {
-        label: "🌐 Tengo un tema de dominio",
-        question: "Hola, quiero reportar un tema con mi dominio.",
+        label: "📧 Crear correo corporativo",
+        question: "¿Cómo creo una cuenta de correo corporativa y entro al webmail?",
     },
     {
-        label: "🖥️ Necesito ayuda con hosting",
-        question: "Hola, es sobre mi servicio de hosting.",
+        label: "🖥️ Acceder a cPanel",
+        question: "¿Cómo accedo al panel de hosting cPanel?",
     },
     {
-        label: "💳 Facturación o una compra",
-        question: "Hola, tengo una consulta de facturación o de una compra.",
+        label: "💳 Factura electrónica",
+        question: "¿Dónde llega la factura electrónica y qué hago si no la veo?",
     },
 ];
 
@@ -231,8 +231,8 @@ async function refreshHealth() {
 function showWelcome() {
     const html = `
         <h3>👋 ¡Hola! Qué gusto saludarte</h3>
-        <p>Soy parte del equipo de soporte de <strong>MI.COM.CO</strong>. Para ubicar tu cuenta, ¿me compartes el correo con el que estás registrado?</p>
-        <p class="welcome-hint">Si quieres, también dime si es de correo, dominio, hosting o facturación:</p>
+        <p>Soy parte del equipo de soporte de <strong>MI.COM.CO</strong>. Puedo orientarte con las guías de la plataforma (dominios, correo, hosting y facturación) o dejarte un caso si hace falta gestión de cuenta.</p>
+        <p class="welcome-hint">Cuéntame qué necesitas. Si quieres, empieza por una de estas consultas:</p>
         <div class="suggestions">
             ${SUGGESTIONS.map(
                 (item) =>
@@ -243,14 +243,14 @@ function showWelcome() {
     appendMessage({ role: "bot", html });
     rememberTurn(
         "assistant",
-        "¡Hola! Soy parte del equipo de soporte de MI.COM.CO. Para ubicar tu cuenta, ¿me compartes el correo con el que estás registrado?"
+        "¡Hola! Soy parte del equipo de soporte de MI.COM.CO. Puedo orientarte con las guías de la plataforma o dejarte un caso si hace falta. ¿En qué te ayudo hoy?"
     );
 }
 
 function showThinking() {
     return appendMessage({
         role: "bot",
-        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>Un segundo, te leo con calma…</p>`,
+        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>Un segundo, consulto las guías…</p>`,
     });
 }
 

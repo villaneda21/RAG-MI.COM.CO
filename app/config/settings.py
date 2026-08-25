@@ -88,7 +88,7 @@ class Settings:
     chunk_overlap: int = 200
 
     # --- Recuperación ---
-    retrieval_k: int = 6  # entre 5 y 8 fragmentos por consulta
+    retrieval_k: int = 8  # fragmentos por consulta para cubrir guías y políticas
 
     # --- Casos de soporte ---
     cases_directory: Path = PROJECT_ROOT / "data" / "cases"

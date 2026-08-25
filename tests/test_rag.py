@@ -169,12 +169,53 @@ async def test_ask_uses_mock_claude(tmp_path: Path) -> None:
     response = await rag.ask("Hola, tengo un problema con el correo")
     assert isinstance(response, ChatResponse)
     assert "correo" in response.answer.lower()
-    assert response.sources == []
     assert response.session_id
     stored = rag.conversation_service.get(response.session_id)
     assert stored is not None
     assert stored.messages[-1]["content"] == response.answer
     claude.generate_support_reply.assert_awaited()
+    sent_context = claude.generate_support_reply.await_args.kwargs["context"]
+    assert sent_context
+
+
+@pytest.mark.asyncio
+async def test_ask_passes_matching_guides_in_context(tmp_path: Path) -> None:
+    path = write_sample_document(tmp_path / "documento.txt")
+    chunks, _characters, fingerprint = DocumentService(document_path=path).process()
+    vector_service = make_vector_service(tmp_path)
+    vector_service.index_chunks(chunks, fingerprint, reset=True)
+
+    claude = ClaudeService(api_key="test-key-not-real")
+    claude.generate_support_reply = AsyncMock(  # type: ignore[method-assign]
+        return_value=SupportTurn(
+            text="El código de cliente tiene el formato CLI-XXXXXX y se consulta en Mi cuenta."
+        )
+    )
+    rag = RagService(
+        document_service=DocumentService(document_path=path),
+        vector_service=vector_service,
+        claude_service=claude,
+        conversation_service=ConversationService(store_dir=tmp_path / "conversations"),
+    )
+    response = await rag.ask("¿Dónde veo el código de cliente?")
+    context = claude.generate_support_reply.await_args.kwargs["context"]
+    assert "CLI-XXXXXX" in context
+    assert response.sources
+
+
+def test_build_retrieval_query_includes_recent_user_turns() -> None:
+    from app.services.rag_service import build_retrieval_query
+
+    query = build_retrieval_query(
+        "no pude renovarlo",
+        history=[
+            {"role": "assistant", "content": "¿En qué te ayudo?"},
+            {"role": "user", "content": "Tengo un problema con mi dominio"},
+            {"role": "assistant", "content": "Cuéntame un poco más"},
+        ],
+    )
+    assert "dominio" in query
+    assert "no pude renovarlo" in query
 
 
 def test_chat_requires_question() -> None:
@@ -202,6 +243,8 @@ def test_system_prompt_covers_support_flow() -> None:
     assert "DNS" in SUPPORT_SYSTEM_PROMPT
     assert "registrar_caso" in SUPPORT_SYSTEM_PROMPT or "registrar" in SUPPORT_SYSTEM_PROMPT.lower()
     assert "Facturación o Compras" in SUPPORT_SYSTEM_PROMPT
+    assert "base de conocimiento" in SUPPORT_SYSTEM_PROMPT.lower()
+    assert "último recurso" in SUPPORT_SYSTEM_PROMPT.lower() or "no el primero" in SUPPORT_SYSTEM_PROMPT.lower()
 
 
 def test_home_renders_chatbot() -> None:

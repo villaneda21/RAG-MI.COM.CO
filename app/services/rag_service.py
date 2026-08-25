@@ -63,7 +63,7 @@ class RagService:
         history: list[dict[str, str]] | None = None,
         session_id: str | None = None,
     ) -> ChatResponse:
-        """Atiende un turno del flujo de registro de casos."""
+        """Atiende un turno: recupera guías y, si hace falta, registra el caso."""
         cleaned = (question or "").strip()
         if not cleaned:
             raise ValueError("La pregunta no puede estar vacía.")
@@ -72,12 +72,16 @@ class RagService:
         active_session, started_new = self.conversation_service.resolve_session(session_id)
         history_for_claude = [] if started_new else (history or [])
 
+        hits, sources = self._retrieve(cleaned, history_for_claude)
+        context = self.build_context(hits)
+
         try:
             turn: SupportTurn = await self.claude_service.generate_support_reply(
                 cleaned,
                 history=history_for_claude,
                 session_id=active_session,
                 case_service=self.case_service,
+                context=context,
             )
         except ClaudeServiceError:
             raise
@@ -102,12 +106,26 @@ class RagService:
         )
         return ChatResponse(
             answer=turn.text,
-            sources=[],
+            sources=sources,
             session_id=active_session,
             case=case_summary,
             case_closed=case_summary is not None,
             new_chat=started_new,
         )
+
+    def _retrieve(
+        self,
+        question: str,
+        history: list[dict[str, str]] | None,
+    ) -> tuple[list[dict[str, Any]], list[SourceChunk]]:
+        """Busca en ChromaDB las guías y políticas más cercanas a la consulta."""
+        query = build_retrieval_query(question, history)
+        try:
+            hits = self.vector_service.query(query, n_results=settings.retrieval_k)
+        except VectorStoreError:
+            logger.warning("No se pudo recuperar contexto de la base de conocimiento.")
+            return [], []
+        return hits, self.vector_service.hits_to_sources(hits)
 
     def reindex(self, reset: bool = True) -> ReindexResponse:
         """Vuelve a procesar el TXT y actualizar ChromaDB."""
@@ -135,3 +153,23 @@ class RagService:
 
 def sources_as_dicts(sources: list[SourceChunk]) -> list[dict[str, Any]]:
     return [source.model_dump() for source in sources]
+
+
+def build_retrieval_query(question: str, history: list[dict[str, str]] | None = None) -> str:
+    """Arma la consulta semántica con el mensaje actual y turnos recientes del cliente."""
+    parts: list[str] = []
+    for item in (history or [])[-6:]:
+        if (item.get("role") or "").strip() != "user":
+            continue
+        text = (item.get("content") or "").strip()
+        if text:
+            parts.append(text)
+    cleaned = (question or "").strip()
+    if cleaned:
+        parts.append(cleaned)
+    # Evita repetir el mismo texto si el historial ya lo trae.
+    deduped: list[str] = []
+    for part in parts:
+        if not deduped or deduped[-1] != part:
+            deduped.append(part)
+    return "\n".join(deduped[-3:])

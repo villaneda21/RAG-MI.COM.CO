@@ -186,7 +186,7 @@ python run.py --port 8000
 
 La página del chatbot carga aunque aún no exista una API key; al preguntar, verás un mensaje claro si falta `ANTHROPIC_API_KEY`.
 
-El chat sigue un flujo de atención: pide el correo, clasifica (correo, dominio, hosting o facturación/compras), confirma y registra el caso en `data/cases/casos.jsonl` con estado **Cerrado/Registrado**. Cada conversación se guarda completa en `data/cases/conversations/` y se puede revisar en la pantalla **Historial**. Cuando un caso se cierra, el siguiente mensaje del cliente abre un chat nuevo y vuelve a pedir el correo. No diagnostica DNS, SPF, ping ni estado de red.
+El chat consulta la base de conocimiento (ChromaDB) en cada turno y responde con las guías y políticas del documento. Solo registra un caso en `data/cases/casos.jsonl` cuando la guía no alcanza o el cliente pide gestión de cuenta. Cada conversación se guarda completa en `data/cases/conversations/` y se puede revisar en **Historial**. Si un caso se cierra y el cliente escribe de nuevo, se abre un chat nuevo. No diagnostica DNS, SPF, ping ni estado de red; sí puede explicar los pasos documentados del panel.
 
 ## API
 
@@ -288,7 +288,7 @@ Los valores importantes viven en `app/config/settings.py` y pueden sobreescribir
 - `EMBEDDING_MODEL`
 - `CHROMA_COLLECTION_NAME` (por defecto `empresa_knowledge_base`)
 - Tamaño de chunk: 800–1200 caracteres, solapamiento 200
-- Recuperación: 6 fragmentos por pregunta
+- Recuperación: 8 fragmentos por pregunta
 
 ## Estructura
 
