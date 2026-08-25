@@ -89,6 +89,7 @@ body {
     height: 28px;
     width: auto;
     display: block;
+    mix-blend-mode: screen;
 }
 
 .brand-kicker {

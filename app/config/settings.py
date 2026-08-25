@@ -6,6 +6,7 @@ para que el resto del código no hardcodee valores de entorno.
 
 from __future__ import annotations
 
+import logging
 import os
 from pathlib import Path
 
@@ -27,6 +28,7 @@ load_dotenv(PROJECT_ROOT / ".env")
 # Evita llamadas de telemetría de ChromaDB al iniciar.
 os.environ.setdefault("ANONYMIZED_TELEMETRY", "False")
 os.environ.setdefault("CHROMA_TELEMETRY_IMPL", "none")
+logging.getLogger("chromadb.telemetry.product.posthog").setLevel(logging.CRITICAL)
 
 
 class Settings:
