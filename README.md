@@ -34,16 +34,44 @@ Archivo TXT
 
 ## Requisitos
 
-- Python 3.10 o superior
+- **Python 3.12** (obligatorio; `run.py` lo busca y crea el `venv` con esa versión)
 - Una API key de Anthropic para las respuestas del chatbot (`ANTHROPIC_API_KEY`)
-- La interfaz y la indexación **sí arrancan sin API key**; las consultas a Claude no.
+- La interfaz **sí arranca sin API key**; las consultas a Claude no.
 
-## Instalación
+En Windows instala Python 3.12 desde [python.org](https://www.python.org/downloads/) y marca **Add python.exe to PATH**.
+
+## Instalación y arranque (recomendado)
+
+Con un solo comando se crea el entorno 3.12, se instalan dependencias, se indexa el TXT si hace falta y se abre el servidor:
+
+**Windows (doble clic o consola):**
+
+```bash
+py -3.12 run.py
+```
+
+o:
+
+```bash
+run.bat
+```
+
+**Linux / macOS:**
+
+```bash
+python3.12 run.py
+```
+
+La primera vez tarda varios minutos (venv + PyTorch + modelo de embeddings). Las siguientes son rápidas.
+
+Cuando veas `Servidor listo`, abre [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+Instalación manual (solo si no quieres el bootstrap automático):
 
 ```bash
 git clone https://github.com/villaneda21/RAG-MI.COM.CO.git
 cd RAG-MI.COM.CO
-python -m venv venv
+py -3.12 -m venv venv
 ```
 
 Activa el entorno virtual:
@@ -146,13 +174,17 @@ La primera indexación descarga el modelo de embeddings (requiere red). Las sigu
 python run.py
 ```
 
-Equivalente:
+Eso basta: no actives el venv a mano ni ejecutes `uvicorn --reload` en Windows. El recargado automático reinicia el proceso al cargar embeddings y deja `/api/chat` y `/health` en rojo en DevTools.
+
+Opciones:
 
 ```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+python run.py --reload      # solo desarrollo, no usar en Windows con ChromaDB
+python run.py --no-ingest   # no indexar al arrancar
+python run.py --port 8000
 ```
 
-Abre [http://127.0.0.1:8000](http://127.0.0.1:8000). La página del chatbot carga aunque aún no exista `.env`; al preguntar, verás un mensaje claro si falta la API key.
+La página del chatbot carga aunque aún no exista una API key; al preguntar, verás un mensaje claro si falta `ANTHROPIC_API_KEY`.
 
 ## API
 
@@ -274,8 +306,10 @@ RAG-MI.COM.CO/
 ├── scripts/ingest_document.py
 ├── tests/test_rag.py
 ├── .env.example
+├── .python-version              # 3.12
 ├── requirements.txt
-├── run.py
+├── run.py                       # Crea venv 3.12, instala e inicia
+├── run.bat                      # Atajo para Windows
 └── README.md
 ```
 
@@ -294,8 +328,9 @@ Si el TXT ya trae bloques `[CHUNK_ID]`, se respetan (es el caso de la base de MI
 
 ## Notas para Windows
 
-- Activa el venv con `venv\Scripts\activate` (o `Activate.ps1` en PowerShell).
+- El camino más simple es `py -3.12 run.py` o `run.bat`. Crea `venv\` solo.
+- Si `python` apunta a 3.11 o 3.13, `run.py` busca `py -3.12` y usa esa versión.
 - Los archivos se leen siempre como UTF-8; si un TXT antiguo falla, el lector reintenta con Latin-1.
-- Usa `python` (no `python3`) si así está registrado el intérprete.
 - La carpeta `chroma_db\` se crea sola; no la edites a mano.
-- Si PowerShell bloquea la activación del venv: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+- No uses `uvicorn --reload`: en Windows suele tumbar el servidor en la primera pregunta.
+- Si PowerShell bloquea la activación manual del venv: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.

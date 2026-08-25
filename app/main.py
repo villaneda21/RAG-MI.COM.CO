@@ -141,6 +141,14 @@ async def chat(payload: ChatRequest, request: Request):
         result = await rag.ask(payload.question)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except (VectorStoreError, ClaudeServiceError, DocumentProcessingError):
+        raise
+    except Exception:
+        logger.exception("Error inesperado al procesar /api/chat.")
+        raise HTTPException(
+            status_code=500,
+            detail="Ocurrió un error interno al generar la respuesta. Revisa la consola del servidor.",
+        ) from None
     return result
 
 

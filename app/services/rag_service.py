@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from typing import Any
 
@@ -60,7 +61,7 @@ class RagService:
         logger.info("Consulta recibida (%s caracteres).", len(cleaned))
 
         try:
-            hits = self.vector_service.query(cleaned)
+            hits = await asyncio.to_thread(self.vector_service.query, cleaned)
         except VectorStoreError:
             raise
 

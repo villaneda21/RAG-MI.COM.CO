@@ -30,6 +30,27 @@ os.environ.setdefault("ANONYMIZED_TELEMETRY", "False")
 os.environ.setdefault("CHROMA_TELEMETRY_IMPL", "none")
 logging.getLogger("chromadb.telemetry.product.posthog").setLevel(logging.CRITICAL)
 
+_API_KEY_PLACEHOLDERS = {
+    "tu_api_key_aqui",
+    "your_api_key_here",
+    "changeme",
+    "api_key",
+    "sk-ant-xxxxxxxx",
+}
+
+
+def is_usable_anthropic_key(key: str | None) -> bool:
+    """True si hay una clave real, no el placeholder de .env.example."""
+    cleaned = (key or "").strip()
+    if not cleaned:
+        return False
+    lowered = cleaned.lower()
+    if lowered in _API_KEY_PLACEHOLDERS:
+        return False
+    if "aqui" in lowered or "your_api" in lowered or "replace" in lowered:
+        return False
+    return True
+
 
 class Settings:
     """Parámetros de ejecución del backend, la base vectorial y Claude."""
@@ -71,8 +92,8 @@ class Settings:
 
     @property
     def claude_is_configured(self) -> bool:
-        """True cuando existe una API key de Anthropic en el entorno."""
-        return bool(self.anthropic_api_key)
+        """True cuando existe una API key real de Anthropic en el entorno."""
+        return is_usable_anthropic_key(self.anthropic_api_key)
 
 
 settings = Settings()

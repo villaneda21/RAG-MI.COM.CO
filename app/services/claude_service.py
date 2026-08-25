@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 
-from app.config.settings import settings
+from app.config.settings import is_usable_anthropic_key, settings
 
 logger = logging.getLogger(__name__)
 
@@ -41,15 +41,15 @@ class ClaudeService:
 
     @property
     def is_configured(self) -> bool:
-        return bool(self.api_key)
+        return is_usable_anthropic_key(self.api_key)
 
     def _require_key(self) -> None:
-        if not self.api_key:
+        if not is_usable_anthropic_key(self.api_key):
             raise ClaudeServiceError(
-                "ANTHROPIC_API_KEY no está definida.",
+                "ANTHROPIC_API_KEY no está definida o sigue siendo un placeholder.",
                 user_message=(
                     "Falta configurar la clave de Claude. "
-                    "Crea un archivo .env con ANTHROPIC_API_KEY y reinicia el servidor."
+                    "Edita el archivo .env, pon tu ANTHROPIC_API_KEY real y reinicia el servidor."
                 ),
             )
 
