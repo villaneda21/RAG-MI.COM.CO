@@ -460,6 +460,12 @@ async function sendQuestion(question) {
             return;
         }
 
+        if (payload.new_chat) {
+            messagesEl.innerHTML = "";
+            conversationHistory.length = 0;
+            appendMessage({ role: "user", html: `<p>${escapeHtml(cleaned)}</p>` });
+            rememberTurn("user", cleaned);
+        }
         if (payload.session_id) {
             persistSessionId(payload.session_id);
         }
