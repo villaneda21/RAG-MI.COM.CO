@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 _MISSING_MODEL_HINT = (
     "El modelo de Claude configurado ya no está disponible (Anthropic lo retiró). "
-    "En tu archivo .env pon CLAUDE_MODEL=claude-sonnet-5 y reinicia el servidor."
+    "En tu archivo .env pon CLAUDE_MODEL=claude-haiku-4-5 y reinicia el servidor."
 )
 
 

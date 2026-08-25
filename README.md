@@ -118,7 +118,7 @@ Contenido mínimo de `.env`:
 
 ```env
 ANTHROPIC_API_KEY=tu_api_key_aqui
-CLAUDE_MODEL=claude-sonnet-5
+CLAUDE_MODEL=claude-haiku-4-5
 EMBEDDING_MODEL=all-MiniLM-L6-v2
 ```
 
@@ -279,7 +279,7 @@ La interfaz mostrará en **Fuentes consultadas** el archivo y el número de frag
 Los valores importantes viven en `app/config/settings.py` y pueden sobreescribirse con `.env`:
 
 - `ANTHROPIC_API_KEY`
-- `CLAUDE_MODEL` (por defecto `claude-sonnet-5`; `claude-sonnet-4-20250514` se retiró el 15 de junio de 2026)
+- `CLAUDE_MODEL` (por defecto `claude-haiku-4-5`)
 - `EMBEDDING_MODEL`
 - `CHROMA_COLLECTION_NAME` (por defecto `empresa_knowledge_base`)
 - Tamaño de chunk: 800–1200 caracteres, solapamiento 200

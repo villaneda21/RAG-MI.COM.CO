@@ -50,9 +50,9 @@ def test_retired_model_gets_clear_user_message() -> None:
         "model: claude-sonnet-4-20250514",
         "claude-sonnet-4-20250514",
     )
-    assert "claude-sonnet-5" in message
+    assert "claude-haiku-4-5" in message
     assert "retiró" in message or "retirado" in message
-    assert models_to_try("claude-sonnet-4-20250514", ("claude-sonnet-5",)) == [
+    assert models_to_try("claude-sonnet-4-20250514", ("claude-haiku-4-5",)) == [
         "claude-sonnet-4-20250514",
-        "claude-sonnet-5",
+        "claude-haiku-4-5",
     ]
