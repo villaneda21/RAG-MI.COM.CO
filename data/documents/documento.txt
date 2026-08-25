@@ -974,8 +974,33 @@ Los reportes de abuso de cualquier tipo sobre dominios alojados se pueden radica
 --------------------------------------------------------------------------------
 CONTROL DE VERSIONES DEL DOCUMENTO
 --------------------------------------------------------------------------------
-Versión: 1.0
-Fecha: Julio 2026
+Versión: 1.1
+Fecha: Agosto 2026
 Autor: Juan Villaneda
-Descripción: Creación de la Base de Conocimiento estandarizada y unificada de la plataforma de autogestión de MI.COM.CO.
+Descripción: Se documenta la conexión del chat con un asesor humano y la asignación a Correo, HDR, Facturación o Ventas.
+================================================================================
+
+================================================================================
+[CHUNK_ID]: SOP-HANDOFF-001
+[CATEGORY]: Guías Operativas - Soporte y Cuenta
+[TITLE]: Cómo comunicarte con un asesor humano y áreas de asignación
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: asesor humano, hablar con un asesor, transferir chat, área de correo, HDR, dominio hosting, facturación, ventas, conexión con soporte
+[SUMMARY]: El chatbot puede conectar al cliente con un asesor humano y asignar la conversación al área de Correo, HDR (dominio y hosting), Facturación o Ventas.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Si necesitas hablar con una persona, puedes pedir en el chat comunicarte con un asesor humano. El sistema hace la conexión y asigna la conversación al área que corresponda:
+
+- Área de Correo: buzones, webmail, registros MX, spam y correo corporativo.
+- Área HDR (Dominio y Hosting): dominios, DNS, hosting, cPanel, SSL y sitios web.
+- Área de Facturación: facturas, pagos, cobros, renovaciones y saldos.
+- Área de Ventas: cotizaciones, planes nuevos y contratación de servicios.
+
+Cómo solicitarlo:
+1. Escribe que deseas un asesor humano, un agente o una persona real.
+2. Si el tema ya está claro en la conversación (por ejemplo un problema de correo o una factura), la conversación queda asignada de inmediato a esa área.
+3. Si el área no es evidente, el asistente te pedirá elegir entre Correo, HDR, Facturación o Ventas.
+4. Verás la confirmación de conexión y el texto "Asignado al área de..." según el equipo que te atenderá.
+
+Puedes seguir dejando mensajes para el asesor mientras esperas. También puedes volver al asistente virtual cuando lo desees.
 ================================================================================

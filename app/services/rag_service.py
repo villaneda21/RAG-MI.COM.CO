@@ -7,9 +7,10 @@ import logging
 from typing import Any
 
 from app.config.settings import settings
-from app.models.schemas import ChatResponse, ReindexResponse, SourceChunk
+from app.models.schemas import ChatResponse, ChatTurn, HandoffInfo, ReindexResponse, SourceChunk
 from app.services.claude_service import ClaudeService, ClaudeServiceError
 from app.services.document_service import DocumentService
+from app.services.handoff_service import HandoffDecision, history_texts, resolve_handoff
 from app.services.vector_service import VectorService, VectorStoreError
 from app.utils.text_processor import DocumentProcessingError
 
@@ -52,13 +53,51 @@ class RagService:
             )
         return "\n\n".join(sections)
 
-    async def ask(self, question: str) -> ChatResponse:
+    def _handoff_payload(self, decision: HandoffDecision) -> HandoffInfo:
+        area = decision.area
+        return HandoffInfo(
+            requested=decision.requested,
+            connected=decision.connected,
+            needs_area=decision.needs_area,
+            queued_message=decision.queued_message,
+            area=area.id if area else None,
+            area_label=area.label if area else None,
+            assigned_label=area.assigned_label if area else None,
+            area_description=area.description if area else None,
+        )
+
+    async def ask(
+        self,
+        question: str,
+        history: list[ChatTurn] | None = None,
+        requested_area: str | None = None,
+        handed_off_area: str | None = None,
+    ) -> ChatResponse:
         """Ejecuta el pipeline completo para una pregunta del usuario."""
         cleaned = (question or "").strip()
         if not cleaned:
             raise ValueError("La pregunta no puede estar vacía.")
 
         logger.info("Consulta recibida (%s caracteres).", len(cleaned))
+
+        decision = resolve_handoff(
+            cleaned,
+            history=history_texts(history),
+            requested_area=requested_area,
+            handed_off_area=handed_off_area,
+        )
+        if decision.requested:
+            logger.info(
+                "Handoff a asesor humano (connected=%s, area=%s, queued=%s).",
+                decision.connected,
+                decision.area_id,
+                decision.queued_message,
+            )
+            return ChatResponse(
+                answer=decision.answer,
+                sources=[],
+                handoff=self._handoff_payload(decision),
+            )
 
         try:
             hits = await asyncio.to_thread(self.vector_service.query, cleaned)

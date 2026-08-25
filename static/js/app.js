@@ -4,7 +4,7 @@ const form = document.getElementById("chat-form");
 const input = document.getElementById("question-input");
 const sendButton = document.getElementById("send-button");
 const statusPill = document.getElementById("status-pill");
-const statusLabel = document.getElementById("status-label");
+const composerHint = document.getElementById("composer-hint");
 
 const SUGGESTIONS = [
     {
@@ -20,10 +20,36 @@ const SUGGESTIONS = [
         question: "¿Cómo creo una cuenta en mi.com.co?",
     },
     {
-        label: "🔑 ¿Cómo encuentro mi código de cliente?",
-        question: "¿Cómo encuentro mi código de cliente?",
+        label: "🧑‍💼 Hablar con un asesor",
+        question: "Quiero comunicarme con un asesor humano",
     },
 ];
+
+const AREA_CHOICES = [
+    {
+        id: "correo",
+        label: "📧 Correo",
+        question: "Asignar al área de Correo",
+    },
+    {
+        id: "hdr",
+        label: "🌐 HDR (Dominio y Hosting)",
+        question: "Asignar al área HDR (Dominio y Hosting)",
+    },
+    {
+        id: "facturacion",
+        label: "💳 Facturación",
+        question: "Asignar al área de Facturación",
+    },
+    {
+        id: "ventas",
+        label: "💼 Ventas",
+        question: "Asignar al área de Ventas",
+    },
+];
+
+const conversation = [];
+let handedOffArea = null;
 
 function extractErrorMessage(payload) {
     const detail = payload && payload.detail;
@@ -115,10 +141,10 @@ function scrollToBottom() {
     chatPanel.scrollTo({ top: chatPanel.scrollHeight, behavior: "smooth" });
 }
 
-function appendMessage({ role, html, sources, error }) {
+function appendMessage({ role, html, sources, error, extraClass }) {
     const article = document.createElement("article");
-    article.className = `message ${role}${error ? " error" : ""}`;
-    const avatar = role === "user" ? "👤" : "💬";
+    article.className = `message ${role}${error ? " error" : ""}${extraClass ? ` ${extraClass}` : ""}`;
+    const avatar = role === "user" ? "👤" : extraClass === "handoff" ? "🤝" : "💬";
     const sourcesHtml = renderSources(sources);
     article.innerHTML = `
         <div class="avatar" aria-hidden="true">${avatar}</div>
@@ -127,6 +153,96 @@ function appendMessage({ role, html, sources, error }) {
     messagesEl.appendChild(article);
     scrollToBottom();
     return article;
+}
+
+function rememberTurn(role, content) {
+    const cleaned = String(content || "").trim();
+    if (!cleaned) {
+        return;
+    }
+    conversation.push({ role, content: cleaned });
+    if (conversation.length > 12) {
+        conversation.splice(0, conversation.length - 12);
+    }
+}
+
+function renderAreaChoices() {
+    return `<div class="area-choices">${AREA_CHOICES.map(
+        (item) =>
+            `<button type="button" class="chip area-chip" data-area="${item.id}" data-question="${escapeHtml(item.question)}">${escapeHtml(item.label)}</button>`
+    ).join("")}</div>`;
+}
+
+function renderHandoffCard(handoff, answerHtml) {
+    if (!handoff || !handoff.requested) {
+        return answerHtml;
+    }
+
+    if (handoff.needs_area) {
+        return `${answerHtml}${renderAreaChoices()}`;
+    }
+
+    if (handoff.queued_message) {
+        return `
+            <div class="handoff-card queued">
+                <p class="handoff-kicker">Mensaje en cola</p>
+                ${answerHtml}
+            </div>
+        `;
+    }
+
+    if (!handoff.connected) {
+        return answerHtml;
+    }
+
+    const assigned = escapeHtml(handoff.assigned_label || "área de soporte");
+    const description = handoff.area_description
+        ? `<p class="handoff-detail">${escapeHtml(handoff.area_description)}</p>`
+        : "";
+    return `
+        <div class="handoff-card connected">
+            <div class="handoff-pulse" aria-hidden="true"></div>
+            <p class="handoff-kicker">Conexión establecida</p>
+            ${answerHtml}
+            <p class="handoff-assigned">Asignado al <strong>${assigned}</strong></p>
+            ${description}
+            <button type="button" class="chip return-chip" data-action="return-bot">Volver al asistente virtual</button>
+        </div>
+    `;
+}
+
+function applyHandoffState(handoff) {
+    if (!handoff || !handoff.requested) {
+        return;
+    }
+    if (handoff.connected && handoff.area) {
+        handedOffArea = handoff.area;
+        setStatus("ok", `🟢 Asignado · ${handoff.area_label || "Asesor"}`);
+        input.placeholder = "Escribe un mensaje para el asesor…";
+        if (composerHint) {
+            composerHint.textContent =
+                `🤝 Conversación asignada al ${handoff.assigned_label || "asesor humano"}.`;
+        }
+        return;
+    }
+    if (handoff.needs_area) {
+        setStatus("warn", "🟡 Elige el área del asesor");
+        input.placeholder = "Elige un área o escribe cuál necesitas…";
+    }
+}
+
+function returnToBot() {
+    handedOffArea = null;
+    input.placeholder = "Escribe tu pregunta sobre dominios, hosting, correo o soporte…";
+    if (composerHint) {
+        composerHint.textContent =
+            "🔒 Las respuestas se basan únicamente en la base de conocimiento indexada.";
+    }
+    refreshHealth();
+    appendMessage({
+        role: "bot",
+        html: "<p>Volviste al <strong>asistente virtual</strong>. Puedes seguir consultando la base de conocimiento o pedir de nuevo un asesor humano.</p>",
+    });
 }
 
 function renderSources(sources) {
@@ -157,6 +273,9 @@ function setStatus(state, label) {
 }
 
 async function refreshHealth() {
+    if (handedOffArea) {
+        return;
+    }
     try {
         const response = await fetch("/health");
         const data = await response.json();
@@ -185,7 +304,7 @@ async function refreshHealth() {
 function showWelcome() {
     const html = `
         <h3>👋 ¡Hola! Soy el asistente de MI.COM.CO</h3>
-        <p>Puedes consultarme la base de conocimiento sobre <strong>cuentas</strong>, <strong>DNS</strong>, <strong>hosting</strong>, <strong>correo</strong>, políticas y soporte.</p>
+        <p>Puedes consultarme la base de conocimiento sobre <strong>cuentas</strong>, <strong>DNS</strong>, <strong>hosting</strong>, <strong>correo</strong>, políticas y soporte. Si lo necesitas, también te conecto con un <strong>asesor humano</strong>.</p>
         <p class="welcome-hint">Elige una pregunta rápida o escribe la tuya:</p>
         <div class="suggestions">
             ${SUGGESTIONS.map(
@@ -200,25 +319,38 @@ function showWelcome() {
 function showThinking() {
     return appendMessage({
         role: "bot",
-        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>⏳ Consultando la base de conocimiento…</p>`,
+        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>${handedOffArea ? "🤝 Enviando tu mensaje al asesor…" : "⏳ Consultando la base de conocimiento…"}</p>`,
     });
 }
 
-async function sendQuestion(question) {
+async function sendQuestion(question, requestedArea) {
     const cleaned = question.trim();
     if (!cleaned) {
         return;
     }
 
     appendMessage({ role: "user", html: `<p>${escapeHtml(cleaned)}</p>` });
+    rememberTurn("user", cleaned);
     setBusy(true);
-    const thinking = showThinking();
+    const looksLikeHandoff = /asesor|humano|asignar al área|asignar al area/i.test(cleaned);
+    const thinking = looksLikeHandoff && !handedOffArea
+        ? appendMessage({
+              role: "bot",
+              extraClass: "handoff",
+              html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>🤝 Conectando con un asesor humano…</p>`,
+          })
+        : showThinking();
 
     try {
         const response = await fetch("/api/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question: cleaned }),
+            body: JSON.stringify({
+                question: cleaned,
+                history: conversation.slice(0, -1),
+                requested_area: requestedArea || null,
+                handed_off_area: handedOffArea,
+            }),
         });
         const payload = await response.json();
         thinking.remove();
@@ -232,14 +364,18 @@ async function sendQuestion(question) {
             return;
         }
 
+        const answerHtml = formatAnswer(
+            payload.answer ||
+                "No encontré información suficiente sobre esta pregunta en la base de conocimiento disponible."
+        );
+        applyHandoffState(payload.handoff);
         appendMessage({
             role: "bot",
-            html: formatAnswer(
-                payload.answer ||
-                    "No encontré información suficiente sobre esta pregunta en la base de conocimiento disponible."
-            ),
-            sources: payload.sources,
+            extraClass: payload.handoff && payload.handoff.requested ? "handoff" : "",
+            html: renderHandoffCard(payload.handoff, answerHtml),
+            sources: payload.handoff && payload.handoff.requested ? [] : payload.sources,
         });
+        rememberTurn("assistant", payload.answer || "");
     } catch (_error) {
         thinking.remove();
         appendMessage({
@@ -250,7 +386,9 @@ async function sendQuestion(question) {
     } finally {
         setBusy(false);
         input.focus();
-        refreshHealth();
+        if (!handedOffArea) {
+            refreshHealth();
+        }
     }
 }
 
@@ -275,11 +413,16 @@ input.addEventListener("input", () => {
 });
 
 messagesEl.addEventListener("click", (event) => {
+    const returnChip = event.target.closest("[data-action='return-bot']");
+    if (returnChip) {
+        returnToBot();
+        return;
+    }
     const chip = event.target.closest(".chip");
     if (!chip) {
         return;
     }
-    sendQuestion(chip.dataset.question || chip.textContent);
+    sendQuestion(chip.dataset.question || chip.textContent, chip.dataset.area);
 });
 
 showWelcome();

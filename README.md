@@ -222,7 +222,27 @@ Respuesta típica:
       "source": "documento.txt",
       "title": "Cómo crear tu cuenta en Mi.com.co"
     }
-  ]
+  ],
+  "handoff": null
+}
+```
+
+Si el cliente pide un **asesor humano**, `/api/chat` no llama a Claude: hace la conexión y asigna el caso al área de **Correo**, **HDR (dominio y hosting)**, **Facturación** o **Ventas**.
+
+```json
+{
+  "answer": "Listo. Estoy haciendo la conexión con un especialista...",
+  "sources": [],
+  "handoff": {
+    "requested": true,
+    "connected": true,
+    "needs_area": false,
+    "queued_message": false,
+    "area": "correo",
+    "area_label": "Correo",
+    "assigned_label": "área de Correo",
+    "area_description": "Buzones, webmail, registros MX y correo corporativo."
+  }
 }
 ```
 
@@ -256,6 +276,9 @@ Preguntas sugeridas (también aparecen como atajos en la interfaz):
 - ¿Cómo accedo a cPanel?
 - ¿Qué dice el documento sobre la autenticación de dos factores?
 - ¿Cuáles son los avisos de vencimiento de un dominio?
+- Quiero comunicarme con un asesor humano
+
+Si pides un asesor, el chat **hace la conexión** y muestra *Asignado al área de Correo / HDR (Dominio y Hosting) / Facturación / Ventas* según el tema. Si el área no es clara, te deja elegirla.
 
 Pruebas automatizadas (no requieren API key; Claude se sustituye por un mock):
 
@@ -296,7 +319,8 @@ RAG-MI.COM.CO/
 │   │   ├── document_service.py # Lectura del TXT
 │   │   ├── vector_service.py   # ChromaDB persistente
 │   │   ├── rag_service.py      # Flujo de recuperación + generación
-│   │   └── claude_service.py   # Único cliente de Anthropic
+│   │   ├── claude_service.py   # Único cliente de Anthropic
+│   │   └── handoff_service.py  # Conexión con asesor humano y ruteo de área
 │   ├── models/schemas.py       # Contratos de la API
 │   └── utils/text_processor.py # Limpieza y chunking
 ├── data/documents/documento.txt

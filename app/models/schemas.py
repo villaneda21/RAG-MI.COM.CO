@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, Field, field_validator
+
+SupportAreaId = Literal["correo", "hdr", "facturacion", "ventas"]
 
 
 @dataclass
@@ -18,10 +20,26 @@ class TextChunk:
     metadata: dict[str, Any] = field(default_factory=dict)
 
 
+class ChatTurn(BaseModel):
+    """Turno previo de la conversación, para ruteo a un asesor humano."""
+
+    role: Literal["user", "assistant"]
+    content: str = Field(..., min_length=1, max_length=4000)
+
+
 class ChatRequest(BaseModel):
     """Pregunta enviada por el chatbot."""
 
     question: str = Field(..., min_length=1, description="Pregunta del usuario")
+    history: list[ChatTurn] = Field(default_factory=list)
+    requested_area: Optional[SupportAreaId] = Field(
+        default=None,
+        description="Área elegida por el usuario para hablar con un asesor humano.",
+    )
+    handed_off_area: Optional[SupportAreaId] = Field(
+        default=None,
+        description="Área ya asignada si la conversación fue transferida.",
+    )
 
     @field_validator("question")
     @classmethod
@@ -32,6 +50,11 @@ class ChatRequest(BaseModel):
         if len(cleaned) > 2000:
             raise ValueError("La pregunta es demasiado larga (máximo 2000 caracteres).")
         return cleaned
+
+    @field_validator("history")
+    @classmethod
+    def history_must_stay_short(cls, value: list[ChatTurn]) -> list[ChatTurn]:
+        return value[-12:]
 
 
 class SourceChunk(BaseModel):
@@ -44,11 +67,25 @@ class SourceChunk(BaseModel):
     distance: Optional[float] = None
 
 
+class HandoffInfo(BaseModel):
+    """Estado de la conexión con un asesor humano."""
+
+    requested: bool = False
+    connected: bool = False
+    needs_area: bool = False
+    queued_message: bool = False
+    area: Optional[SupportAreaId] = None
+    area_label: Optional[str] = None
+    assigned_label: Optional[str] = None
+    area_description: Optional[str] = None
+
+
 class ChatResponse(BaseModel):
     """Respuesta del asistente junto con las fuentes recuperadas."""
 
     answer: str
     sources: list[SourceChunk] = Field(default_factory=list)
+    handoff: Optional[HandoffInfo] = None
 
 
 class HealthResponse(BaseModel):

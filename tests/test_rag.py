@@ -194,6 +194,7 @@ def test_system_prompt_asks_for_structured_markdown() -> None:
     assert "##" in SYSTEM_PROMPT
     assert "emoji" in SYSTEM_PROMPT.lower()
     assert "Markdown" in SYSTEM_PROMPT
+    assert "asesor humano" in SYSTEM_PROMPT.lower()
 
 
 def test_home_renders_chatbot() -> None:

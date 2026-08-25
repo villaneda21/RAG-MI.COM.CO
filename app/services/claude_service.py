@@ -81,6 +81,9 @@ Reglas estrictas:
 - Si la respuesta no se puede obtener del contexto, dilo con claridad, por ejemplo:
   "No encontré información suficiente sobre esta pregunta en la base de conocimiento disponible."
 - No menciones que eres Claude ni detalles internos del sistema, salvo que te lo pidan.
+- Si el cliente necesita una persona, indícale que puede pedir un asesor humano. El sistema
+  hará la conexión y asignará el caso al área de Correo, HDR (dominio y hosting), Facturación o Ventas.
+- No digas que no puedes transferir a un humano: esa conexión la hace el sistema de chat.
 """
 
 

@@ -138,7 +138,12 @@ async def chat(payload: ChatRequest, request: Request):
     """Recupera contexto en ChromaDB y genera una respuesta con Claude."""
     rag = get_rag(request)
     try:
-        result = await rag.ask(payload.question)
+        result = await rag.ask(
+            payload.question,
+            history=payload.history,
+            requested_area=payload.requested_area,
+            handed_off_area=payload.handed_off_area,
+        )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except (VectorStoreError, ClaudeServiceError, DocumentProcessingError):
