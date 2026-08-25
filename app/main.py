@@ -45,6 +45,7 @@ async def lifespan(app: FastAPI):
 
     rag = _build_rag_service()
     app.state.rag = rag
+    app.state.cases = rag.case_service
     try:
         rag.vector_service.connect()
         logger.info(
@@ -135,10 +136,15 @@ async def health(request: Request) -> HealthResponse:
 
 @app.post("/api/chat")
 async def chat(payload: ChatRequest, request: Request):
-    """Recupera contexto en ChromaDB y genera una respuesta con Claude."""
+    """Continúa el flujo de atención y registro de casos."""
     rag = get_rag(request)
     try:
-        result = await rag.ask(payload.question)
+        history = [{"role": item.role, "content": item.content} for item in payload.history]
+        result = await rag.ask(
+            payload.question,
+            history=history,
+            session_id=payload.session_id,
+        )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except (VectorStoreError, ClaudeServiceError, DocumentProcessingError):
@@ -159,6 +165,14 @@ async def reindex(request: Request, payload: ReindexRequest | None = None) -> Re
     rag = get_rag(request)
     logger.info("Endpoint /api/reindex (reset=%s).", options.reset)
     return rag.reindex(reset=options.reset)
+
+
+@app.get("/api/cases")
+async def list_cases(request: Request, limit: int = 20):
+    """Lista los casos más recientes del historial local."""
+    rag = get_rag(request)
+    records = rag.case_service.list_cases(limit=max(1, min(limit, 100)))
+    return [record.to_dict() for record in records]
 
 
 @app.exception_handler(ValidationError)

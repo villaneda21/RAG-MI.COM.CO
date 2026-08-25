@@ -186,13 +186,16 @@ python run.py --port 8000
 
 La página del chatbot carga aunque aún no exista una API key; al preguntar, verás un mensaje claro si falta `ANTHROPIC_API_KEY`.
 
+El chat sigue un flujo de atención: pide el correo, clasifica (correo, dominio, hosting o facturación/compras), confirma y registra el caso en `data/cases/casos.jsonl` con estado **Cerrado/Registrado**. No diagnostica DNS, SPF, ping ni estado de red.
+
 ## API
 
 | Método | Ruta | Descripción |
 | --- | --- | --- |
 | `GET` | `/` | Interfaz del chatbot |
 | `GET` | `/health` | Estado de ChromaDB, chunks indexados y Claude |
-| `POST` | `/api/chat` | Pregunta al RAG |
+| `POST` | `/api/chat` | Turno del flujo de atención (con historial) |
+| `GET` | `/api/cases` | Historial de casos registrados |
 | `POST` | `/api/reindex` | Vuelve a procesar el TXT |
 
 Ejemplo de chat:

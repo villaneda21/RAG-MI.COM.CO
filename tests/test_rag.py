@@ -13,7 +13,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.models.schemas import ChatResponse
-from app.services.claude_service import ClaudeService
+from app.services.claude_service import ClaudeService, SupportTurn
 from app.services.document_service import DocumentService
 from app.services.rag_service import RagService
 from app.utils.text_processor import (
@@ -155,18 +155,20 @@ async def test_ask_uses_mock_claude(tmp_path: Path) -> None:
     vector_service.index_chunks(chunks, fingerprint, reset=True)
 
     claude = ClaudeService(api_key="test-key-not-real")
-    claude.generate_response = AsyncMock(return_value="El soporte responde en horario continuo.")  # type: ignore[method-assign]
+    claude.generate_support_reply = AsyncMock(  # type: ignore[method-assign]
+        return_value=SupportTurn(text="Claro, con gusto te ayudo. ¿Me confirmas tu correo?")
+    )
 
     rag = RagService(
         document_service=DocumentService(document_path=path),
         vector_service=vector_service,
         claude_service=claude,
     )
-    response = await rag.ask("¿Cuál es la política de soporte?")
+    response = await rag.ask("Hola, tengo un problema con el correo")
     assert isinstance(response, ChatResponse)
-    assert "soporte" in response.answer.lower()
-    assert response.sources
-    claude.generate_response.assert_awaited()
+    assert "correo" in response.answer.lower()
+    assert response.sources == []
+    claude.generate_support_reply.assert_awaited()
 
 
 def test_chat_requires_question() -> None:
@@ -188,12 +190,12 @@ def test_health_endpoint() -> None:
         assert "vector_database" in payload
 
 
-def test_system_prompt_asks_for_structured_markdown() -> None:
-    from app.services.claude_service import SYSTEM_PROMPT
+def test_system_prompt_covers_support_flow() -> None:
+    from app.services.claude_service import SUPPORT_SYSTEM_PROMPT
 
-    assert "##" in SYSTEM_PROMPT
-    assert "emoji" in SYSTEM_PROMPT.lower()
-    assert "Markdown" in SYSTEM_PROMPT
+    assert "DNS" in SUPPORT_SYSTEM_PROMPT
+    assert "registrar_caso" in SUPPORT_SYSTEM_PROMPT or "registrar" in SUPPORT_SYSTEM_PROMPT.lower()
+    assert "Facturación o Compras" in SUPPORT_SYSTEM_PROMPT
 
 
 def test_home_renders_chatbot() -> None:
@@ -202,7 +204,7 @@ def test_home_renders_chatbot() -> None:
     with TestClient(app) as client:
         response = client.get("/")
         assert response.status_code == 200
-        assert "Asistente" in response.text
+        assert "Soporte" in response.text or "Asistente" in response.text
         assert "/static/css/style.css" in response.text
 
 

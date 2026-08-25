@@ -297,6 +297,31 @@ body {
     font-size: 0.9rem;
 }
 
+.case-card {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    color: #d1fae5;
+}
+
+.case-card strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #ecfdf5;
+}
+
+.case-card p {
+    margin: 0 0 0.35em;
+    color: #d1fae5;
+    font-size: 0.88rem;
+}
+
+.case-card p:last-child {
+    margin-bottom: 0;
+}
+
 .suggestions {
     display: flex;
     flex-wrap: wrap;

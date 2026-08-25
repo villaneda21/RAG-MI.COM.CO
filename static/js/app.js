@@ -8,22 +8,34 @@ const statusLabel = document.getElementById("status-label");
 
 const SUGGESTIONS = [
     {
-        label: "📘 ¿Qué contiene esta base?",
-        question: "¿Qué información contiene esta base de conocimiento?",
+        label: "📧 Es sobre mi correo",
+        question: "Hola, necesito ayuda con mi correo electrónico.",
     },
     {
-        label: "🗂️ Resume los temas principales",
-        question: "Resume los temas principales.",
+        label: "🌐 Tengo un tema de dominio",
+        question: "Hola, quiero reportar un tema con mi dominio.",
     },
     {
-        label: "👤 ¿Cómo creo una cuenta?",
-        question: "¿Cómo creo una cuenta en mi.com.co?",
+        label: "🖥️ Necesito ayuda con hosting",
+        question: "Hola, es sobre mi servicio de hosting.",
     },
     {
-        label: "🔑 ¿Cómo encuentro mi código de cliente?",
-        question: "¿Cómo encuentro mi código de cliente?",
+        label: "💳 Facturación o una compra",
+        question: "Hola, tengo una consulta de facturación o de una compra.",
     },
 ];
+
+const sessionId = (() => {
+    const existing = window.sessionStorage.getItem("micomco-session");
+    if (existing) {
+        return existing;
+    }
+    const created = `ses-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+    window.sessionStorage.setItem("micomco-session", created);
+    return created;
+})();
+
+const conversationHistory = [];
 
 function extractErrorMessage(payload) {
     const detail = payload && payload.detail;
@@ -115,18 +127,41 @@ function scrollToBottom() {
     chatPanel.scrollTo({ top: chatPanel.scrollHeight, behavior: "smooth" });
 }
 
-function appendMessage({ role, html, sources, error }) {
+function appendMessage({ role, html, sources, error, caseInfo }) {
     const article = document.createElement("article");
     article.className = `message ${role}${error ? " error" : ""}`;
     const avatar = role === "user" ? "👤" : "💬";
     const sourcesHtml = renderSources(sources);
+    const caseHtml = renderCaseCard(caseInfo);
     article.innerHTML = `
         <div class="avatar" aria-hidden="true">${avatar}</div>
-        <div class="bubble">${html}${sourcesHtml}</div>
+        <div class="bubble">${html}${caseHtml}${sourcesHtml}</div>
     `;
     messagesEl.appendChild(article);
     scrollToBottom();
     return article;
+}
+
+function renderCaseCard(caseInfo) {
+    if (!caseInfo) {
+        return "";
+    }
+    return `
+        <div class="case-card">
+            <strong>✅ Caso ${escapeHtml(caseInfo.case_id)}</strong>
+            <p><span>📧</span> ${escapeHtml(caseInfo.correo)}</p>
+            <p><span>🗂️</span> ${escapeHtml(caseInfo.categoria)}</p>
+            <p><span>📝</span> ${escapeHtml(caseInfo.detalle)}</p>
+            <p><span>🕒</span> ${escapeHtml(caseInfo.registrado_en)} · ${escapeHtml(caseInfo.estado)}</p>
+        </div>
+    `;
+}
+
+function rememberTurn(role, content) {
+    conversationHistory.push({ role, content });
+    if (conversationHistory.length > 24) {
+        conversationHistory.splice(0, conversationHistory.length - 24);
+    }
 }
 
 function renderSources(sources) {
@@ -184,9 +219,9 @@ async function refreshHealth() {
 
 function showWelcome() {
     const html = `
-        <h3>👋 ¡Hola! Soy el asistente de MI.COM.CO</h3>
-        <p>Puedes consultarme la base de conocimiento sobre <strong>cuentas</strong>, <strong>DNS</strong>, <strong>hosting</strong>, <strong>correo</strong>, políticas y soporte.</p>
-        <p class="welcome-hint">Elige una pregunta rápida o escribe la tuya:</p>
+        <h3>👋 ¡Hola! Qué gusto saludarte</h3>
+        <p>Soy parte del equipo de soporte de <strong>MI.COM.CO</strong>. Para ubicar tu cuenta, ¿me compartes el correo con el que estás registrado?</p>
+        <p class="welcome-hint">Si quieres, también dime si es de correo, dominio, hosting o facturación:</p>
         <div class="suggestions">
             ${SUGGESTIONS.map(
                 (item) =>
@@ -195,12 +230,16 @@ function showWelcome() {
         </div>
     `;
     appendMessage({ role: "bot", html });
+    rememberTurn(
+        "assistant",
+        "¡Hola! Soy parte del equipo de soporte de MI.COM.CO. Para ubicar tu cuenta, ¿me compartes el correo con el que estás registrado?"
+    );
 }
 
 function showThinking() {
     return appendMessage({
         role: "bot",
-        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>⏳ Consultando la base de conocimiento…</p>`,
+        html: `<p class="thinking"><span class="thinking-dots"><span></span><span></span><span></span></span>Un segundo, te leo con calma…</p>`,
     });
 }
 
@@ -211,6 +250,8 @@ async function sendQuestion(question) {
     }
 
     appendMessage({ role: "user", html: `<p>${escapeHtml(cleaned)}</p>` });
+    const historyForApi = conversationHistory.slice();
+    rememberTurn("user", cleaned);
     setBusy(true);
     const thinking = showThinking();
 
@@ -218,7 +259,11 @@ async function sendQuestion(question) {
         const response = await fetch("/api/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question: cleaned }),
+            body: JSON.stringify({
+                question: cleaned,
+                session_id: sessionId,
+                history: historyForApi,
+            }),
         });
         const payload = await response.json();
         thinking.remove();
@@ -232,14 +277,16 @@ async function sendQuestion(question) {
             return;
         }
 
+        const answer =
+            payload.answer ||
+            "Cuéntame un poco más para dejar tu solicitud registrada.";
         appendMessage({
             role: "bot",
-            html: formatAnswer(
-                payload.answer ||
-                    "No encontré información suficiente sobre esta pregunta en la base de conocimiento disponible."
-            ),
+            html: formatAnswer(answer),
             sources: payload.sources,
+            caseInfo: payload.case,
         });
+        rememberTurn("assistant", answer);
     } catch (_error) {
         thinking.remove();
         appendMessage({

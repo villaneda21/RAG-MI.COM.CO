@@ -18,10 +18,19 @@ class TextChunk:
     metadata: dict[str, Any] = field(default_factory=dict)
 
 
+class ChatMessage(BaseModel):
+    """Turno previo de la conversación."""
+
+    role: str = Field(..., description="user o assistant")
+    content: str = Field(..., min_length=1)
+
+
 class ChatRequest(BaseModel):
     """Pregunta enviada por el chatbot."""
 
     question: str = Field(..., min_length=1, description="Pregunta del usuario")
+    session_id: Optional[str] = Field(default=None, description="Identificador de la conversación")
+    history: list[ChatMessage] = Field(default_factory=list)
 
     @field_validator("question")
     @classmethod
@@ -44,11 +53,24 @@ class SourceChunk(BaseModel):
     distance: Optional[float] = None
 
 
+class CaseSummary(BaseModel):
+    """Caso de soporte dejado en el historial."""
+
+    case_id: str
+    correo: str
+    categoria: str
+    detalle: str
+    registrado_en: str
+    estado: str
+
+
 class ChatResponse(BaseModel):
-    """Respuesta del asistente junto con las fuentes recuperadas."""
+    """Respuesta del asistente junto con las fuentes o el caso registrado."""
 
     answer: str
     sources: list[SourceChunk] = Field(default_factory=list)
+    session_id: Optional[str] = None
+    case: Optional[CaseSummary] = None
 
 
 class HealthResponse(BaseModel):

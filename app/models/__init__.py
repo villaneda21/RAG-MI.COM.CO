@@ -1,4 +1,5 @@
 from app.models.schemas import (
+    CaseSummary,
     ChatRequest,
     ChatResponse,
     HealthResponse,
@@ -7,6 +8,17 @@ from app.models.schemas import (
     SourceChunk,
     TextChunk,
 )
+
+__all__ = [
+    "CaseSummary",
+    "ChatRequest",
+    "ChatResponse",
+    "HealthResponse",
+    "ReindexRequest",
+    "ReindexResponse",
+    "SourceChunk",
+    "TextChunk",
+]
 
 __all__ = [
     "ChatRequest",

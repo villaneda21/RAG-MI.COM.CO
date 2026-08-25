@@ -34,9 +34,10 @@ chroma_db/*
 # Sentence Transformers / HuggingFace cache (local only)
 .cache/
 
-# Logs
-*.log
-logs/
+# Casos de soporte registrados por el chatbot
+data/cases/*.jsonl
+data/cases/*.json
+!data/cases/.gitkeep
 
 # IDE / OS
 .idea/

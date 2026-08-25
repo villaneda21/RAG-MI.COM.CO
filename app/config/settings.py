@@ -90,6 +90,10 @@ class Settings:
     # --- Recuperación ---
     retrieval_k: int = 6  # entre 5 y 8 fragmentos por consulta
 
+    # --- Casos de soporte ---
+    cases_directory: Path = PROJECT_ROOT / "data" / "cases"
+    cases_file: Path = cases_directory / "casos.jsonl"
+
     # --- Servidor ---
     host: str = os.getenv("HOST", "0.0.0.0").strip()
     port: int = int(os.getenv("PORT", "8000"))
