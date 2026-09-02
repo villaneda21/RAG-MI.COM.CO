@@ -1,0 +1,16 @@
+================================================================================
+[CHUNK_ID]: GUA-XXX
+[CATEGORY]: Guías Operativas
+[TITLE]: Título claro de la guía
+[ENTITY]: MI.COM.CO
+[KEYWORDS]: palabras clave separadas por coma
+[SUMMARY]: Una o dos frases de qué resuelve esta guía.
+--------------------------------------------------------------------------------
+[CONTENT]:
+Escribe aquí los pasos o la política.
+
+1. Primer paso.
+2. Segundo paso.
+
+Notas o excepciones al final.
+================================================================================

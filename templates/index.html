@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente MI.COM.CO</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230D6EFD'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='12' font-family='Arial,sans-serif' font-weight='700'%3EMI%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <img class="brand-logo" src="/static/img/logo.png" alt="mi.com.co">
+                <div class="brand-copy">
+                    <p class="brand-kicker">🤝 Atención al cliente</p>
+                    <h1>💬 Soporte MI.COM.CO</h1>
+                </div>
+            </div>
+            <nav class="view-nav" aria-label="Pantallas">
+                <button type="button" class="nav-link is-active" data-view="chat">💬 Chat</button>
+                <button type="button" class="nav-link" data-view="history">🗂️ Historial</button>
+                <button type="button" class="nav-link" data-view="index">📚 Base</button>
+            </nav>
+            <div id="status-pill" class="status-pill" data-state="checking" aria-live="polite">
+                <span class="status-dot"></span>
+                <span id="status-label">Comprobando conexión…</span>
+            </div>
+        </header>
+
+        <main class="chat-panel" id="chat-panel">
+            <div id="messages" class="messages" role="log" aria-live="polite"></div>
+        </main>
+
+        <main class="history-panel" id="history-panel" hidden>
+            <aside class="history-list-wrap">
+                <div class="history-list-head">
+                    <h2>🗂️ Historial de chats</h2>
+                    <p>Se guarda cada conversación, abierta o cerrada.</p>
+                </div>
+                <div id="history-list" class="history-list"></div>
+            </aside>
+            <section class="history-detail" id="history-detail" aria-live="polite">
+                <div class="history-empty">
+                    <p>Elige un chat a la izquierda para ver el resumen y el transcript completo.</p>
+                </div>
+            </section>
+        </main>
+
+        <main class="index-panel" id="index-panel" hidden>
+            <div class="index-card">
+                <div class="index-head">
+                    <h2>📚 Base de conocimiento</h2>
+                    <p>Para agregar información nueva, copia un archivo <strong>.txt</strong> o <strong>.md</strong> en <code>data/documents/</code> y pulsa <strong>Indexar cambios</strong>. Los archivos que empiezan por <code>_</code> no se indexan (sirven de plantilla).</p>
+                </div>
+                <div class="index-actions">
+                    <button type="button" class="index-button" id="index-changes">Indexar cambios</button>
+                    <button type="button" class="index-button secondary" id="index-reset">Indexar todo de nuevo</button>
+                </div>
+                <p id="index-feedback" class="index-feedback" hidden></p>
+                <div id="index-files" class="index-files"></div>
+            </div>
+        </main>
+
+        <footer class="composer-wrap" id="composer-wrap">
+            <form id="chat-form" class="composer" autocomplete="off">
+                <label class="sr-only" for="question-input">Escribe tu pregunta</label>
+                <textarea
+                    id="question-input"
+                    name="question"
+                    rows="1"
+                    maxlength="2000"
+                    placeholder="Cuéntame en qué te puedo ayudar…"
+                    required
+                ></textarea>
+                <button type="submit" id="send-button" class="send-button" aria-label="Enviar pregunta">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3.4 20.6 21 12 3.4 3.4 3.2 10l11 2-11 2z"/>
+                    </svg>
+                </button>
+            </form>
+            <p class="composer-hint">📚 Consultamos las guías de MI.COM.CO. Si hace falta gestión de cuenta, registramos un caso. No diagnosticamos DNS ni conexiones desde aquí.</p>
+        </footer>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

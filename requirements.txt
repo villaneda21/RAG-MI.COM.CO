@@ -1,0 +1,11 @@
+fastapi==0.115.8
+uvicorn[standard]==0.34.0
+chromadb==0.6.3
+sentence-transformers==3.4.1
+anthropic==0.46.0
+python-dotenv==1.0.1
+jinja2==3.1.5
+httpx==0.28.1
+tzdata==2025.2
+pytest==8.3.4
+pytest-asyncio==0.25.3
