@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: micomco
+      POSTGRES_PASSWORD: micomco
+      POSTGRES_DB: micomco
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U micomco -d micomco"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
