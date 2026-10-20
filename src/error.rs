@@ -42,6 +42,14 @@ impl AppError {
     pub fn internal(detail: impl Into<String>) -> Self {
         Self::new(StatusCode::INTERNAL_SERVER_ERROR, detail)
     }
+
+    pub fn conflict(detail: impl Into<String>) -> Self {
+        Self::new(StatusCode::CONFLICT, detail)
+    }
+
+    pub fn unsupported(detail: impl Into<String>) -> Self {
+        Self::new(StatusCode::UNSUPPORTED_MEDIA_TYPE, detail)
+    }
 }
 
 impl IntoResponse for AppError {

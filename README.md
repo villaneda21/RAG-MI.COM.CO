@@ -26,6 +26,16 @@ cargo test
 
 Si defines `CHROMA_HOST` (por ejemplo `http://127.0.0.1:8001`), los vectores se guardan por la API REST v2 de ChromaDB. Si no, quedan en `chroma_db/rust_vectors.sqlite` junto con `chroma_db/.index_meta.json`.
 
+## Centro de ayuda
+
+Con PostgreSQL en marcha, el mismo proceso sirve el simulador de WhatsApp y el CRM:
+
+- [http://127.0.0.1:8000/client](http://127.0.0.1:8000/client) — triage y chat del cliente
+- [http://127.0.0.1:8000/crm](http://127.0.0.1:8000/crm) — bandeja de agentes
+- [http://127.0.0.1:8000/crm/admin](http://127.0.0.1:8000/crm/admin) — snippets y reglas del bot
+
+`DATABASE_URL` por defecto es `postgres://rag:rag@127.0.0.1:5432/rag_micomco?sslmode=disable`. Al arrancar se aplican las migraciones de `migrations/` y un temporizador revisa la inactividad cada minuto. Las respuestas al cliente no incluyen fuentes ni URLs; el chat de conocimiento en `/` sigue mostrándolas.
+
 ## Arquitectura
 
 ```text

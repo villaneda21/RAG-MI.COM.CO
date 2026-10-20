@@ -11,10 +11,12 @@ pub mod conversations;
 pub mod documents;
 pub mod embed;
 pub mod error;
+pub mod helpdesk;
 pub mod models;
 pub mod prompts;
 pub mod rag;
 pub mod routes;
+pub mod state;
 pub mod text;
 pub mod vector;
 

@@ -1,0 +1,410 @@
+//! Clasificación, filtro de medios y limpieza de respuestas al cliente.
+
+use std::sync::LazyLock;
+
+use regex::Regex;
+
+pub const DEPT_SUPPORT: &str = "Soporte Técnico";
+pub const DEPT_SALES: &str = "Ventas";
+pub const DEPT_BILLING: &str = "Facturación";
+
+pub const SATISFACTION_QUESTION: &str =
+    "¿Pude resolver tu duda o hay algo más en lo que te pueda ayudar?";
+
+pub const TIMEOUT_STATUSES: &[&str] = &["en_bot", "esperando_agente", "en_proceso"];
+
+pub const DEFAULT_WARNING_MINUTES: i32 = 10;
+pub const DEFAULT_CLOSE_MINUTES: i32 = 5;
+pub const DEFAULT_WARNING_TEMPLATE: &str =
+    "Seguimos por aquí. Si no recibimos respuesta en los próximos minutos, cerraremos esta conversación.";
+pub const DEFAULT_CLOSE_TEMPLATE: &str =
+    "Cerramos este chat por inactividad. Cuando quieras, escríbenos de nuevo y te ayudamos.";
+
+const ROUTES: &[(&str, &str)] = &[
+    ("factura", DEPT_BILLING),
+    ("facturacion", DEPT_BILLING),
+    ("datos", DEPT_BILLING),
+    ("cotizacion", DEPT_SALES),
+    ("precio", DEPT_SALES),
+    ("reembolso", DEPT_SUPPORT),
+    ("falla", DEPT_SUPPORT),
+];
+
+const CONFIRMATIONS: &[&str] = &[
+    "si",
+    "sip",
+    "ok",
+    "okay",
+    "dale",
+    "listo",
+    "gracias",
+    "muchas gracias",
+    "ok gracias",
+    "si gracias",
+    "perfecto",
+    "resuelto",
+    "resuelta",
+    "quedo resuelto",
+    "quedo resuelta",
+    "ya quedo",
+    "nada mas",
+    "eso es todo",
+    "no gracias",
+    "todo bien",
+    "me sirvio",
+    "era eso",
+    "esa era",
+    "no necesito nada mas",
+    "esta bien",
+];
+
+static MD_LINK: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)\[([^\]\n]+)\]\((?:https?://|www\.)[^)\s]+\)").expect("regex de enlaces")
+});
+static URL_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)\b(?:https?://|www\.)\S+").expect("regex de urls"));
+static PAREN_SOURCE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)\s*[\(\[](?:fuente|fuentes|source|sources|ref|referencia|ver)[^)\]]*[\)\]]")
+        .expect("regex de citas")
+});
+static CHUNK_HEADER: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)\[(?:chunk|fuente)[^\]]*\]").expect("regex de chunks"));
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MediaDecision {
+    Text,
+    Audio { extension: &'static str },
+    RejectStickers,
+    RejectOther,
+}
+
+pub fn fold(text: &str) -> String {
+    text.chars()
+        .map(|character| match character {
+            'á' | 'à' | 'ä' | 'â' => 'a',
+            'é' | 'è' | 'ë' | 'ê' => 'e',
+            'í' | 'ì' | 'ï' | 'î' => 'i',
+            'ó' | 'ò' | 'ö' | 'ô' => 'o',
+            'ú' | 'ù' | 'ü' | 'û' => 'u',
+            'ñ' => 'n',
+            other => other.to_ascii_lowercase(),
+        })
+        .collect()
+}
+
+fn term_at(haystack: &str, term: &str) -> Option<usize> {
+    let mut rest = haystack;
+    let mut offset = 0usize;
+    while let Some(found) = rest.find(term) {
+        let absolute = offset + found;
+        let before_ok = absolute == 0
+            || !haystack
+                .chars()
+                .nth(absolute.saturating_sub(1))
+                .is_some_and(|c| c.is_ascii_alphanumeric());
+        let after = absolute + term.len();
+        let after_ok = !haystack
+            .chars()
+            .nth(after)
+            .is_some_and(|c| c.is_ascii_alphanumeric());
+        if before_ok && after_ok {
+            return Some(absolute);
+        }
+        let next = found + term.len();
+        offset += next;
+        rest = &rest[next..];
+    }
+    None
+}
+
+pub fn route_department(text: &str) -> &'static str {
+    let folded = fold(text);
+    let mut best: Option<(usize, &'static str)> = None;
+    for (term, department) in ROUTES {
+        if let Some(position) = term_at(&folded, term) {
+            let replace = best.is_none_or(|(current, _)| position < current);
+            if replace {
+                best = Some((position, department));
+            }
+        }
+    }
+    best.map(|(_, department)| department)
+        .unwrap_or(DEPT_SUPPORT)
+}
+
+pub fn priority_for(text: &str) -> &'static str {
+    let folded = fold(text);
+    if term_at(&folded, "reembolso").is_some() || term_at(&folded, "falla").is_some() {
+        "alta"
+    } else {
+        "normal"
+    }
+}
+
+pub fn requests_human(text: &str) -> bool {
+    let folded = fold(text);
+    ["agente", "asesor", "asesora", "humano", "operador"]
+        .iter()
+        .any(|term| term_at(&folded, term).is_some())
+        || folded.contains("persona real")
+        || folded.contains("hablar con alguien")
+}
+
+pub fn client_confirms_resolution(text: &str) -> bool {
+    if text.chars().count() > 60 || text.contains('?') || text.contains('¿') {
+        return false;
+    }
+    let folded = fold(text);
+    if folded.contains("pero") || folded.contains("tambien") || folded.contains("otra") {
+        return false;
+    }
+    let compact = folded
+        .chars()
+        .map(|character| {
+            if character.is_ascii_alphanumeric() || character.is_whitespace() {
+                character
+            } else {
+                ' '
+            }
+        })
+        .collect::<String>()
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ");
+    CONFIRMATIONS.contains(&compact.as_str())
+}
+
+pub fn media_decision(mime: &str, filename: &str) -> MediaDecision {
+    let mime = mime
+        .split(';')
+        .next()
+        .unwrap_or("")
+        .trim()
+        .to_ascii_lowercase();
+    let name = filename.trim().to_ascii_lowercase();
+    let sticker = mime == "image/webp"
+        || mime == "image/gif"
+        || name.ends_with(".gif")
+        || name.ends_with(".webp");
+    if sticker {
+        return MediaDecision::RejectStickers;
+    }
+    let audio = match mime.as_str() {
+        "audio/ogg" | "audio/opus" => Some("ogg"),
+        "audio/mpeg" | "audio/mp3" => Some("mp3"),
+        "audio/wav" | "audio/x-wav" | "audio/wave" => Some("wav"),
+        _ => None,
+    };
+    if let Some(extension) = audio {
+        return MediaDecision::Audio { extension };
+    }
+    if name.ends_with(".ogg") {
+        return MediaDecision::Audio { extension: "ogg" };
+    }
+    if name.ends_with(".mp3") {
+        return MediaDecision::Audio { extension: "mp3" };
+    }
+    if name.ends_with(".wav") {
+        return MediaDecision::Audio { extension: "wav" };
+    }
+    if mime.starts_with("image/") || mime.starts_with("video/") || !name.is_empty() {
+        return MediaDecision::RejectOther;
+    }
+    MediaDecision::Text
+}
+
+pub fn strip_sources(answer: &str) -> String {
+    let without_chunks = CHUNK_HEADER.replace_all(answer, "");
+    let without_links = MD_LINK.replace_all(&without_chunks, "$1");
+    let without_urls = URL_RE.replace_all(&without_links, "");
+    let without_cites = PAREN_SOURCE.replace_all(&without_urls, "");
+    let mut kept = Vec::new();
+    let mut skipping_list = false;
+    for line in without_cites.lines() {
+        let trimmed = line.trim();
+        if is_source_heading(trimmed) {
+            skipping_list = true;
+            continue;
+        }
+        if skipping_list {
+            if trimmed.is_empty() {
+                skipping_list = false;
+            }
+            continue;
+        }
+        if is_citation_line(trimmed) {
+            continue;
+        }
+        kept.push(line.trim_end());
+    }
+    let mut collapsed = String::new();
+    let mut blank = 0u8;
+    for line in kept {
+        if line.trim().is_empty() {
+            blank = blank.saturating_add(1);
+            if blank <= 1 && !collapsed.is_empty() {
+                collapsed.push('\n');
+            }
+            continue;
+        }
+        blank = 0;
+        if !collapsed.is_empty() {
+            collapsed.push('\n');
+        }
+        collapsed.push_str(line.trim());
+    }
+    collapsed.trim().to_string()
+}
+
+fn is_source_heading(line: &str) -> bool {
+    let cleaned = line
+        .trim_matches('#')
+        .trim()
+        .trim_end_matches(':')
+        .trim()
+        .to_lowercase();
+    matches!(
+        cleaned.as_str(),
+        "fuentes"
+            | "fuente"
+            | "referencias"
+            | "referencia"
+            | "references"
+            | "sources"
+            | "bibliografia"
+            | "bibliografía"
+    )
+}
+
+fn is_citation_line(line: &str) -> bool {
+    let lower = line.to_lowercase();
+    lower.starts_with("fuente:")
+        || lower.starts_with("fuentes:")
+        || lower.starts_with("source:")
+        || lower.starts_with("sources:")
+        || lower.starts_with("referencia:")
+        || lower.starts_with("ver también:")
+        || lower.starts_with("ver tambien:")
+}
+
+pub fn with_satisfaction_question(answer: &str) -> String {
+    let cleaned = strip_sources(answer);
+    if cleaned.contains(SATISFACTION_QUESTION) {
+        return cleaned;
+    }
+    if cleaned.is_empty() {
+        return SATISFACTION_QUESTION.to_string();
+    }
+    format!("{cleaned}\n\n{SATISFACTION_QUESTION}")
+}
+
+pub fn normalize_shortcut(raw: &str) -> Option<String> {
+    let trimmed = raw.trim().to_ascii_lowercase();
+    let with_slash = if trimmed.starts_with('/') {
+        trimmed
+    } else {
+        format!("/{trimmed}")
+    };
+    if with_slash.len() < 2 || with_slash.len() > 33 {
+        return None;
+    }
+    if !with_slash.chars().enumerate().all(|(index, character)| {
+        if index == 0 {
+            character == '/'
+        } else {
+            character.is_ascii_alphanumeric() || character == '_' || character == '-'
+        }
+    }) {
+        return None;
+    }
+    Some(with_slash)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn routes_keywords_to_the_first_department() {
+        assert_eq!(route_department("hay una falla en el correo"), DEPT_SUPPORT);
+        assert_eq!(route_department("quiero un reembolso"), DEPT_SUPPORT);
+        assert_eq!(
+            route_department("me pasan el precio del hosting"),
+            DEPT_SALES
+        );
+        assert_eq!(
+            route_department("necesito una cotización anual"),
+            DEPT_SALES
+        );
+        assert_eq!(
+            route_department("enviame la factura de marzo"),
+            DEPT_BILLING
+        );
+        assert_eq!(
+            route_department("actualicen mis datos de pago"),
+            DEPT_BILLING
+        );
+        assert_eq!(route_department("hola, no carga mi sitio"), DEPT_SUPPORT);
+        assert_eq!(priority_for("falla de dns"), "alta");
+        assert_eq!(priority_for("precio del plan"), "normal");
+    }
+
+    #[test]
+    fn confirmation_is_short_and_affirmative() {
+        assert!(client_confirms_resolution("Sí, gracias"));
+        assert!(client_confirms_resolution("nada más"));
+        assert!(!client_confirms_resolution(
+            "sí, pero sigue caído el correo"
+        ));
+        assert!(!client_confirms_resolution("¿ya quedó?"));
+        assert!(requests_human("quiero hablar con un agente"));
+    }
+
+    #[test]
+    fn strips_bibliographic_sources() {
+        let raw = "El código está en Mi cuenta [guía](https://mi.com.co/cuenta).\n\
+Consulta https://docs.example.com/cli para el formato.\n\
+\n\
+Fuentes:\n\
+- documento.txt\n\
+\n\
+Fuente: documento.txt";
+        let clean = strip_sources(raw);
+        assert!(!clean.to_lowercase().contains("http"));
+        assert!(!clean.to_lowercase().contains("fuentes"));
+        assert!(!clean.to_lowercase().contains("documento.txt"));
+        assert!(clean.contains("Mi cuenta"));
+        let asked = with_satisfaction_question(raw);
+        assert!(asked.contains(SATISFACTION_QUESTION));
+        assert!(!asked.contains("https://"));
+    }
+
+    #[test]
+    fn rejects_stickers_and_accepts_voice_notes() {
+        assert_eq!(
+            media_decision("image/webp", "sticker.webp"),
+            MediaDecision::RejectStickers
+        );
+        assert_eq!(
+            media_decision("image/gif", ""),
+            MediaDecision::RejectStickers
+        );
+        assert_eq!(
+            media_decision("audio/ogg", "nota.ogg"),
+            MediaDecision::Audio { extension: "ogg" }
+        );
+        assert_eq!(
+            media_decision("audio/mp3", ""),
+            MediaDecision::Audio { extension: "mp3" }
+        );
+        assert_eq!(
+            media_decision("audio/wav", "voz.wav"),
+            MediaDecision::Audio { extension: "wav" }
+        );
+        assert_eq!(media_decision("", ""), MediaDecision::Text);
+        assert_eq!(
+            media_decision("image/png", "foto.png"),
+            MediaDecision::RejectOther
+        );
+    }
+}

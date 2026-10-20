@@ -1,47 +1,30 @@
 //! Rutas HTTP equivalentes a `app/main.py`.
 
 use std::collections::HashMap;
-use std::sync::Arc;
 
 use axum::body::Bytes;
-use axum::extract::{FromRequest, Path, Query, Request, State};
+use axum::extract::{DefaultBodyLimit, FromRequest, Path, Query, Request, State};
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse};
 use axum::routing::{get, post};
 use axum::{Json, Router};
 use serde::de::DeserializeOwned;
 use serde_json::json;
-use tera::Tera;
 use tower_http::services::ServeDir;
 
 use crate::error::AppError;
 use crate::models::{
     ChatRequest, ChatResponse, HealthResponse, IndexStatusResponse, ReindexRequest, ReindexResponse,
 };
-use crate::rag::{RagError, RagService};
+use crate::rag::RagError;
 
-#[derive(Clone)]
-pub struct AppState {
-    pub rag: RagService,
-    pub templates: Arc<Tera>,
-}
-
-impl AppState {
-    pub fn try_new(rag: RagService) -> Result<Self, String> {
-        let path = rag.settings.templates_dir.join("index.html");
-        let mut tera = Tera::default();
-        tera.add_template_file(&path, Some("index.html"))
-            .map_err(|err| format!("No se pudo cargar {}: {err}", path.display()))?;
-        Ok(Self {
-            rag,
-            templates: Arc::new(tera),
-        })
-    }
-}
+pub use crate::state::AppState;
 
 pub fn router(state: AppState) -> Router {
     let static_dir = state.rag.settings.static_dir.clone();
+    let media_dir = state.rag.settings.media_dir.clone();
     Router::new()
+        .merge(crate::helpdesk::routes())
         .route("/", get(home))
         .route("/health", get(health))
         .route("/api/chat", post(chat))
@@ -51,6 +34,8 @@ pub fn router(state: AppState) -> Router {
         .route("/api/conversations", get(list_conversations))
         .route("/api/conversations/:session_id", get(get_conversation))
         .nest_service("/static", ServeDir::new(static_dir))
+        .nest_service("/media", ServeDir::new(media_dir))
+        .layer(DefaultBodyLimit::max(12 * 1024 * 1024))
         .with_state(state)
 }
 
@@ -105,6 +90,12 @@ async fn health(State(state): State<AppState>) -> Json<HealthResponse> {
         vector_database: vector_status.into(),
         indexed_chunks: indexed,
         claude_api: claude_status.into(),
+        helpdesk: if state.helpdesk.is_some() {
+            "connected"
+        } else {
+            "disabled"
+        }
+        .into(),
     })
 }
 

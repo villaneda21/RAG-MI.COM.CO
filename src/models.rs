@@ -80,6 +80,7 @@ pub struct HealthResponse {
     pub vector_database: String,
     pub indexed_chunks: usize,
     pub claude_api: String,
+    pub helpdesk: String,
 }
 
 #[derive(Debug, Clone, Default, Deserialize)]

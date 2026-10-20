@@ -59,6 +59,8 @@ pub struct Settings {
     pub fastembed_cache: PathBuf,
     pub static_dir: PathBuf,
     pub templates_dir: PathBuf,
+    pub database_url: String,
+    pub media_dir: PathBuf,
 }
 
 impl Settings {
@@ -105,6 +107,11 @@ impl Settings {
             fastembed_cache: project_root.join(".cache").join("fastembed"),
             static_dir: project_root.join("static"),
             templates_dir: project_root.join("templates"),
+            database_url: env_string(
+                "DATABASE_URL",
+                "postgres://rag:rag@127.0.0.1:5432/rag_micomco?sslmode=disable",
+            ),
+            media_dir: project_root.join("data").join("media"),
             chroma_host,
             project_root,
         }

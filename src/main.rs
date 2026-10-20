@@ -8,6 +8,7 @@ use tracing_subscriber::EnvFilter;
 
 use rag_micomco::build_rag;
 use rag_micomco::config::Settings;
+use rag_micomco::helpdesk::{spawn_inactivity_worker, Helpdesk};
 use rag_micomco::rag::prepare_index;
 use rag_micomco::routes::{router, AppState};
 
@@ -85,13 +86,30 @@ async fn main() -> ExitCode {
         }
     }
 
-    let state = match AppState::try_new(rag) {
+    let mut state = match AppState::try_new(rag) {
         Ok(state) => state,
         Err(err) => {
             eprintln!("[run] {err}");
             return ExitCode::from(1);
         }
     };
+    let media_dir = state.rag.settings.media_dir.clone();
+    if let Err(err) = std::fs::create_dir_all(&media_dir) {
+        tracing::error!("No se pudo crear {}: {err}", media_dir.display());
+    }
+    match Helpdesk::connect(&state.rag.settings.database_url, media_dir.clone()).await {
+        Ok(helpdesk) => {
+            spawn_inactivity_worker(helpdesk.pool.clone(), media_dir);
+            tracing::info!(
+                "Centro de ayuda conectado. El temporizador revisa inactividad cada minuto."
+            );
+            state.helpdesk = Some(helpdesk);
+        }
+        Err(err) => {
+            tracing::error!("{err}");
+            tracing::error!("/client y /crm responderán 503 hasta que PostgreSQL esté disponible.");
+        }
+    }
     let host = state.rag.settings.host.clone();
     let port = state.rag.settings.port;
     let app = router(state);
@@ -115,6 +133,8 @@ async fn main() -> ExitCode {
         format!("http://{host}:{port}")
     };
     tracing::info!("Servidor listo en {browse}");
+    tracing::info!("Cliente WhatsApp: {browse}/client");
+    tracing::info!("CRM: {browse}/crm");
     if let Err(err) = axum::serve(listener, app)
         .with_graceful_shutdown(async {
             let _ = tokio::signal::ctrl_c().await;
