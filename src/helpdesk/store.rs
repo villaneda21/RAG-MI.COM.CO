@@ -14,9 +14,9 @@ use uuid::Uuid;
 use crate::config::HELPDESK_DATABASE_URL;
 
 use super::logic::{
-    self, agent_notice, priority_for, reopen_notice, route_department, ticket_label,
-    transfer_notice, DEFAULT_CLOSE_MINUTES, DEFAULT_CLOSE_TEMPLATE, DEFAULT_WARNING_MINUTES,
-    DEFAULT_WARNING_TEMPLATE, RESOLVED_NOTICE,
+    self, agent_notice, handoff_notice, priority_for, reopen_notice, route_department,
+    ticket_label, transfer_notice, DEFAULT_CLOSE_MINUTES, DEFAULT_CLOSE_TEMPLATE,
+    DEFAULT_WARNING_MINUTES, DEFAULT_WARNING_TEMPLATE, RESOLVED_NOTICE,
 };
 
 #[derive(Debug, thiserror::Error)]
@@ -633,12 +633,46 @@ impl Helpdesk {
         }
         if agent_id.is_some() && agent_id != current.assigned_agent_id {
             if let Some(name) = agent_name.as_deref() {
-                let notice = agent_notice(name);
-                insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
+                insert_assumption(&mut tx, ticket_id, &agent_notice(name)).await?;
             }
         }
         tx.commit().await.map_err(db_err)?;
         self.ticket_by_id(ticket_id).await
+    }
+
+    pub async fn handoff_to_team(&self, ticket_id: Uuid, area: &str) -> Result<(), HelpdeskError> {
+        let department = self.department_by_name(area).await?;
+        let notice = handoff_notice(&ticket_label(ticket_id), area);
+        let mut tx = self.pool.begin().await.map_err(db_err)?;
+        let updated = sqlx::query(
+            r#"
+            UPDATE tickets
+            SET department_id = $2,
+                assigned_agent_id = NULL,
+                status = 'esperando_agente',
+                updated_at = NOW()
+            WHERE id = $1
+            "#,
+        )
+        .bind(ticket_id)
+        .bind(department.id)
+        .execute(&mut *tx)
+        .await
+        .map_err(db_err)?;
+        if updated.rows_affected() == 0 {
+            return Err(HelpdeskError::NotFound("No encontramos ese chat.".into()));
+        }
+        insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
+        insert_audit(
+            &mut tx,
+            ticket_id,
+            None,
+            "status_change",
+            &format!("Escalado al equipo de {area}."),
+        )
+        .await?;
+        tx.commit().await.map_err(db_err)?;
+        Ok(())
     }
 
     pub async fn set_timeout(
@@ -783,8 +817,7 @@ impl Helpdesk {
                 .await?;
             }
             if current.assigned_agent_id != Some(agent_id) {
-                let notice = agent_notice(&author);
-                insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
+                insert_assumption(&mut tx, ticket_id, &agent_notice(&author)).await?;
             }
         }
         tx.commit().await.map_err(db_err)?;
@@ -1215,6 +1248,43 @@ fn message_stamp() -> DateTime<Utc> {
             Err(seen) => previous = seen,
         }
     }
+}
+
+async fn insert_assumption(
+    tx: &mut Transaction<'_, Postgres>,
+    ticket_id: Uuid,
+    content: &str,
+) -> Result<(), HelpdeskError> {
+    let previous: Option<(Uuid, String, DateTime<Utc>)> = sqlx::query_as(
+        r#"
+        SELECT id, content, created_at
+        FROM messages
+        WHERE ticket_id = $1
+          AND sender_type = 'system'
+          AND content LIKE '%ha asumido%'
+        ORDER BY created_at DESC
+        LIMIT 1
+        "#,
+    )
+    .bind(ticket_id)
+    .fetch_optional(&mut **tx)
+    .await
+    .map_err(db_err)?;
+    if let Some((id, prior, when)) = previous {
+        let age = Utc::now().signed_duration_since(when).num_seconds();
+        if prior == content {
+            return Ok(());
+        }
+        if (-5..45).contains(&age) {
+            sqlx::query("DELETE FROM messages WHERE id = $1")
+                .bind(id)
+                .execute(&mut **tx)
+                .await
+                .map_err(db_err)?;
+        }
+    }
+    insert_message(tx, &system_note(ticket_id, content)).await?;
+    Ok(())
 }
 
 fn system_note(ticket_id: Uuid, content: &str) -> NewMessage<'_> {

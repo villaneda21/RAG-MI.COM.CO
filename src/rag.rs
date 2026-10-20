@@ -71,6 +71,17 @@ impl RagService {
         history: &[HistoryTurn],
         session_id: Option<&str>,
     ) -> Result<ChatResponse, RagError> {
+        self.ask_with_session(question, history, session_id, "")
+            .await
+    }
+
+    pub async fn ask_with_session(
+        &self,
+        question: &str,
+        history: &[HistoryTurn],
+        session_id: Option<&str>,
+        session_note: &str,
+    ) -> Result<ChatResponse, RagError> {
         let cleaned = question.trim();
         if cleaned.is_empty() {
             return Err(RagError::BadRequest(
@@ -97,6 +108,7 @@ impl RagService {
                 active_session.clone(),
                 self.cases.clone(),
                 context,
+                session_note.to_string(),
             )
             .await?;
         let case_summary = turn.case.as_ref().map(|case| case.summary());
@@ -379,8 +391,10 @@ mod tests {
             _session_id: String,
             _case_service: CaseService,
             context: String,
+            session_note: String,
         ) -> Result<SupportTurn, ClaudeServiceError> {
-            *self.context.lock().unwrap_or_else(|err| err.into_inner()) = context;
+            *self.context.lock().unwrap_or_else(|err| err.into_inner()) =
+                format!("{session_note}\n{context}");
             Ok(SupportTurn {
                 text: self.text.clone(),
                 case: None,

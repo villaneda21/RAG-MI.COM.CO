@@ -21,6 +21,20 @@ pub fn agent_notice(name: &str) -> String {
     format!("👤 El agente {name} ha asumido tu conversación y te está atendiendo ahora.")
 }
 
+pub fn handoff_notice(label: &str, area: &str) -> String {
+    format!(
+        "🔄 Entendido. He transferido tu caso ({label}) al equipo de {area}. Un agente humano te atenderá en breve."
+    )
+}
+
+pub const COVERAGE_MARK: &str = "[[SIN_COBERTURA]]";
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HandoffKind {
+    Human,
+    Knowledge,
+}
+
 pub fn reopen_notice(label: &str) -> String {
     format!("ℹ️ Tu caso anterior ya se encuentra cerrado. Hemos generado una nueva solicitud ({label}) para atender tu mensaje.")
 }
@@ -136,7 +150,7 @@ fn term_at(haystack: &str, term: &str) -> Option<usize> {
     None
 }
 
-pub fn route_department(text: &str) -> &'static str {
+pub fn matched_department(text: &str) -> Option<&'static str> {
     let folded = fold(text);
     let mut best: Option<(usize, &'static str)> = None;
     for (term, department) in ROUTES {
@@ -148,7 +162,27 @@ pub fn route_department(text: &str) -> &'static str {
         }
     }
     best.map(|(_, department)| department)
-        .unwrap_or(DEPT_SUPPORT)
+}
+
+pub fn route_department(text: &str) -> &'static str {
+    matched_department(text).unwrap_or(DEPT_SUPPORT)
+}
+
+pub fn handoff_area(kind: HandoffKind, text: &str, current: &str) -> &'static str {
+    if let Some(area) = matched_department(text) {
+        return area;
+    }
+    if fold(text).contains("soporte") {
+        return DEPT_SUPPORT;
+    }
+    match kind {
+        HandoffKind::Knowledge => DEPT_SUPPORT,
+        HandoffKind::Human => match current {
+            DEPT_SALES => DEPT_SALES,
+            DEPT_BILLING => DEPT_BILLING,
+            _ => DEPT_SUPPORT,
+        },
+    }
 }
 
 pub fn priority_for(text: &str) -> &'static str {
@@ -162,11 +196,49 @@ pub fn priority_for(text: &str) -> &'static str {
 
 pub fn requests_human(text: &str) -> bool {
     let folded = fold(text);
-    ["agente", "asesor", "asesora", "humano", "operador"]
+    if ["agente", "asesor", "asesora", "humano", "operador"]
         .iter()
         .any(|term| term_at(&folded, term).is_some())
         || folded.contains("persona real")
         || folded.contains("hablar con alguien")
+    {
+        return true;
+    }
+    let asks_person = [
+        "comunicame",
+        "comuniqueme",
+        "pasame",
+        "conectame",
+        "transfiereme",
+    ]
+    .iter()
+    .any(|term| folded.contains(term));
+    asks_person
+        && (folded.contains("soporte")
+            || folded.contains("asesor")
+            || folded.contains("agente")
+            || folded.contains("humano")
+            || folded.contains("persona"))
+}
+
+pub fn lacks_knowledge(answer: &str) -> bool {
+    if answer.contains(COVERAGE_MARK) {
+        return true;
+    }
+    let folded = fold(answer);
+    const MARKERS: &[&str] = &[
+        "no encontre informacion",
+        "no tengo informacion suficiente",
+        "no tengo informacion sobre",
+        "no esta en la base de conocimiento",
+        "no aparece en la documentacion",
+        "no aparece en la base de conocimiento",
+        "la base de conocimiento no",
+        "no cubre el tema",
+        "no hay informacion suficiente",
+        "sin informacion suficiente",
+    ];
+    MARKERS.iter().any(|marker| folded.contains(marker))
 }
 
 pub fn client_confirms_resolution(text: &str) -> bool {
@@ -306,15 +378,11 @@ fn is_citation_line(line: &str) -> bool {
         || lower.starts_with("ver tambien:")
 }
 
-pub fn with_satisfaction_question(answer: &str) -> String {
-    let cleaned = strip_sources(answer);
-    if cleaned.contains(SATISFACTION_QUESTION) {
-        return cleaned;
-    }
-    if cleaned.is_empty() {
-        return SATISFACTION_QUESTION.to_string();
-    }
-    format!("{cleaned}\n\n{SATISFACTION_QUESTION}")
+pub fn visible_reply(answer: &str) -> String {
+    strip_sources(answer)
+        .replace(COVERAGE_MARK, "")
+        .trim()
+        .to_string()
 }
 
 pub fn normalize_shortcut(raw: &str) -> Option<String> {
@@ -377,6 +445,31 @@ mod tests {
         ));
         assert!(!client_confirms_resolution("¿ya quedó?"));
         assert!(requests_human("quiero hablar con un agente"));
+        assert!(requests_human("comunícame con soporte"));
+        assert!(requests_human("pásame con un asesor"));
+        assert!(!requests_human("el soporte del correo no abre"));
+        assert!(lacks_knowledge(
+            "[[SIN_COBERTURA]] No está en la base de conocimiento."
+        ));
+        assert!(lacks_knowledge(
+            "No encontré información suficiente sobre esta pregunta en la base de conocimiento disponible."
+        ));
+        assert!(!lacks_knowledge(
+            "Entra a Mis servicios y pulsa Acceder a cPanel."
+        ));
+        assert_eq!(
+            handoff_area(
+                HandoffKind::Knowledge,
+                "certificado SSL en cPanel",
+                DEPT_BILLING
+            ),
+            DEPT_SUPPORT
+        );
+        assert_eq!(
+            handoff_area(HandoffKind::Human, "quiero un agente", DEPT_BILLING),
+            DEPT_BILLING
+        );
+        assert!(handoff_notice("#AB12CD34", DEPT_SUPPORT).contains("Soporte Técnico"));
     }
 
     #[test]
@@ -393,8 +486,8 @@ Fuente: documento.txt";
         assert!(!clean.to_lowercase().contains("fuentes"));
         assert!(!clean.to_lowercase().contains("documento.txt"));
         assert!(clean.contains("Mi cuenta"));
-        let asked = with_satisfaction_question(raw);
-        assert!(asked.contains(SATISFACTION_QUESTION));
+        let asked = visible_reply(raw);
+        assert!(!asked.contains(SATISFACTION_QUESTION));
         assert!(!asked.contains("https://"));
     }
 

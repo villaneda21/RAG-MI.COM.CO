@@ -6,7 +6,8 @@ use crate::conversations::HistoryTurn;
 use crate::rag::RagService;
 
 use super::logic::{
-    client_confirms_resolution, requests_human, with_satisfaction_question, SATISFACTION_QUESTION,
+    client_confirms_resolution, handoff_area, lacks_knowledge, requests_human, visible_reply,
+    HandoffKind, SATISFACTION_QUESTION,
 };
 use super::store::{Helpdesk, HelpdeskError, Message, TicketRow};
 
@@ -87,20 +88,7 @@ async fn reply_as_bot(
     };
     let question = latest.content.trim().to_string();
     if requests_human(&question) {
-        let text = format!(
-            "Te comunico con un agente de {}. En un momento continúan por este chat.",
-            ticket.department_name
-        );
-        helpdesk
-            .post_bot_message(
-                ticket_id,
-                &text,
-                Some("esperando_agente"),
-                "status_change",
-                "El cliente pidió hablar con una persona.",
-            )
-            .await?;
-        return client_view(helpdesk, ticket_id).await;
+        return escalate(helpdesk, &ticket, HandoffKind::Human, &question).await;
     }
     let prior: Vec<&super::store::Message> = messages
         .iter()
@@ -146,38 +134,67 @@ async fn reply_as_bot(
             })
             .collect::<Vec<_>>();
         match rag
-            .ask(&question, &history, Some(&ticket_id.to_string()))
+            .ask_with_session(
+                &question,
+                &history,
+                Some(&ticket_id.to_string()),
+                &client_session_note(&ticket),
+            )
             .await
         {
             Ok(response) => response.answer,
             Err(err) => {
                 tracing::warn!("El asistente no pudo responder en {ticket_id}: {err}");
-                let text = format!(
-                    "Recibí tu mensaje. Ahora mismo no puedo ampliar la respuesta automática, así que te dejo con un agente de {}.",
-                    ticket.department_name
-                );
-                helpdesk
-                    .post_bot_message(
-                        ticket_id,
-                        &text,
-                        Some("esperando_agente"),
-                        "status_change",
-                        "Escalado porque el asistente no pudo responder.",
-                    )
-                    .await?;
-                return client_view(helpdesk, ticket_id).await;
+                return escalate(helpdesk, &ticket, HandoffKind::Knowledge, &question).await;
             }
         }
     };
-    let visible = with_satisfaction_question(&answer);
+    if lacks_knowledge(&answer) {
+        return escalate(helpdesk, &ticket, HandoffKind::Knowledge, &question).await;
+    }
+    let visible = visible_reply(&answer);
+    let asked_confirmation = visible.contains(SATISFACTION_QUESTION);
     helpdesk
         .post_bot_message(
             ticket_id,
             &visible,
             Some("en_bot"),
             "bot_validation",
-            "Respuesta automática enviada. Se pidió confirmación antes de cerrar.",
+            if asked_confirmation {
+                "Respuesta automática enviada. Se pidió confirmación antes de cerrar."
+            } else {
+                "Respuesta automática enviada."
+            },
         )
         .await?;
     client_view(helpdesk, ticket_id).await
+}
+
+fn client_session_note(ticket: &TicketRow) -> String {
+    format!(
+        "DATOS DEL CLIENTE EN SESIÓN:\n\
+- Nombre: {name}\n\
+- Correo registrado: {email}\n\
+- Dominio: {domain}\n\
+- ID de Ticket: {id}\n\
+- Departamento actual: {department}\n\
+\n\
+INSTRUCCIÓN ESTRICTA: El cliente YA está identificado. NUNCA le vuelvas a pedir su correo, dominio o nombre si ya figuran en los datos anteriores.",
+        name = ticket.customer_name,
+        email = ticket.email_micomco,
+        domain = ticket.customer_domain,
+        id = ticket.id,
+        department = ticket.department_name,
+    )
+}
+
+async fn escalate(
+    helpdesk: &Helpdesk,
+    ticket: &TicketRow,
+    kind: HandoffKind,
+    text: &str,
+) -> Result<ClientView, HelpdeskError> {
+    let area = handoff_area(kind, text, &ticket.department_name);
+    helpdesk.handoff_to_team(ticket.id, area).await?;
+    client_view(helpdesk, ticket.id).await
 }

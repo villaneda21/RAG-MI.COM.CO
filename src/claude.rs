@@ -12,7 +12,7 @@ use crate::cases::{CaseRecord, CaseRegistrationError, CaseService, CATEGORIES};
 use crate::config::{is_usable_anthropic_key, Settings, CLAUDE_FALLBACK_MODELS};
 use crate::conversations::HistoryTurn;
 use crate::prompts::{
-    support_system_with_context, INSUFFICIENT_INFO_FALLBACK, MISSING_MODEL_HINT, RAG_SYSTEM_PROMPT,
+    support_system, INSUFFICIENT_INFO_FALLBACK, MISSING_MODEL_HINT, RAG_SYSTEM_PROMPT,
 };
 
 const MAX_BODY: usize = 8 * 1024 * 1024;
@@ -51,6 +51,7 @@ pub trait SupportClient: Send + Sync {
         session_id: String,
         case_service: CaseService,
         context: String,
+        session_note: String,
     ) -> Result<SupportTurn, ClaudeServiceError>;
 }
 
@@ -235,9 +236,10 @@ impl SupportClient for ClaudeService {
         session_id: String,
         case_service: CaseService,
         context: String,
+        session_note: String,
     ) -> Result<SupportTurn, ClaudeServiceError> {
         let messages = history_to_messages(&history, &question);
-        let system = support_system_with_context(&context);
+        let system = support_system(&context, &session_note);
         let temperature = if context.trim().is_empty() { 0.5 } else { 0.25 };
         let tools = register_case_tool();
         let message = self
@@ -522,5 +524,8 @@ mod tests {
         assert!(SUPPORT_SYSTEM_PROMPT.contains("Facturación o Compras"));
         assert!(lowered.contains("base de conocimiento"));
         assert!(lowered.contains("último recurso") || lowered.contains("no el primero"));
+        assert!(SUPPORT_SYSTEM_PROMPT.contains("[[SIN_COBERTURA]]"));
+        assert!(SUPPORT_SYSTEM_PROMPT.contains("NUNCA cierres con coletillas"));
+        assert!(SUPPORT_SYSTEM_PROMPT.contains("NUNCA vuelvas a pedir"));
     }
 }

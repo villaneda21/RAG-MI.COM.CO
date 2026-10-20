@@ -1,6 +1,6 @@
 //! Flujo del centro de ayuda contra PostgreSQL de prueba.
 
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 
 use async_trait::async_trait;
 use axum::body::Body;
@@ -23,6 +23,8 @@ const TEST_DB: &str = "postgres://rag:rag@127.0.0.1:5432/rag_micomco_test?sslmod
 
 struct ScriptedClaude;
 
+static SEEN_SESSION: Mutex<String> = Mutex::new(String::new());
+
 #[async_trait]
 impl SupportClient for ScriptedClaude {
     fn is_configured(&self) -> bool {
@@ -31,21 +33,26 @@ impl SupportClient for ScriptedClaude {
 
     async fn generate_support_reply(
         &self,
-        _question: String,
+        question: String,
         _history: Vec<HistoryTurn>,
         _session_id: String,
         _case_service: CaseService,
         _context: String,
+        session_note: String,
     ) -> Result<SupportTurn, ClaudeServiceError> {
-        Ok(SupportTurn {
-            text: "Revisa el código en Mi cuenta [guía](https://mi.com.co/cuenta).\n\
+        *SEEN_SESSION.lock().unwrap_or_else(|err| err.into_inner()) = session_note;
+        let folded = question.to_lowercase();
+        let text = if folded.contains("ssl") || folded.contains("certificado") {
+            "[[SIN_COBERTURA]] No está en la base de conocimiento.".to_string()
+        } else {
+            "Revisa el código en Mi cuenta [guía](https://mi.com.co/cuenta).\n\
 Consulta https://docs.example.com/cli.\n\
 \n\
 Fuentes:\n\
 - documento.txt\n"
-                .into(),
-            case: None,
-        })
+                .to_string()
+        };
+        Ok(SupportTurn { text, case: None })
     }
 }
 
@@ -129,6 +136,8 @@ async fn helpdesk_triage_crm_and_inactivity() {
     assert!(home_html.contains("sender_type === 'system'"));
     assert!(home_html.contains("justify-center"));
     assert!(home_html.contains("Caso resuelto"));
+    assert!(!home_html.contains("fixed inset-0"));
+    assert!(home_html.contains("triage-form"));
     let crm = app
         .clone()
         .oneshot(Request::builder().uri("/crm").body(Body::empty()).unwrap())
@@ -161,13 +170,21 @@ async fn helpdesk_triage_crm_and_inactivity() {
         .find(|message| message["sender_type"] == "bot")
         .unwrap();
     let answer = bot["content"].as_str().unwrap();
-    assert!(answer.contains("¿Pude resolver tu duda"));
+    assert!(!answer.contains("¿Pude resolver tu duda"));
+    assert!(!answer.to_lowercase().contains("correo"));
     assert!(!answer.to_lowercase().contains("http"));
     assert!(!answer.to_lowercase().contains("fuentes"));
     assert!(answer.contains("Mi cuenta"));
+    let seen = SEEN_SESSION
+        .lock()
+        .unwrap_or_else(|err| err.into_inner())
+        .clone();
+    assert!(seen.contains("ana@mi.com.co"));
+    assert!(seen.contains("tienda.test"));
+    assert!(seen.contains("NUNCA le vuelvas a pedir"));
     let ticket_id = opened["ticket"]["id"].as_str().unwrap();
 
-    let closed = app
+    let thanks = app
         .clone()
         .oneshot(post(
             "/api/client/message",
@@ -175,8 +192,31 @@ async fn helpdesk_triage_crm_and_inactivity() {
         ))
         .await
         .unwrap();
+    assert_eq!(thanks.status(), StatusCode::OK);
+    let thanks_body = json_body(thanks).await;
+    assert_eq!(thanks_body["ticket"]["status"], "en_bot");
+    assert!(!message_text(&thanks_body, "bot").contains("¿Pude resolver tu duda"));
+
+    let closed = app
+        .clone()
+        .oneshot(put(
+            &format!("/api/crm/tickets/{ticket_id}/status"),
+            json!({ "status": "cerrado", "agent_id": null }),
+        ))
+        .await
+        .unwrap();
     assert_eq!(closed.status(), StatusCode::OK);
-    let closed_body = json_body(closed).await;
+    let closed_view = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/client/tickets/{ticket_id}"))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let closed_body = json_body(closed_view).await;
     assert_eq!(closed_body["ticket"]["status"], "cerrado");
     assert!(message_text(&closed_body, "system").contains("RESUELTO"));
 
@@ -249,6 +289,106 @@ async fn helpdesk_triage_crm_and_inactivity() {
         .unwrap();
     let marked_body = json_body(marked_view).await;
     assert!(message_text(&marked_body, "system").contains("RESUELTO"));
+
+    let ssl = app
+        .clone()
+        .oneshot(post(
+            "/api/client/triage",
+            json!({
+                "name": "Clara SSL",
+                "domain": "ssl.test",
+                "email_micomco": "clara@mi.com.co",
+                "reason": "como instalo el certificado SSL en cPanel"
+            }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(ssl.status(), StatusCode::OK);
+    let ssl_body = json_body(ssl).await;
+    assert_eq!(ssl_body["ticket"]["status"], "esperando_agente");
+    assert_eq!(ssl_body["ticket"]["department_name"], "Soporte Técnico");
+    let ssl_notice = message_text(&ssl_body, "system");
+    assert!(ssl_notice.contains("He transferido tu caso"));
+    assert!(ssl_notice.contains("Soporte Técnico"));
+    assert!(ssl_notice.contains('#'));
+    assert_eq!(
+        ssl_body["messages"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|message| message["sender_type"] == "system")
+            .count(),
+        1
+    );
+    assert!(ssl_body["messages"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .all(|message| {
+            let content = message["content"].as_str().unwrap_or("");
+            !content.contains("¿Pude resolver tu duda")
+                && !content.to_lowercase().contains("correo")
+                && !content.contains("[[SIN_COBERTURA]]")
+        }));
+    let ssl_id = ssl_body["ticket"]["id"].as_str().unwrap();
+    let ssl_follow = app
+        .clone()
+        .oneshot(post(
+            "/api/client/message",
+            json!({
+                "ticket_id": ssl_id,
+                "content": "sigues ahi"
+            }),
+        ))
+        .await
+        .unwrap();
+    let ssl_follow_body = json_body(ssl_follow).await;
+    assert_eq!(ssl_follow_body["ticket"]["status"], "esperando_agente");
+    assert_eq!(
+        ssl_follow_body["messages"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|message| message["sender_type"] == "bot")
+            .count(),
+        0
+    );
+    assert_eq!(
+        ssl_follow_body["messages"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|message| message["sender_type"] == "system")
+            .count(),
+        1
+    );
+
+    let human = app
+        .clone()
+        .oneshot(post(
+            "/api/client/triage",
+            json!({
+                "name": "Hugo Humano",
+                "domain": "humano.test",
+                "email_micomco": "hugo@mi.com.co",
+                "reason": "comunícame con soporte"
+            }),
+        ))
+        .await
+        .unwrap();
+    let human_body = json_body(human).await;
+    assert_eq!(human_body["ticket"]["status"], "esperando_agente");
+    assert_eq!(human_body["ticket"]["department_name"], "Soporte Técnico");
+    assert_eq!(
+        human_body["messages"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|message| message["sender_type"] == "system")
+            .count(),
+        1
+    );
+    assert!(message_text(&human_body, "system").contains("He transferido tu caso"));
 
     let billing = app
         .clone()
@@ -419,6 +559,54 @@ async fn helpdesk_triage_crm_and_inactivity() {
     assert!(system_copy.contains("transferido al área de Ventas"));
     assert!(system_copy.contains("asumido"));
     assert!(system_copy.contains(sales_name));
+
+    let support = agents["agents"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|agent| agent["name"] == "Agente Soporte")
+        .unwrap();
+    let moved_again = app
+        .clone()
+        .oneshot(put(
+            &format!("/api/crm/tickets/{billing_id}/transfer"),
+            json!({
+                "department_id": support["department_id"],
+                "agent_id": support["id"],
+                "actor_agent_id": agent_id
+            }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(moved_again.status(), StatusCode::OK);
+    let after_second = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/client/tickets/{billing_id}"))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let after_second_body = json_body(after_second).await;
+    let assumptions: Vec<_> = after_second_body["messages"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|message| {
+            message["sender_type"] == "system"
+                && message["content"]
+                    .as_str()
+                    .unwrap_or("")
+                    .contains("ha asumido")
+        })
+        .collect();
+    assert_eq!(assumptions.len(), 1);
+    assert!(assumptions[0]["content"]
+        .as_str()
+        .unwrap()
+        .contains("Agente Soporte"));
 
     let toggled = app
         .clone()
