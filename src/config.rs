@@ -13,6 +13,10 @@ const API_KEY_PLACEHOLDERS: &[&str] = &[
 
 pub const CLAUDE_FALLBACK_MODELS: &[&str] = &["claude-haiku-4-5", "claude-haiku-4-5-20251001"];
 
+/// Puerto 5433: contenedor Docker. El 5432 lo ocupa el PostgreSQL nativo de Windows.
+pub const HELPDESK_DATABASE_URL: &str =
+    "postgres://rag:rag@127.0.0.1:5433/rag_micomco?sslmode=disable";
+
 /// True si hay una clave real, no el placeholder de `.env.example`.
 pub fn is_usable_anthropic_key(key: Option<&str>) -> bool {
     let cleaned = key.unwrap_or("").trim();
@@ -67,6 +71,7 @@ impl Settings {
     pub fn load() -> Self {
         let root = find_project_root();
         ensure_env_file(&root);
+        ensure_database_url(&root);
         let _ = dotenvy::from_path(root.join(".env"));
         Self::from_env(root)
     }
@@ -107,10 +112,7 @@ impl Settings {
             fastembed_cache: project_root.join(".cache").join("fastembed"),
             static_dir: project_root.join("static"),
             templates_dir: project_root.join("templates"),
-            database_url: env_string(
-                "DATABASE_URL",
-                "postgres://rag:rag@127.0.0.1:5432/rag_micomco?sslmode=disable",
-            ),
+            database_url: prefer_docker_port(env_string("DATABASE_URL", HELPDESK_DATABASE_URL)),
             media_dir: project_root.join("data").join("media"),
             chroma_host,
             project_root,
@@ -136,6 +138,67 @@ impl Settings {
     pub fn claude_is_configured(&self) -> bool {
         is_usable_anthropic_key(Some(&self.anthropic_api_key))
     }
+}
+
+pub fn ensure_database_url(root: &Path) {
+    let env_path = root.join(".env");
+    let current = std::fs::read_to_string(&env_path).unwrap_or_default();
+    let mut saw = false;
+    let mut changed = false;
+    let mut lines = Vec::new();
+    for line in current.lines() {
+        let trimmed = line.trim();
+        if !trimmed.starts_with('#') && trimmed.starts_with("DATABASE_URL=") {
+            saw = true;
+            let value = trimmed.trim_start_matches("DATABASE_URL=").trim();
+            let fixed = prefer_docker_port(value.to_string());
+            if fixed != value {
+                lines.push(format!("DATABASE_URL={fixed}"));
+                changed = true;
+                continue;
+            }
+        }
+        lines.push(line.to_string());
+    }
+    if !saw {
+        if lines.last().is_some_and(|line| !line.is_empty()) {
+            lines.push(String::new());
+        }
+        lines.push(
+            "# PostgreSQL del centro de ayuda. 5433 es Docker; 5432 es el servicio nativo de Windows."
+                .to_string(),
+        );
+        lines.push(format!("DATABASE_URL={HELPDESK_DATABASE_URL}"));
+        changed = true;
+    }
+    if !changed {
+        return;
+    }
+    let mut body = lines.join("\n");
+    if !body.ends_with('\n') {
+        body.push('\n');
+    }
+    if let Err(err) = std::fs::write(&env_path, body) {
+        tracing::warn!("No se pudo escribir DATABASE_URL en .env: {err}");
+    } else {
+        tracing::info!("DATABASE_URL del centro de ayuda apunta al puerto 5433.");
+    }
+}
+
+/// El PostgreSQL de Windows escucha en 5432 y rechaza al usuario `rag`.
+/// El contenedor de este proyecto publica ese mismo servidor en el host como 5433.
+pub fn prefer_docker_port(url: String) -> String {
+    let path = url.split('?').next().unwrap_or(url.as_str());
+    if !path.ends_with("/rag_micomco") {
+        return url;
+    }
+    for host in ["127.0.0.1:5432/", "localhost:5432/", "[::1]:5432/"] {
+        let docker_host = host.replace("5432", "5433");
+        if url.contains(host) {
+            return url.replace(host, &docker_host);
+        }
+    }
+    url
 }
 
 pub fn ensure_env_file(root: &Path) {
@@ -227,5 +290,19 @@ mod tests {
         assert!(!is_usable_anthropic_key(Some("tu_api_key_aqui")));
         assert!(!is_usable_anthropic_key(Some("  your_api_key_here  ")));
         assert!(is_usable_anthropic_key(Some("sk-ant-api03-realish-value")));
+    }
+
+    #[test]
+    fn windows_postgres_port_is_left_for_docker() {
+        let local = prefer_docker_port(
+            "postgres://rag:rag@127.0.0.1:5432/rag_micomco?sslmode=disable".to_string(),
+        );
+        assert_eq!(local, HELPDESK_DATABASE_URL);
+        let other = prefer_docker_port("postgres://other:secret@db.example:5432/app".to_string());
+        assert!(other.contains(":5432/"));
+        let test_db = prefer_docker_port(
+            "postgres://rag:rag@127.0.0.1:5432/rag_micomco_test?sslmode=disable".to_string(),
+        );
+        assert!(test_db.contains(":5432/"));
     }
 }

@@ -68,9 +68,9 @@ async fn client_triage(
     State(state): State<AppState>,
     Body(body): Body<TriageBody>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let view = service::triage(
-        helpdesk,
+        &helpdesk,
         &state.rag,
         &body.name,
         &body.domain,
@@ -94,7 +94,7 @@ async fn client_message(
     State(state): State<AppState>,
     request: Request,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?.clone();
+    let helpdesk = require(&state).await?;
     let content_type = request
         .headers()
         .get(axum::http::header::CONTENT_TYPE)
@@ -131,8 +131,8 @@ async fn client_ticket(
     State(state): State<AppState>,
     Path(id): Path<Uuid>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
-    let view = service::client_view(helpdesk, id)
+    let helpdesk = require(&state).await?;
+    let view = service::client_view(&helpdesk, id)
         .await
         .map_err(map_helpdesk)?;
     Ok(view_json(view))
@@ -142,7 +142,7 @@ async fn crm_tickets(
     State(state): State<AppState>,
     Query(query): Query<TicketQuery>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let filter = ticket_filter(query)?;
     let tickets = helpdesk.list_tickets(&filter).await.map_err(map_helpdesk)?;
     Ok(Json(json!({ "tickets": tickets })))
@@ -152,7 +152,7 @@ async fn crm_ticket(
     State(state): State<AppState>,
     Path(id): Path<Uuid>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let ticket = helpdesk.ticket_by_id(id).await.map_err(map_helpdesk)?;
     let messages = helpdesk.messages(id, false).await.map_err(map_helpdesk)?;
     let audit = helpdesk.audit_log(id).await.map_err(map_helpdesk)?;
@@ -168,7 +168,7 @@ async fn crm_transfer(
     Path(id): Path<Uuid>,
     Body(body): Body<TransferBody>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let ticket = helpdesk
         .transfer(id, body.department_id, body.agent_id, body.actor_agent_id)
         .await
@@ -181,7 +181,7 @@ async fn crm_timeout(
     Path(id): Path<Uuid>,
     Body(body): Body<TimeoutBody>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let enabled = body
         .auto_timeout_enabled
         .or(body.enabled)
@@ -198,7 +198,7 @@ async fn crm_note(
     Path(id): Path<Uuid>,
     Body(body): Body<AgentTextBody>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let message = helpdesk
         .add_agent_message(id, body.agent_id, &body.content, true)
         .await
@@ -211,7 +211,7 @@ async fn crm_reply(
     Path(id): Path<Uuid>,
     Body(body): Body<AgentTextBody>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let message = helpdesk
         .add_agent_message(id, body.agent_id, &body.content, false)
         .await
@@ -225,7 +225,7 @@ async fn crm_status(
     Path(id): Path<Uuid>,
     Body(body): Body<StatusBody>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let ticket = helpdesk
         .change_status(id, &body.status, body.agent_id)
         .await
@@ -237,7 +237,7 @@ async fn crm_customers(
     State(state): State<AppState>,
     Query(query): Query<CustomerQuery>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     if let Some(id) = query.id {
         let customer = helpdesk.customer_by_id(id).await.map_err(map_helpdesk)?;
         return Ok(Json(json!(customer)));
@@ -250,7 +250,7 @@ async fn crm_update_customer(
     State(state): State<AppState>,
     Body(body): Body<CustomerBody>,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let customer = helpdesk
         .update_customer(body.id, &body.name, &body.domain, &body.email_micomco)
         .await
@@ -259,19 +259,19 @@ async fn crm_update_customer(
 }
 
 async fn crm_departments(State(state): State<AppState>) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let departments = helpdesk.departments().await.map_err(map_helpdesk)?;
     Ok(Json(json!({ "departments": departments })))
 }
 
 async fn crm_agents(State(state): State<AppState>) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let agents = helpdesk.agents().await.map_err(map_helpdesk)?;
     Ok(Json(json!({ "agents": agents })))
 }
 
 async fn list_snippets(State(state): State<AppState>) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let snippets = helpdesk.snippets().await.map_err(map_helpdesk)?;
     Ok(Json(json!({ "snippets": snippets })))
 }
@@ -280,7 +280,7 @@ async fn create_snippet(
     State(state): State<AppState>,
     Body(body): Body<SnippetBody>,
 ) -> Result<impl IntoResponse, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let snippet = helpdesk
         .create_snippet(
             &body.shortcut,
@@ -326,7 +326,7 @@ async fn delete_snippet_path(
 }
 
 async fn get_rules(State(state): State<AppState>) -> Result<Json<BotSettings>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let rules = helpdesk.rules().await.map_err(map_helpdesk)?;
     Ok(Json(rules))
 }
@@ -335,7 +335,7 @@ async fn put_rules(
     State(state): State<AppState>,
     Body(body): Body<BotSettings>,
 ) -> Result<Json<BotSettings>, AppError> {
-    let helpdesk = require(&state)?;
+    let helpdesk = require(&state).await?;
     let rules = helpdesk.save_rules(&body).await.map_err(map_helpdesk)?;
     Ok(Json(rules))
 }
@@ -345,7 +345,7 @@ async fn save_snippet(
     id: Uuid,
     body: SnippetBody,
 ) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(state)?;
+    let helpdesk = require(state).await?;
     let snippet = helpdesk
         .update_snippet(
             id,
@@ -360,7 +360,7 @@ async fn save_snippet(
 }
 
 async fn remove_snippet(state: &AppState, id: Uuid) -> Result<Json<Value>, AppError> {
-    let helpdesk = require(state)?;
+    let helpdesk = require(state).await?;
     helpdesk.delete_snippet(id).await.map_err(map_helpdesk)?;
     Ok(Json(json!({ "ok": true })))
 }
@@ -410,12 +410,8 @@ fn view_json(view: ClientView) -> Json<Value> {
     }))
 }
 
-fn require(state: &AppState) -> Result<&Helpdesk, AppError> {
-    state.helpdesk.as_ref().ok_or_else(|| {
-        AppError::unavailable(
-            "El centro de ayuda no está conectado a PostgreSQL. Revisa DATABASE_URL.",
-        )
-    })
+async fn require(state: &AppState) -> Result<Helpdesk, AppError> {
+    state.helpdesk.get().await.map_err(AppError::unavailable)
 }
 
 fn map_helpdesk(err: HelpdeskError) -> AppError {

@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: rag
+      POSTGRES_DB: rag_micomco
+    ports:
+      - "5433:5432"
+    volumes:
+      - helpdesk_pg:/var/lib/postgresql/data
+
+volumes:
+  helpdesk_pg:

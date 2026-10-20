@@ -1,14 +1,17 @@
 //! Persistencia PostgreSQL del centro de ayuda.
 
 use std::path::PathBuf;
+use std::str::FromStr;
 use std::time::Duration;
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
-use sqlx::postgres::PgPoolOptions;
+use sqlx::postgres::{PgConnectOptions, PgPoolOptions};
 use sqlx::{PgPool, Postgres, Transaction};
 use uuid::Uuid;
+
+use crate::config::HELPDESK_DATABASE_URL;
 
 use super::logic::{
     self, priority_for, route_department, DEFAULT_CLOSE_MINUTES, DEFAULT_CLOSE_TEMPLATE,
@@ -195,16 +198,25 @@ LIMIT 200
 
 impl Helpdesk {
     pub async fn connect(database_url: &str, media_dir: PathBuf) -> Result<Self, String> {
-        let pool = PgPoolOptions::new()
-            .max_connections(8)
-            .acquire_timeout(Duration::from_secs(8))
-            .connect(database_url)
-            .await
-            .map_err(|err| format!("No se pudo conectar a PostgreSQL: {err}"))?;
+        let pool = match open_pool(database_url).await {
+            Ok(pool) => pool,
+            Err(err) if missing_database(&err) => {
+                create_database(database_url).await?;
+                open_pool(database_url)
+                    .await
+                    .map_err(|retry| connection_help(database_url, &retry))?
+            }
+            Err(err) => return Err(connection_help(database_url, &err)),
+        };
         sqlx::migrate!("./migrations")
             .run(&pool)
             .await
-            .map_err(|err| format!("No se pudieron aplicar las migraciones: {err}"))?;
+            .map_err(|err| {
+                connection_help(
+                    database_url,
+                    &format!("no se pudieron aplicar las migraciones: {err}"),
+                )
+            })?;
         tokio::fs::create_dir_all(&media_dir)
             .await
             .map_err(|err| format!("No se pudo crear el directorio de medios: {err}"))?;
@@ -1205,6 +1217,75 @@ async fn insert_audit(
     .await
     .map_err(db_err)?;
     Ok(())
+}
+
+async fn open_pool(database_url: &str) -> Result<PgPool, String> {
+    PgPoolOptions::new()
+        .max_connections(8)
+        .acquire_timeout(Duration::from_secs(8))
+        .connect(database_url)
+        .await
+        .map_err(|err| err.to_string())
+}
+
+fn missing_database(err: &str) -> bool {
+    let lowered = err.to_lowercase();
+    lowered.contains("does not exist") && lowered.contains("database")
+}
+
+async fn create_database(database_url: &str) -> Result<(), String> {
+    let options = PgConnectOptions::from_str(database_url)
+        .map_err(|err| connection_help(database_url, &err.to_string()))?;
+    let name = options.get_database().unwrap_or("rag_micomco").to_string();
+    if name.is_empty()
+        || !name
+            .chars()
+            .all(|character| character.is_ascii_alphanumeric() || character == '_')
+    {
+        return Err(connection_help(
+            database_url,
+            "el nombre de la base no se puede crear solo",
+        ));
+    }
+    let admin = PgPoolOptions::new()
+        .max_connections(1)
+        .acquire_timeout(Duration::from_secs(8))
+        .connect_with(options.database("postgres"))
+        .await
+        .map_err(|err| connection_help(database_url, &err.to_string()))?;
+    sqlx::query(&format!("CREATE DATABASE {name}"))
+        .execute(&admin)
+        .await
+        .map_err(|err| connection_help(database_url, &err.to_string()))?;
+    tracing::info!("Se creó la base PostgreSQL {name}.");
+    Ok(())
+}
+
+pub fn connection_help(database_url: &str, reason: &str) -> String {
+    let target = describe_database_target(database_url);
+    format!(
+        "No hay conexión con PostgreSQL ({target}). {reason}. \
+El puerto 5432 es el PostgreSQL de Windows. El contenedor Docker usa el 5433. \
+En .env deja DATABASE_URL={HELPDESK_DATABASE_URL}. \
+Luego ejecuta docker compose up -d y recarga esta página."
+    )
+}
+
+fn describe_database_target(database_url: &str) -> String {
+    let rest = database_url
+        .split_once("://")
+        .map(|(_, rest)| rest)
+        .unwrap_or(database_url);
+    let (authority, after_user) = rest.split_once('@').unwrap_or(("", rest));
+    let user = authority.split(':').next().filter(|user| !user.is_empty());
+    let without_query = after_user.split('?').next().unwrap_or(after_user);
+    let (host, database) = without_query
+        .split_once('/')
+        .unwrap_or((without_query, "rag_micomco"));
+    match user {
+        Some(user) => format!("usuario {user}, {host}, base {database}"),
+        None => format!("{host}, base {database}"),
+    }
 }
 
 fn db_err(err: sqlx::Error) -> HelpdeskError {

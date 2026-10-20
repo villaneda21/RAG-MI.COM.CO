@@ -90,7 +90,7 @@ async fn health(State(state): State<AppState>) -> Json<HealthResponse> {
         vector_database: vector_status.into(),
         indexed_chunks: indexed,
         claude_api: claude_status.into(),
-        helpdesk: if state.helpdesk.is_some() {
+        helpdesk: if state.helpdesk.connected().await {
             "connected"
         } else {
             "disabled"

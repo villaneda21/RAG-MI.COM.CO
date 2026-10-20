@@ -34,7 +34,14 @@ Con PostgreSQL en marcha, el mismo proceso sirve el simulador de WhatsApp y el C
 - [http://127.0.0.1:8000/crm](http://127.0.0.1:8000/crm) — bandeja de agentes
 - [http://127.0.0.1:8000/crm/admin](http://127.0.0.1:8000/crm/admin) — snippets y reglas del bot
 
-`DATABASE_URL` por defecto es `postgres://rag:rag@127.0.0.1:5432/rag_micomco?sslmode=disable`. Al arrancar se aplican las migraciones de `migrations/` y un temporizador revisa la inactividad cada minuto. Las respuestas al cliente no incluyen fuentes ni URLs; el chat de conocimiento en `/` sigue mostrándolas.
+`DATABASE_URL` apunta a `127.0.0.1:5433`. Ese puerto es el contenedor Docker. El `5432` pertenece al PostgreSQL de Windows, que responde con un error de autenticación y no tiene el usuario `rag`. Si el `.env` todavía dice 5432, el servidor lo cambia a 5433 al arrancar. Luego aplica las migraciones de `migrations/` y el temporizador revisa la inactividad cada minuto. Las respuestas al cliente no incluyen fuentes ni URLs; el chat de conocimiento en `/` sigue mostrándolas.
+
+```bash
+docker compose up -d
+cargo run
+```
+
+El contenedor crea el usuario `rag`, la clave `rag` y la base `rag_micomco`, y lo publica en el host como puerto 5433.
 
 ## Arquitectura
 

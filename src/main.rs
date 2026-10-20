@@ -8,7 +8,6 @@ use tracing_subscriber::EnvFilter;
 
 use rag_micomco::build_rag;
 use rag_micomco::config::Settings;
-use rag_micomco::helpdesk::{spawn_inactivity_worker, Helpdesk};
 use rag_micomco::rag::prepare_index;
 use rag_micomco::routes::{router, AppState};
 
@@ -86,7 +85,7 @@ async fn main() -> ExitCode {
         }
     }
 
-    let mut state = match AppState::try_new(rag) {
+    let state = match AppState::try_new(rag) {
         Ok(state) => state,
         Err(err) => {
             eprintln!("[run] {err}");
@@ -97,18 +96,8 @@ async fn main() -> ExitCode {
     if let Err(err) = std::fs::create_dir_all(&media_dir) {
         tracing::error!("No se pudo crear {}: {err}", media_dir.display());
     }
-    match Helpdesk::connect(&state.rag.settings.database_url, media_dir.clone()).await {
-        Ok(helpdesk) => {
-            spawn_inactivity_worker(helpdesk.pool.clone(), media_dir);
-            tracing::info!(
-                "Centro de ayuda conectado. El temporizador revisa inactividad cada minuto."
-            );
-            state.helpdesk = Some(helpdesk);
-        }
-        Err(err) => {
-            tracing::error!("{err}");
-            tracing::error!("/client y /crm responderán 503 hasta que PostgreSQL esté disponible.");
-        }
+    if let Err(err) = state.helpdesk.establish().await {
+        eprintln!("[run] {err}");
     }
     let host = state.rag.settings.host.clone();
     let port = state.rag.settings.port;
