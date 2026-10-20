@@ -47,11 +47,12 @@
             <section class="flex min-h-0 flex-col border-zinc-200 bg-white xl:border-r">
                 <div id="chat-empty" class="grid flex-1 place-items-center text-sm text-zinc-400">Selecciona un chat</div>
                 <div id="chat" class="hidden min-h-0 flex-1 flex-col">
-                    <header class="flex items-center justify-between border-b border-zinc-100 px-4 py-3">
-                        <div>
-                            <p id="chat-title" class="text-sm font-semibold text-zinc-900"></p>
-                            <p id="chat-sub" class="text-xs text-zinc-500"></p>
+                    <header class="flex items-center justify-between gap-3 border-b border-zinc-100 px-4 py-3">
+                        <div class="min-w-0">
+                            <p id="chat-title" class="truncate text-sm font-semibold text-zinc-900"></p>
+                            <p id="chat-sub" class="truncate text-xs text-zinc-500"></p>
                         </div>
+                        <span id="chat-badge" class="shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-medium text-zinc-500"></span>
                         <button id="open-side" type="button" class="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs xl:hidden">Ficha</button>
                     </header>
                     <div id="messages" class="min-h-0 flex-1 space-y-3 overflow-y-auto bg-zinc-50 px-4 py-4"></div>
@@ -216,6 +217,24 @@
             return date.toLocaleString('es-CO', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
         }
 
+        function badgeClass(status) {
+            return ({
+                nuevo: 'bg-emerald-50 text-emerald-700',
+                en_bot: 'bg-emerald-50 text-emerald-700',
+                en_proceso: 'bg-sky-50 text-sky-700',
+                esperando_agente: 'bg-orange-50 text-orange-700',
+                resuelto: 'bg-zinc-100 text-zinc-500',
+                cerrado: 'bg-zinc-100 text-zinc-500'
+            })[status] || 'bg-zinc-100 text-zinc-500';
+        }
+
+        function handlerLine(ticket) {
+            if (ticket.status === 'en_proceso' && ticket.agent_name) return 'Atendido por Agente ' + ticket.agent_name;
+            if (ticket.status === 'esperando_agente') return 'Esperando agente · ' + ticket.department_name;
+            if (ticket.status === 'resuelto' || ticket.status === 'cerrado') return 'Caso resuelto';
+            return 'Atendido por Bot · ' + ticket.department_name;
+        }
+
         function statusLabel(status) {
             return ({
                 nuevo: 'Nuevo',
@@ -348,14 +367,14 @@
             data.tickets.forEach((ticket) => {
                 const button = document.createElement('button');
                 button.type = 'button';
-                button.className = 'block w-full border-b border-zinc-100 px-3 py-3 text-left hover:bg-zinc-50 ' + (ticket.id === state.ticketId ? 'bg-indigo-50/70' : '');
+                button.className = 'mx-2 my-1.5 block w-[calc(100%-1rem)] rounded-xl border border-zinc-200 bg-white px-3 py-3 text-left shadow-sm hover:border-indigo-200 ' + (ticket.id === state.ticketId ? 'ring-2 ring-indigo-200' : '');
                 const title = document.createElement('div');
                 title.className = 'flex items-center justify-between gap-2';
                 const name = document.createElement('span');
                 name.className = 'truncate text-sm font-medium';
                 name.textContent = ticket.customer_name;
                 const badge = document.createElement('span');
-                badge.className = 'shrink-0 rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] uppercase tracking-wide text-zinc-500';
+                badge.className = 'shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ' + badgeClass(ticket.status);
                 badge.textContent = statusLabel(ticket.status);
                 title.append(name, badge);
                 const preview = document.createElement('p');
@@ -380,7 +399,10 @@
             document.getElementById('chat').classList.remove('hidden');
             document.getElementById('chat').classList.add('flex');
             document.getElementById('chat-title').textContent = data.ticket.customer_name;
-            document.getElementById('chat-sub').textContent = data.ticket.department_name + ' · ' + statusLabel(data.ticket.status) + ' · ' + data.ticket.priority;
+            document.getElementById('chat-sub').textContent = handlerLine(data.ticket) + ' · ' + data.ticket.priority;
+            const badge = document.getElementById('chat-badge');
+            badge.className = 'shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium ' + badgeClass(data.ticket.status);
+            badge.textContent = statusLabel(data.ticket.status);
             paintMessages(data.messages);
             if (!silent || !editingSide) paintSide(data);
             if (!silent) loadTickets();
@@ -391,6 +413,16 @@
             const atBottom = root.scrollHeight - root.scrollTop - root.clientHeight < 80;
             root.replaceChildren();
             messages.forEach((message) => {
+                if (message.sender_type === 'system') {
+                    const row = document.createElement('div');
+                    row.className = 'flex justify-center';
+                    const note = document.createElement('p');
+                    note.className = 'max-w-md rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2 text-center text-xs leading-relaxed text-slate-600 shadow-sm';
+                    note.textContent = message.content;
+                    row.appendChild(note);
+                    root.appendChild(row);
+                    return;
+                }
                 if (message.is_internal_note) {
                     const note = document.createElement('div');
                     note.className = 'rounded-2xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950';
@@ -408,7 +440,9 @@
                 const row = document.createElement('div');
                 row.className = 'flex ' + (mine ? 'justify-end' : 'justify-start');
                 const bubble = document.createElement('div');
-                bubble.className = 'max-w-[75%] rounded-2xl px-3 py-2 text-sm ' + (mine ? 'bg-indigo-600 text-white' : 'border border-zinc-200 bg-white');
+                bubble.className = 'max-w-[75%] rounded-2xl px-3.5 py-2.5 text-sm shadow-sm ' + (mine
+                    ? (message.sender_type === 'agent' ? 'border border-indigo-100 bg-indigo-50 text-slate-800' : 'border border-slate-200 bg-white text-slate-800')
+                    : 'border border-slate-200 bg-white text-slate-800');
                 if (message.media_type === 'audio' && message.media_url) {
                     const audio = document.createElement('audio');
                     audio.controls = true;
@@ -419,8 +453,13 @@
                 text.className = 'whitespace-pre-wrap';
                 text.textContent = message.content;
                 const meta = document.createElement('p');
-                meta.className = 'mt-1 text-[11px] ' + (mine ? 'text-indigo-100' : 'text-zinc-400');
-                meta.textContent = (message.author_name || message.sender_type) + ' · ' + clock(message.created_at);
+                meta.className = 'mt-1 text-[11px] text-zinc-400';
+                const who = message.sender_type === 'client'
+                    ? 'Cliente'
+                    : message.sender_type === 'agent'
+                        ? ('Agente ' + (message.author_name || ''))
+                        : 'Bot';
+                meta.textContent = who + ' · ' + clock(message.created_at);
                 bubble.append(text, meta);
                 row.appendChild(bubble);
                 root.appendChild(row);

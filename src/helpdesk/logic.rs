@@ -11,6 +11,25 @@ pub const DEPT_BILLING: &str = "Facturación";
 pub const SATISFACTION_QUESTION: &str =
     "¿Pude resolver tu duda o hay algo más en lo que te pueda ayudar?";
 
+pub const RESOLVED_NOTICE: &str = "✅ Tu caso ha sido marcado como RESUELTO. Si necesitas ayuda adicional o tu problema no se solucionó, escríbenos de nuevo.";
+
+pub fn transfer_notice(area: &str) -> String {
+    format!("🔄 Tu caso ha sido transferido al área de {area}. Un agente te atenderá en breve.")
+}
+
+pub fn agent_notice(name: &str) -> String {
+    format!("👤 El agente {name} ha asumido tu conversación y te está atendiendo ahora.")
+}
+
+pub fn reopen_notice(label: &str) -> String {
+    format!("ℹ️ Tu caso anterior ya se encuentra cerrado. Hemos generado una nueva solicitud ({label}) para atender tu mensaje.")
+}
+
+pub fn ticket_label(id: uuid::Uuid) -> String {
+    let compact = id.simple().to_string();
+    format!("#{}", compact[..8].to_uppercase())
+}
+
 pub const TIMEOUT_STATUSES: &[&str] = &["en_bot", "esperando_agente", "en_proceso"];
 
 pub const DEFAULT_WARNING_MINUTES: i32 = 10;
@@ -377,6 +396,18 @@ Fuente: documento.txt";
         let asked = with_satisfaction_question(raw);
         assert!(asked.contains(SATISFACTION_QUESTION));
         assert!(!asked.contains("https://"));
+    }
+
+    #[test]
+    fn notices_name_the_area_agent_and_new_request() {
+        assert!(RESOLVED_NOTICE.contains("RESUELTO"));
+        assert!(transfer_notice("Facturación").contains("área de Facturación"));
+        assert!(agent_notice("Agente Ventas").contains("El agente Agente Ventas"));
+        let id = uuid::Uuid::parse_str("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1").unwrap();
+        let label = ticket_label(id);
+        assert_eq!(label, "#AAAAAAAA");
+        assert!(reopen_notice(&label).contains("#AAAAAAAA"));
+        assert!(reopen_notice(&label).contains("nueva solicitud"));
     }
 
     #[test]

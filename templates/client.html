@@ -14,12 +14,7 @@
     </script>
     <style>
         body { font-family: Inter, system-ui, sans-serif; }
-        .wallpaper {
-            background-color: #efeae2;
-            background-image:
-                radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.05), transparent 28%),
-                radial-gradient(circle at 80% 0%, rgba(15, 118, 110, 0.06), transparent 24%);
-        }
+        .thread-bg { background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%); }
         audio { height: 36px; width: 220px; }
         #toast { transition: opacity 180ms ease, transform 180ms ease; }
     </style>
@@ -49,19 +44,21 @@
         </form>
     </div>
 
-    <main class="mx-auto flex h-full max-w-3xl flex-col bg-white shadow-xl">
-        <header class="flex items-center gap-3 bg-emerald-700 px-4 py-3 text-white">
-            <div class="grid h-10 w-10 place-items-center rounded-full bg-emerald-500/40 text-sm font-semibold">MI</div>
+    <main class="mx-auto flex h-full max-w-3xl flex-col bg-white shadow-sm">
+        <header class="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-3">
+            <div class="grid h-10 w-10 place-items-center rounded-2xl bg-emerald-600 text-sm font-semibold text-white shadow-sm">MI</div>
             <div class="min-w-0 flex-1">
-                <p class="truncate text-sm font-semibold">Soporte MI.COM.CO</p>
-                <p id="presence" class="text-xs text-emerald-100">En línea</p>
+                <p class="truncate text-sm font-semibold text-slate-900">Soporte MI.COM.CO</p>
+                <p id="presence" class="truncate text-xs text-slate-500">Atendido por Bot</p>
             </div>
-            <a href="/crm" class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium hover:bg-white/20">CRM</a>
+            <span id="status-badge" class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">Activo</span>
+            <a href="/crm" class="rounded-xl border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 hover:bg-slate-50">CRM</a>
         </header>
-        <section id="thread" class="wallpaper flex-1 space-y-2 overflow-y-auto px-3 py-4 sm:px-5"></section>
-        <div id="closed-banner" class="hidden border-t border-amber-200 bg-amber-50 px-4 py-2 text-center text-sm text-amber-800">
-            Este chat está cerrado.
-            <button id="new-chat" type="button" class="ml-1 font-semibold underline">Abrir uno nuevo</button>
+        <section id="thread" class="thread-bg flex-1 space-y-3 overflow-y-auto px-3 py-5 sm:px-6"></section>
+        <div id="closed-banner" class="hidden border-t border-slate-200 bg-slate-50 px-4 py-2 text-center text-sm text-slate-600">
+            <span class="mr-2 rounded-full bg-zinc-200 px-2 py-0.5 text-[11px] font-medium text-zinc-600">Caso resuelto</span>
+            Si escribes de nuevo, abriremos una solicitud nueva.
+            <button id="new-chat" type="button" class="ml-1 font-semibold text-slate-800 underline">Empezar de cero</button>
         </div>
         <form id="composer" class="flex items-end gap-2 border-t border-slate-200 bg-zinc-100 px-3 py-2.5">
             <input id="file" type="file" accept="audio/ogg,audio/mpeg,audio/mp3,audio/wav,.ogg,.mp3,.wav,.gif,.webp" class="hidden">
@@ -79,6 +76,7 @@
         const thread = document.getElementById('thread');
         const triage = document.getElementById('triage');
         const presence = document.getElementById('presence');
+        const statusBadge = document.getElementById('status-badge');
         const input = document.getElementById('input');
         const fileInput = document.getElementById('file');
         const closedBanner = document.getElementById('closed-banner');
@@ -103,20 +101,39 @@
         function render(payload) {
             const ticket = payload.ticket;
             const messages = payload.messages || [];
-            presence.textContent = ticket.department_name + ' · ' + labelStatus(ticket.status);
-            closedBanner.classList.toggle('hidden', ticket.status !== 'cerrado');
+            presence.textContent = handlerLine(ticket);
+            paintBadge(ticket.status);
+            const resolved = ticket.status === 'cerrado' || ticket.status === 'resuelto';
+            closedBanner.classList.toggle('hidden', !resolved);
+            input.placeholder = resolved ? 'Escribe para abrir una solicitud nueva' : 'Escribe un mensaje';
             const signature = JSON.stringify(messages.map((item) => item.id));
             if (signature === known) return;
             known = signature;
             thread.replaceChildren();
             messages.forEach((message) => {
+                if (message.sender_type === 'system') {
+                    const row = document.createElement('div');
+                    row.className = 'flex justify-center';
+                    const note = document.createElement('p');
+                    note.className = 'max-w-md rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2 text-center text-xs leading-relaxed text-slate-600 shadow-sm';
+                    note.textContent = message.content + (clock(message.created_at) ? ' · ' + clock(message.created_at) : '');
+                    row.appendChild(note);
+                    thread.appendChild(row);
+                    return;
+                }
                 const mine = message.sender_type === 'client';
                 const row = document.createElement('div');
                 row.className = 'flex ' + (mine ? 'justify-end' : 'justify-start');
                 const bubble = document.createElement('div');
-                bubble.className = 'max-w-[80%] rounded-2xl px-3 py-2 text-sm shadow-sm ' + (mine
+                bubble.className = 'max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm shadow-sm ' + (mine
                     ? 'rounded-br-md bg-emerald-600 text-white'
-                    : 'rounded-bl-md bg-white text-slate-800');
+                    : message.sender_type === 'agent'
+                        ? 'rounded-bl-md border border-indigo-100 bg-white text-slate-800'
+                        : 'rounded-bl-md border border-slate-200 bg-white text-slate-800');
+                const who = document.createElement('p');
+                who.className = 'mb-1 text-[11px] font-medium ' + (mine ? 'text-emerald-100' : message.sender_type === 'agent' ? 'text-indigo-600' : 'text-emerald-700');
+                who.textContent = mine ? 'Tú' : (message.sender_type === 'agent' ? ('Agente ' + (message.author_name || '')) : 'Bot');
+                bubble.appendChild(who);
                 if (message.media_type === 'audio' && message.media_url) {
                     const audio = document.createElement('audio');
                     audio.controls = true;
@@ -132,7 +149,7 @@
                 }
                 const meta = document.createElement('p');
                 meta.className = 'mt-1 text-[11px] ' + (mine ? 'text-emerald-100' : 'text-slate-400');
-                meta.textContent = (message.author_name ? message.author_name + ' · ' : '') + clock(message.created_at);
+                meta.textContent = clock(message.created_at);
                 bubble.appendChild(meta);
                 row.appendChild(bubble);
                 thread.appendChild(row);
@@ -140,16 +157,27 @@
             thread.scrollTop = thread.scrollHeight;
         }
 
-        function labelStatus(status) {
-            const names = {
-                nuevo: 'nuevo',
-                en_bot: 'asistente',
-                esperando_agente: 'esperando agente',
-                en_proceso: 'con un agente',
-                resuelto: 'resuelto',
-                cerrado: 'cerrado'
+        function handlerLine(ticket) {
+            if (ticket.status === 'en_proceso' && ticket.agent_name) {
+                return 'Atendido por Agente ' + ticket.agent_name;
+            }
+            if (ticket.status === 'esperando_agente') return 'Esperando un agente de ' + ticket.department_name;
+            if (ticket.status === 'resuelto' || ticket.status === 'cerrado') return 'Caso resuelto';
+            return 'Atendido por Bot · ' + ticket.department_name;
+        }
+
+        function paintBadge(status) {
+            const styles = {
+                nuevo: ['bg-emerald-50 text-emerald-700', 'Activo'],
+                en_bot: ['bg-emerald-50 text-emerald-700', 'Activo'],
+                en_proceso: ['bg-sky-50 text-sky-700', 'En proceso'],
+                esperando_agente: ['bg-orange-50 text-orange-700', 'Esperando agente'],
+                resuelto: ['bg-zinc-100 text-zinc-500', 'Caso resuelto'],
+                cerrado: ['bg-zinc-100 text-zinc-500', 'Caso resuelto']
             };
-            return names[status] || status;
+            const chosen = styles[status] || styles.en_bot;
+            statusBadge.className = 'rounded-full px-2.5 py-1 text-[11px] font-medium ' + chosen[0];
+            statusBadge.textContent = chosen[1];
         }
 
         async function readError(response) {
@@ -248,16 +276,16 @@
             sending = true;
             document.getElementById('send').disabled = true;
             try {
-                const payload = { ticket_id: ticketId, content };
+                const body = { ticket_id: ticketId, content };
                 if (file) {
-                    payload.mime_type = file.type || '';
-                    payload.filename = file.name || '';
-                    payload.media_base64 = await readFile(file);
+                    body.mime_type = file.type || '';
+                    body.filename = file.name || '';
+                    body.media_base64 = await readFile(file);
                 }
                 const response = await fetch('/api/client/message', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(body)
                 });
                 if (response.status === 409) {
                     toast(await readError(response));
@@ -275,8 +303,13 @@
                     return;
                 }
                 input.value = '';
+                const payload = await response.json();
+                if (payload.ticket && payload.ticket.id) {
+                    ticketId = payload.ticket.id;
+                    localStorage.setItem('micomco_ticket_id', ticketId);
+                }
                 known = '';
-                render(await response.json());
+                render(payload);
             } finally {
                 sending = false;
                 document.getElementById('send').disabled = false;

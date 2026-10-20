@@ -14,8 +14,9 @@ use uuid::Uuid;
 use crate::config::HELPDESK_DATABASE_URL;
 
 use super::logic::{
-    self, priority_for, route_department, DEFAULT_CLOSE_MINUTES, DEFAULT_CLOSE_TEMPLATE,
-    DEFAULT_WARNING_MINUTES, DEFAULT_WARNING_TEMPLATE,
+    self, agent_notice, priority_for, reopen_notice, route_department, ticket_label,
+    transfer_notice, DEFAULT_CLOSE_MINUTES, DEFAULT_CLOSE_TEMPLATE, DEFAULT_WARNING_MINUTES,
+    DEFAULT_WARNING_TEMPLATE, RESOLVED_NOTICE,
 };
 
 #[derive(Debug, thiserror::Error)]
@@ -314,9 +315,9 @@ impl Helpdesk {
             .await
             .map_err(db_err)?
             .ok_or_else(|| HelpdeskError::NotFound("No encontramos ese chat.".into()))?;
-        if status == "cerrado" {
+        if status == "cerrado" || status == "resuelto" {
             return Err(HelpdeskError::Conflict(
-                "Este chat ya está cerrado. Abre una consulta nueva para continuar.".into(),
+                "Este caso ya está cerrado. Hay que abrir una solicitud nueva.".into(),
             ));
         }
         let now = Utc::now();
@@ -396,9 +397,81 @@ impl Helpdesk {
             },
         )
         .await?;
+        if matches!(next_status, Some("resuelto" | "cerrado")) {
+            insert_message(&mut tx, &system_note(ticket_id, RESOLVED_NOTICE)).await?;
+        }
         insert_audit(&mut tx, ticket_id, None, action, details).await?;
         tx.commit().await.map_err(db_err)?;
         Ok(())
+    }
+
+    pub async fn open_followup(
+        &self,
+        previous: &TicketRow,
+        content: &str,
+        media_type: &str,
+        media_url: Option<&str>,
+    ) -> Result<Uuid, HelpdeskError> {
+        let spoken = if content.trim().is_empty() {
+            "Nota de voz"
+        } else {
+            content.trim()
+        };
+        if spoken.chars().count() > 8000 {
+            return Err(HelpdeskError::BadRequest(
+                "El mensaje es demasiado largo.".into(),
+            ));
+        }
+        let department_name = route_department(spoken);
+        let department = self.department_by_name(department_name).await?;
+        let priority = priority_for(spoken);
+        let mut tx = self.pool.begin().await.map_err(db_err)?;
+        let now = Utc::now();
+        let ticket_id: Uuid = sqlx::query_scalar(
+            r#"
+            INSERT INTO tickets (
+                customer_id, department_id, status, priority, auto_timeout_enabled,
+                last_client_message_at, created_at, updated_at
+            )
+            VALUES ($1, $2, 'en_bot', $3, TRUE, $4, $4, $4)
+            RETURNING id
+            "#,
+        )
+        .bind(previous.customer_id)
+        .bind(department.id)
+        .bind(priority)
+        .bind(now)
+        .fetch_one(&mut *tx)
+        .await
+        .map_err(db_err)?;
+        let notice = reopen_notice(&ticket_label(ticket_id));
+        insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
+        insert_message(
+            &mut tx,
+            &NewMessage {
+                ticket_id,
+                sender_type: "client",
+                content: spoken,
+                media_type,
+                media_url,
+                internal: false,
+                author_name: Some(&previous.customer_name),
+            },
+        )
+        .await?;
+        insert_audit(
+            &mut tx,
+            ticket_id,
+            None,
+            "status_change",
+            &format!(
+                "Nueva solicitud {} abierta porque el caso anterior estaba cerrado.",
+                ticket_label(ticket_id)
+            ),
+        )
+        .await?;
+        tx.commit().await.map_err(db_err)?;
+        Ok(ticket_id)
     }
 
     pub async fn list_tickets(
@@ -554,6 +627,16 @@ impl Helpdesk {
             return Err(HelpdeskError::NotFound("No encontramos ese chat.".into()));
         }
         insert_audit(&mut tx, ticket_id, actor_id, "transfer", &details).await?;
+        if current.department_id != department_id {
+            let notice = transfer_notice(&department.name);
+            insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
+        }
+        if agent_id.is_some() && agent_id != current.assigned_agent_id {
+            if let Some(name) = agent_name.as_deref() {
+                let notice = agent_notice(name);
+                insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
+            }
+        }
         tx.commit().await.map_err(db_err)?;
         self.ticket_by_id(ticket_id).await
     }
@@ -620,6 +703,9 @@ impl Helpdesk {
             &format!("Estado cambiado de {} a {status}.", current.status),
         )
         .await?;
+        if matches!(status, "resuelto" | "cerrado") {
+            insert_message(&mut tx, &system_note(ticket_id, RESOLVED_NOTICE)).await?;
+        }
         tx.commit().await.map_err(db_err)?;
         self.ticket_by_id(ticket_id).await
     }
@@ -695,6 +781,10 @@ impl Helpdesk {
                     &format!("{author} tomó el chat. Estado: {next}."),
                 )
                 .await?;
+            }
+            if current.assigned_agent_id != Some(agent_id) {
+                let notice = agent_notice(&author);
+                insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
             }
         }
         tx.commit().await.map_err(db_err)?;
@@ -1057,6 +1147,7 @@ impl Helpdesk {
             },
         )
         .await?;
+        insert_message(&mut tx, &system_note(ticket_id, RESOLVED_NOTICE)).await?;
         insert_audit(
             &mut tx,
             ticket_id,
@@ -1110,6 +1201,32 @@ fn timeout_statuses() -> Vec<String> {
         .iter()
         .map(|status| (*status).to_string())
         .collect()
+}
+
+fn message_stamp() -> DateTime<Utc> {
+    use std::sync::atomic::{AtomicI64, Ordering};
+    static LAST: AtomicI64 = AtomicI64::new(0);
+    let now = Utc::now().timestamp_micros();
+    let mut previous = LAST.load(Ordering::Relaxed);
+    loop {
+        let next = now.max(previous.saturating_add(1));
+        match LAST.compare_exchange_weak(previous, next, Ordering::Relaxed, Ordering::Relaxed) {
+            Ok(_) => return DateTime::from_timestamp_micros(next).unwrap_or_else(Utc::now),
+            Err(seen) => previous = seen,
+        }
+    }
+}
+
+fn system_note(ticket_id: Uuid, content: &str) -> NewMessage<'_> {
+    NewMessage {
+        ticket_id,
+        sender_type: "system",
+        content,
+        media_type: "text",
+        media_url: None,
+        internal: false,
+        author_name: Some("Sistema"),
+    }
 }
 
 fn require_text(value: &str, message: &str, max_chars: usize) -> Result<String, HelpdeskError> {
@@ -1177,9 +1294,10 @@ async fn insert_message(
     sqlx::query_as(
         r#"
         INSERT INTO messages (
-            ticket_id, sender_type, content, media_type, media_url, is_internal_note, author_name
+            ticket_id, sender_type, content, media_type, media_url, is_internal_note, author_name,
+            created_at
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING id, ticket_id, sender_type, content, media_type, media_url,
                   is_internal_note, author_name, created_at
         "#,
@@ -1191,6 +1309,7 @@ async fn insert_message(
     .bind(message.media_url)
     .bind(message.internal)
     .bind(message.author_name)
+    .bind(message_stamp())
     .fetch_one(&mut **tx)
     .await
     .map_err(db_err)

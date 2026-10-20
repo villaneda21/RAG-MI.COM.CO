@@ -49,6 +49,17 @@ Fuentes:\n\
     }
 }
 
+fn message_text(body: &Value, sender: &str) -> String {
+    body["messages"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|message| message["sender_type"] == sender)
+        .filter_map(|message| message["content"].as_str())
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
 async fn json_body(response: axum::response::Response) -> Value {
     let bytes = response.into_body().collect().await.unwrap().to_bytes();
     serde_json::from_slice(&bytes).unwrap_or(Value::Null)
@@ -106,6 +117,18 @@ async fn helpdesk_triage_crm_and_inactivity() {
         .await
         .unwrap();
     assert_eq!(home.status(), StatusCode::OK);
+    let home_html = String::from_utf8(
+        home.into_body()
+            .collect()
+            .await
+            .unwrap()
+            .to_bytes()
+            .to_vec(),
+    )
+    .unwrap();
+    assert!(home_html.contains("sender_type === 'system'"));
+    assert!(home_html.contains("justify-center"));
+    assert!(home_html.contains("Caso resuelto"));
     let crm = app
         .clone()
         .oneshot(Request::builder().uri("/crm").body(Body::empty()).unwrap())
@@ -155,6 +178,77 @@ async fn helpdesk_triage_crm_and_inactivity() {
     assert_eq!(closed.status(), StatusCode::OK);
     let closed_body = json_body(closed).await;
     assert_eq!(closed_body["ticket"]["status"], "cerrado");
+    assert!(message_text(&closed_body, "system").contains("RESUELTO"));
+
+    let reopened = app
+        .clone()
+        .oneshot(post(
+            "/api/client/message",
+            json!({
+                "ticket_id": ticket_id,
+                "content": "sigue sin llegar el correo"
+            }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(reopened.status(), StatusCode::OK);
+    let reopened_body = json_body(reopened).await;
+    let follow_id = reopened_body["ticket"]["id"].as_str().unwrap().to_string();
+    assert_ne!(follow_id, ticket_id);
+    assert_eq!(reopened_body["ticket"]["status"], "en_bot");
+    assert_eq!(
+        reopened_body["ticket"]["department_name"],
+        "Soporte Técnico"
+    );
+    let notice = message_text(&reopened_body, "system");
+    assert!(notice.contains("nueva solicitud"));
+    assert!(notice.contains('#'));
+    assert!(reopened_body["messages"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .any(|message| message["sender_type"] == "client"
+            && message["content"] == "sigue sin llegar el correo"));
+    let previous = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/client/tickets/{ticket_id}"))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let previous_body = json_body(previous).await;
+    assert_eq!(previous_body["ticket"]["status"], "cerrado");
+    assert!(previous_body["messages"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .all(|message| message["content"] != "sigue sin llegar el correo"));
+
+    let marked = app
+        .clone()
+        .oneshot(put(
+            &format!("/api/crm/tickets/{follow_id}/status"),
+            json!({ "status": "resuelto", "agent_id": null }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(marked.status(), StatusCode::OK);
+    assert_eq!(json_body(marked).await["ticket"]["status"], "resuelto");
+    let marked_view = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/client/tickets/{follow_id}"))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let marked_body = json_body(marked_view).await;
+    assert!(message_text(&marked_body, "system").contains("RESUELTO"));
 
     let billing = app
         .clone()
@@ -309,6 +403,22 @@ async fn helpdesk_triage_crm_and_inactivity() {
     let transfer_body = json_body(transfer).await;
     assert_eq!(transfer_body["ticket"]["department_name"], "Ventas");
     assert_eq!(transfer_body["ticket"]["status"], "en_proceso");
+    let sales_name = sales["name"].as_str().unwrap();
+    let transferred_view = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/client/tickets/{billing_id}"))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    let transferred_body = json_body(transferred_view).await;
+    let system_copy = message_text(&transferred_body, "system");
+    assert!(system_copy.contains("transferido al área de Ventas"));
+    assert!(system_copy.contains("asumido"));
+    assert!(system_copy.contains(sales_name));
 
     let toggled = app
         .clone()

@@ -37,6 +37,12 @@ pub async fn accept_client_message(
 ) -> Result<ClientView, HelpdeskError> {
     let ticket = helpdesk.ticket_by_id(ticket_id).await?;
     let media_type = if media_url.is_some() { "audio" } else { "text" };
+    if ticket.status == "resuelto" || ticket.status == "cerrado" {
+        let opened = helpdesk
+            .open_followup(&ticket, content, media_type, media_url)
+            .await?;
+        return reply_as_bot(helpdesk, rag, opened).await;
+    }
     helpdesk
         .record_client_message(
             ticket_id,
