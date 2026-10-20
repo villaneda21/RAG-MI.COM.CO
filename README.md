@@ -1,6 +1,6 @@
 # Asistente RAG de MI.COM.CO
 
-Sistema de **Retrieval-Augmented Generation (RAG)** para consultar la base de conocimiento de MI.COM.CO. El documento TXT se divide en fragmentos, se convierte en embeddings locales con Sentence Transformers y se guarda en **ChromaDB**. Cuando un usuario pregunta, el backend recupera los fragmentos más relevantes y **Claude** (Anthropic) genera una respuesta basada exclusivamente en esa información.
+Sistema de **Retrieval-Augmented Generation (RAG)** para consultar la base de conocimiento de MI.COM.CO. El documento TXT se divide en fragmentos, se indexa en local (o en ChromaDB si se configura `CHROMA_URL`) y, cuando un usuario pregunta, el backend recupera los fragmentos más relevantes. **Claude** (Anthropic) genera una respuesta basada exclusivamente en esa información.
 
 No inventa datos: si el documento no contiene la respuesta, el asistente lo indica con claridad.
 
@@ -9,13 +9,13 @@ No inventa datos: si el documento no contiene la respuesta, el asistente lo indi
 ```text
 Usuario
    ↓
-Interfaz Web (HTML / CSS / JS)
+Interfaz Web (HTML / CSS / JS, plantilla Tera)
    ↓
-FastAPI
+Axum (Tokio)
    ↓
 RAG Service
    ↓
-ChromaDB → Recuperación de contexto
+Índice local o ChromaDB REST v2 → Recuperación de contexto
    ↓
 Claude API
    ↓
@@ -25,22 +25,44 @@ Respuesta + fuentes consultadas
 Flujo de indexación:
 
 ```text
-Archivo TXT
+Archivo TXT o MD
  → Lectura y limpieza
- → División en chunks (párrafos → oraciones → longitud)
- → Embeddings (Sentence Transformers)
+ → División en chunks (bloques [CHUNK_ID] o párrafos → oraciones → longitud)
+ → Embeddings (hashing de 384 dimensiones + BM25, o el mismo vector enviado a Chroma)
  → Almacenamiento persistente en chroma_db/
 ```
 
 ## Requisitos
 
-- **Python 3.12** (obligatorio; `run.py` lo busca y crea el `venv` con esa versión)
+- **Rust 1.83** (`cargo`)
 - Una API key de Anthropic para las respuestas del chatbot (`ANTHROPIC_API_KEY`)
 - La interfaz **sí arranca sin API key**; las consultas a Claude no.
 
-En Windows instala Python 3.12 desde [python.org](https://www.python.org/downloads/) y marca **Add python.exe to PATH**.
+## Backend Rust
 
-## Instalación y arranque (recomendado)
+El servidor de producción de esta rama es **Rust** (Axum + Tokio). Sustituye a `run.py`: misma interfaz en `templates/` y `static/`, mismos endpoints y el mismo flujo de casos, historial e indexación.
+
+```bash
+cargo run
+```
+
+La primera compilación descarga las dependencias. Al arrancar se indexan los `.txt` y `.md` de `data/documents/` si hay cambios, y el servidor queda en [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+```bash
+cargo run -- --no-ingest
+cargo run -- --port 8000
+cargo run -- ingest --status
+cargo run -- ingest --reset
+cargo test
+```
+
+Sin `CHROMA_URL`, los embeddings se calculan en el proceso (hashing de 384 dimensiones + BM25) y se guardan en `chroma_db/local_vectors.json`. Con `CHROMA_URL` (por ejemplo `http://127.0.0.1:8001`) el mismo cliente envía esos vectores a la API REST v2 de ChromaDB. Claude sigue saliendo por `POST https://api.anthropic.com/v1/messages`.
+
+Los módulos Python de `app/` quedan como referencia del comportamiento original.
+
+## Instalación y arranque de Python (referencia)
+
+El código de `app/` y `run.py` se conserva como referencia. Requiere **Python 3.12**. En Windows instálalo desde [python.org](https://www.python.org/downloads/) y marca **Add python.exe to PATH**.
 
 Con un solo comando se crea el entorno 3.12, se instalan dependencias, se indexa el TXT si hace falta y se abre el servidor:
 
