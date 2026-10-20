@@ -41,6 +41,9 @@ data/cases/*.json
 data/cases/conversations/*.json
 !data/cases/conversations/.gitkeep
 
+# Rust
+/target/
+
 # IDE / OS
 .idea/
 .vscode/
