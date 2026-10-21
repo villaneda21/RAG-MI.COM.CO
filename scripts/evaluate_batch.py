@@ -374,6 +374,13 @@ def evaluate_live(tickets: list[dict], base_url: str, timeout: float) -> dict:
             "min_similarity": rows[0].get("min_similarity") if rows else 0.35,
         },
         "rows": rows,
+        "interpretation": (
+            "Un caso deflectado exige que la respuesta cite una guía y que el ticket "
+            "no quede en esperando_agente. Si Claude no está configurado, el centro "
+            "de ayuda escala y la tasa de deflexión cae aunque el índice haya "
+            "encontrado la guía. vector_top_equals_expected mide esa recuperación "
+            "aparte de la deflexión."
+        ),
     }
 
 
