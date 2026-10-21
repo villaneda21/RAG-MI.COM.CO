@@ -17,7 +17,7 @@ use uuid::Uuid;
 use crate::error::AppError;
 use crate::state::AppState;
 
-use super::logic::{media_decision, MediaDecision};
+use super::logic::{media_decision, MediaDecision, GIF_REJECTION};
 use super::service::{self, ClientView};
 use super::store::{BotSettings, Helpdesk, HelpdeskError, TicketFilter};
 
@@ -111,9 +111,12 @@ async fn client_message(
             serde_json::from_slice(&bytes).map_err(|_| AppError::unprocessable())?;
         incoming_from_json(body)?
     };
-    let media_url = match incoming.audio {
-        Some(audio) => Some(write_audio(&helpdesk, &audio.bytes, audio.extension).await?),
-        None => None,
+    let (media_url, media_type) = match incoming.attachment {
+        Some(file) => (
+            Some(write_media(&helpdesk, &file.bytes, file.extension).await?),
+            file.kind,
+        ),
+        None => (None, "text"),
     };
     let view = service::accept_client_message(
         &helpdesk,
@@ -121,6 +124,7 @@ async fn client_message(
         incoming.ticket_id,
         &incoming.content,
         media_url.as_deref(),
+        media_type,
     )
     .await
     .map_err(map_helpdesk)?;
@@ -438,12 +442,13 @@ async fn read_page(state: &AppState, name: &str) -> Result<Html<String>, AppErro
 struct Incoming {
     ticket_id: Uuid,
     content: String,
-    audio: Option<AudioFile>,
+    attachment: Option<Attachment>,
 }
 
-struct AudioFile {
+struct Attachment {
     bytes: Vec<u8>,
     extension: &'static str,
+    kind: &'static str,
 }
 
 fn incoming_from_json(body: ClientMessageBody) -> Result<Incoming, AppError> {
@@ -458,30 +463,15 @@ fn incoming_from_json(body: ClientMessageBody) -> Result<Incoming, AppError> {
         return Ok(Incoming {
             ticket_id: body.ticket_id,
             content: body.content,
-            audio: None,
+            attachment: None,
         });
     }
-    let decision = media_decision(&mime, &body.filename);
-    let extension = match decision {
-        MediaDecision::Audio { extension } => extension,
-        MediaDecision::RejectStickers => {
-            return Err(AppError::unsupported(
-                "No aceptamos stickers ni GIFs. Envía texto o una nota de voz.",
-            ));
-        }
-        MediaDecision::Text | MediaDecision::RejectOther => {
-            return Err(AppError::unsupported(
-                "Solo aceptamos texto o notas de voz (ogg, mp3 o wav).",
-            ));
-        }
-    };
+    let bytes = decode_base64(&body.media_base64)?;
+    let attachment = attachment_from(&mime, &body.filename, bytes)?;
     Ok(Incoming {
         ticket_id: body.ticket_id,
         content: body.content,
-        audio: Some(AudioFile {
-            bytes: decode_base64(&body.media_base64)?,
-            extension,
-        }),
+        attachment,
     })
 }
 
@@ -538,45 +528,56 @@ async fn read_multipart(request: Request) -> Result<Incoming, AppError> {
         return Ok(Incoming {
             ticket_id,
             content,
-            audio: None,
+            attachment: None,
         });
     }
-    let extension = match media_decision(&mime, &filename) {
-        MediaDecision::Audio { extension } => extension,
-        MediaDecision::RejectStickers => {
-            return Err(AppError::unsupported(
-                "No aceptamos stickers ni GIFs. Envía texto o una nota de voz.",
-            ));
-        }
-        MediaDecision::Text | MediaDecision::RejectOther => {
-            return Err(AppError::unsupported(
-                "Solo aceptamos texto o notas de voz (ogg, mp3 o wav).",
-            ));
-        }
-    };
+    let attachment = attachment_from(&mime, &filename, bytes)?;
     Ok(Incoming {
         ticket_id,
         content,
-        audio: Some(AudioFile { bytes, extension }),
+        attachment,
     })
 }
 
-async fn write_audio(
+fn attachment_from(
+    mime: &str,
+    filename: &str,
+    bytes: Vec<u8>,
+) -> Result<Option<Attachment>, AppError> {
+    let decision = media_decision(mime, filename, &bytes);
+    let (extension, kind) = match decision {
+        MediaDecision::Audio { extension } => (extension, "audio"),
+        MediaDecision::Image { extension } => (extension, "image"),
+        MediaDecision::RejectGif => return Err(AppError::bad_request(GIF_REJECTION)),
+        MediaDecision::Text | MediaDecision::RejectOther => {
+            return Err(AppError::unsupported(
+                "Solo aceptamos texto, imágenes PNG, JPG o WebP estáticas, o notas de voz (ogg, mp3 o wav).",
+            ));
+        }
+    };
+    Ok(Some(Attachment {
+        bytes,
+        extension,
+        kind,
+    }))
+}
+
+async fn write_media(
     helpdesk: &Helpdesk,
     bytes: &[u8],
     extension: &str,
 ) -> Result<String, AppError> {
     if bytes.is_empty() {
-        return Err(AppError::bad_request("La nota de voz está vacía."));
+        return Err(AppError::bad_request("El archivo está vacío."));
     }
     if bytes.len() > 8 * 1024 * 1024 {
-        return Err(AppError::bad_request("La nota de voz supera 8 MB."));
+        return Err(AppError::bad_request("El archivo supera 8 MB."));
     }
     let name = format!("{}.{}", Uuid::new_v4(), extension);
     let path: PathBuf = helpdesk.media_dir.join(&name);
     tokio::fs::write(&path, bytes).await.map_err(|err| {
-        tracing::error!("No se pudo guardar el audio: {err}");
-        AppError::internal("No se pudo guardar la nota de voz.")
+        tracing::error!("No se pudo guardar el archivo: {err}");
+        AppError::internal("No se pudo guardar el archivo.")
     })?;
     Ok(format!("/media/{name}"))
 }
@@ -591,7 +592,7 @@ fn decode_base64(raw: &str) -> Result<Vec<u8>, AppError> {
     base64::engine::general_purpose::STANDARD
         .decode(payload.trim())
         .or_else(|_| base64::engine::general_purpose::STANDARD_NO_PAD.decode(payload.trim()))
-        .map_err(|_| AppError::bad_request("No se pudo leer la nota de voz."))
+        .map_err(|_| AppError::bad_request("No se pudo leer el archivo."))
 }
 
 fn mime_from_data_url(raw: &str) -> Option<String> {

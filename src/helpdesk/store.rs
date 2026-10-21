@@ -300,7 +300,7 @@ impl Helpdesk {
         let content = content.trim();
         if content.is_empty() && media_url.is_none() {
             return Err(HelpdeskError::BadRequest(
-                "Escribe un mensaje o adjunta una nota de voz.".into(),
+                "Escribe un mensaje, adjunta una imagen o una nota de voz.".into(),
             ));
         }
         if content.chars().count() > 8000 {
@@ -342,7 +342,7 @@ impl Helpdesk {
                 ticket_id,
                 sender_type: "client",
                 content: if content.is_empty() {
-                    "Nota de voz"
+                    media_placeholder(media_type)
                 } else {
                     content
                 },
@@ -413,7 +413,7 @@ impl Helpdesk {
         media_url: Option<&str>,
     ) -> Result<Uuid, HelpdeskError> {
         let spoken = if content.trim().is_empty() {
-            "Nota de voz"
+            media_placeholder(media_type)
         } else {
             content.trim()
         };
@@ -1234,6 +1234,14 @@ fn timeout_statuses() -> Vec<String> {
         .iter()
         .map(|status| (*status).to_string())
         .collect()
+}
+
+fn media_placeholder(media_type: &str) -> &'static str {
+    match media_type {
+        "audio" => "Nota de voz",
+        "image" => "Imagen",
+        _ => "Archivo",
+    }
 }
 
 fn message_stamp() -> DateTime<Utc> {

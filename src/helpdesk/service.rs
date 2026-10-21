@@ -35,9 +35,9 @@ pub async fn accept_client_message(
     ticket_id: Uuid,
     content: &str,
     media_url: Option<&str>,
+    media_type: &str,
 ) -> Result<ClientView, HelpdeskError> {
     let ticket = helpdesk.ticket_by_id(ticket_id).await?;
-    let media_type = if media_url.is_some() { "audio" } else { "text" };
     if ticket.status == "resuelto" || ticket.status == "cerrado" {
         let opened = helpdesk
             .open_followup(&ticket, content, media_type, media_url)
@@ -113,6 +113,8 @@ async fn reply_as_bot(
     }
     let answer = if question == "Nota de voz" {
         "Recibimos tu nota de voz y quedó disponible en este chat.".to_string()
+    } else if question == "Imagen" {
+        "Recibimos tu imagen y quedó disponible en este chat.".to_string()
     } else {
         let history = prior
             .iter()

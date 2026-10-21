@@ -449,9 +449,21 @@
                     audio.src = message.media_url;
                     bubble.appendChild(audio);
                 }
-                const text = document.createElement('p');
-                text.className = 'whitespace-pre-wrap';
-                text.textContent = message.content;
+                if (message.media_type === 'image' && message.media_url) {
+                    const image = document.createElement('img');
+                    image.src = message.media_url;
+                    image.alt = 'Imagen adjunta';
+                    image.className = 'mt-1 max-h-64 w-full rounded-xl object-contain';
+                    bubble.appendChild(image);
+                }
+                const placeholder = (message.media_type === 'audio' && message.content === 'Nota de voz')
+                    || (message.media_type === 'image' && message.content === 'Imagen');
+                if (!placeholder) {
+                    const text = document.createElement('p');
+                    text.className = 'whitespace-pre-wrap';
+                    text.textContent = message.content;
+                    bubble.appendChild(text);
+                }
                 const meta = document.createElement('p');
                 meta.className = 'mt-1 text-[11px] text-zinc-400';
                 const who = message.sender_type === 'client'
@@ -460,7 +472,7 @@
                         ? ('Agente ' + (message.author_name || ''))
                         : 'Bot';
                 meta.textContent = who + ' · ' + clock(message.created_at);
-                bubble.append(text, meta);
+                bubble.append(meta);
                 row.appendChild(bubble);
                 root.appendChild(row);
             });

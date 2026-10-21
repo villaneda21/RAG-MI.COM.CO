@@ -107,9 +107,13 @@ static CHUNK_HEADER: LazyLock<Regex> =
 pub enum MediaDecision {
     Text,
     Audio { extension: &'static str },
-    RejectStickers,
+    Image { extension: &'static str },
+    RejectGif,
     RejectOther,
 }
+
+pub const GIF_REJECTION: &str =
+    "⚠️ Por políticas de este canal no se permiten archivos GIF ni elementos animados.";
 
 pub fn fold(text: &str) -> String {
     text.chars()
@@ -265,7 +269,7 @@ pub fn client_confirms_resolution(text: &str) -> bool {
     CONFIRMATIONS.contains(&compact.as_str())
 }
 
-pub fn media_decision(mime: &str, filename: &str) -> MediaDecision {
+pub fn media_decision(mime: &str, filename: &str, bytes: &[u8]) -> MediaDecision {
     let mime = mime
         .split(';')
         .next()
@@ -273,12 +277,14 @@ pub fn media_decision(mime: &str, filename: &str) -> MediaDecision {
         .trim()
         .to_ascii_lowercase();
     let name = filename.trim().to_ascii_lowercase();
-    let sticker = mime == "image/webp"
-        || mime == "image/gif"
-        || name.ends_with(".gif")
-        || name.ends_with(".webp");
-    if sticker {
-        return MediaDecision::RejectStickers;
+    if is_gif(&mime, &name, bytes) || is_animated_webp(bytes) {
+        return MediaDecision::RejectGif;
+    }
+    if let Some(extension) = image_extension(&mime, &name) {
+        if extension == "webp" && !bytes.is_empty() && !is_still_webp(bytes) {
+            return MediaDecision::RejectGif;
+        }
+        return MediaDecision::Image { extension };
     }
     let audio = match mime.as_str() {
         "audio/ogg" | "audio/opus" => Some("ogg"),
@@ -302,6 +308,53 @@ pub fn media_decision(mime: &str, filename: &str) -> MediaDecision {
         return MediaDecision::RejectOther;
     }
     MediaDecision::Text
+}
+
+fn is_gif(mime: &str, name: &str, bytes: &[u8]) -> bool {
+    mime == "image/gif"
+        || name.ends_with(".gif")
+        || bytes.starts_with(b"GIF87a")
+        || bytes.starts_with(b"GIF89a")
+}
+
+fn image_extension(mime: &str, name: &str) -> Option<&'static str> {
+    match mime {
+        "image/png" => Some("png"),
+        "image/jpeg" | "image/jpg" => Some("jpg"),
+        "image/webp" => Some("webp"),
+        _ => {
+            if name.ends_with(".png") {
+                Some("png")
+            } else if name.ends_with(".jpg") || name.ends_with(".jpeg") {
+                Some("jpg")
+            } else if name.ends_with(".webp") {
+                Some("webp")
+            } else {
+                None
+            }
+        }
+    }
+}
+
+fn is_animated_webp(bytes: &[u8]) -> bool {
+    bytes.len() >= 21
+        && bytes.starts_with(b"RIFF")
+        && bytes.get(8..12) == Some(b"WEBP".as_slice())
+        && bytes.get(12..16) == Some(b"VP8X".as_slice())
+        && bytes[20] & 0x02 != 0
+}
+
+fn is_still_webp(bytes: &[u8]) -> bool {
+    if bytes.len() < 16
+        || !bytes.starts_with(b"RIFF")
+        || bytes.get(8..12) != Some(b"WEBP".as_slice())
+    {
+        return false;
+    }
+    let chunk = bytes.get(12..16);
+    chunk == Some(b"VP8 ".as_slice())
+        || chunk == Some(b"VP8L".as_slice())
+        || (chunk == Some(b"VP8X".as_slice()) && bytes.get(20).is_some_and(|flag| flag & 0x02 == 0))
 }
 
 pub fn strip_sources(answer: &str) -> String {
@@ -504,30 +557,56 @@ Fuente: documento.txt";
     }
 
     #[test]
-    fn rejects_stickers_and_accepts_voice_notes() {
+    fn rejects_gifs_and_accepts_still_images_and_voice() {
         assert_eq!(
-            media_decision("image/webp", "sticker.webp"),
-            MediaDecision::RejectStickers
+            media_decision("image/gif", "sticker.gif", b""),
+            MediaDecision::RejectGif
         );
         assert_eq!(
-            media_decision("image/gif", ""),
-            MediaDecision::RejectStickers
+            media_decision("image/png", "falso.png", b"GIF89a"),
+            MediaDecision::RejectGif
+        );
+        let mut animated = vec![0u8; 21];
+        animated[0..4].copy_from_slice(b"RIFF");
+        animated[8..12].copy_from_slice(b"WEBP");
+        animated[12..16].copy_from_slice(b"VP8X");
+        animated[20] = 0x02;
+        assert_eq!(
+            media_decision("image/webp", "anim.webp", &animated),
+            MediaDecision::RejectGif
+        );
+        animated[20] = 0x00;
+        assert_eq!(
+            media_decision("image/webp", "foto.webp", &animated),
+            MediaDecision::Image { extension: "webp" }
         );
         assert_eq!(
-            media_decision("audio/ogg", "nota.ogg"),
+            media_decision("image/png", "foto.png", b""),
+            MediaDecision::Image { extension: "png" }
+        );
+        assert_eq!(
+            media_decision("image/jpeg", "foto.jpg", b""),
+            MediaDecision::Image { extension: "jpg" }
+        );
+        assert_eq!(
+            media_decision("image/jpg", "foto.jpg", b""),
+            MediaDecision::Image { extension: "jpg" }
+        );
+        assert_eq!(
+            media_decision("audio/ogg", "nota.ogg", b""),
             MediaDecision::Audio { extension: "ogg" }
         );
         assert_eq!(
-            media_decision("audio/mp3", ""),
+            media_decision("audio/mp3", "", b""),
             MediaDecision::Audio { extension: "mp3" }
         );
         assert_eq!(
-            media_decision("audio/wav", "voz.wav"),
+            media_decision("audio/wav", "voz.wav", b""),
             MediaDecision::Audio { extension: "wav" }
         );
-        assert_eq!(media_decision("", ""), MediaDecision::Text);
+        assert_eq!(media_decision("", "", b""), MediaDecision::Text);
         assert_eq!(
-            media_decision("image/png", "foto.png"),
+            media_decision("image/svg+xml", "icon.svg", b""),
             MediaDecision::RejectOther
         );
     }

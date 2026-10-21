@@ -138,6 +138,8 @@ async fn helpdesk_triage_crm_and_inactivity() {
     assert!(home_html.contains("Caso resuelto"));
     assert!(!home_html.contains("fixed inset-0"));
     assert!(home_html.contains("triage-form"));
+    assert!(home_html.contains("Nuevo Chat de Prueba"));
+    assert!(home_html.contains("Chats activos de prueba"));
     let crm = app
         .clone()
         .oneshot(Request::builder().uri("/crm").body(Body::empty()).unwrap())
@@ -423,12 +425,41 @@ async fn helpdesk_triage_crm_and_inactivity() {
         ))
         .await
         .unwrap();
-    assert_eq!(sticker.status(), StatusCode::UNSUPPORTED_MEDIA_TYPE);
+    assert_eq!(sticker.status(), StatusCode::BAD_REQUEST);
     let sticker_body = json_body(sticker).await;
     assert!(sticker_body["detail"]
         .as_str()
         .unwrap()
-        .contains("stickers"));
+        .contains("no se permiten archivos GIF"));
+
+    let photo = app
+        .clone()
+        .oneshot(post(
+            "/api/client/message",
+            json!({
+                "ticket_id": billing_id,
+                "content": "mira esta captura",
+                "mime_type": "image/png",
+                "filename": "captura.png",
+                "media_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+            }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(photo.status(), StatusCode::OK);
+    let photo_body = json_body(photo).await;
+    let image = photo_body["messages"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|message| message["media_type"] == "image")
+        .unwrap();
+    let image_url = image["media_url"].as_str().unwrap();
+    assert!(image_url.starts_with("/media/"));
+    assert!(image_url.ends_with(".png"));
+    assert!(media
+        .join(image_url.trim_start_matches("/media/"))
+        .is_file());
 
     let voice = app
         .clone()
