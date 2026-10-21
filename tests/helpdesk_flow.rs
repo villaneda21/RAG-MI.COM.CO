@@ -78,6 +78,17 @@ async fn json_body(response: axum::response::Response) -> Value {
     serde_json::from_slice(&bytes).unwrap_or(Value::Null)
 }
 
+fn post_eval(uri: &str, payload: Value) -> Request<Body> {
+    Request::builder()
+        .method("POST")
+        .uri(uri)
+        .header("content-type", "application/json")
+        .header("x-eval-run", "s14")
+        .header("authorization", format!("Bearer {CRM_TOKEN}"))
+        .body(Body::from(payload.to_string()))
+        .unwrap()
+}
+
 fn post(uri: &str, payload: Value) -> Request<Body> {
     Request::builder()
         .method("POST")
@@ -965,4 +976,102 @@ async fn helpdesk_queues_the_case_when_rag_times_out() {
     assert!(notice.contains("alta demanda"));
     assert!(!notice.contains("respuesta tardía"));
     assert!(!message_text(&body, "bot").contains("respuesta tardía"));
+}
+
+#[tokio::test]
+async fn confirmo_registers_support_case_and_lexical_rank() {
+    let _guard = DB_LOCK.lock().await;
+    let dir = tempdir().unwrap();
+    let document = "\
+================================================================================
+[CHUNK_ID]: GUA-001
+[TITLE]: Cómo crear tu cuenta en Mi.com.co
+[KEYWORDS]: crear cuenta, registro de usuario, verificacion de correo
+[CONTENT]:
+Completa el formulario de registro y verifica el correo.
+================================================================================
+";
+    let document_path = dir.path().join("documento.txt");
+    std::fs::write(&document_path, document).unwrap();
+    let helpdesk = Helpdesk::connect(TEST_DB, dir.path().join("media"))
+        .await
+        .expect("PostgreSQL de prueba");
+    let synced = helpdesk.sync_guides(&document_path).await.unwrap();
+    assert_eq!(synced, 1);
+    let calibration = helpdesk
+        .calibrate_lexical("quiero crear una cuenta y completar el registro")
+        .await
+        .unwrap();
+    assert_eq!(calibration.weighted_chunk.as_deref(), Some("GUA-001"));
+    assert_eq!(calibration.flat_chunk.as_deref(), Some("GUA-001"));
+    assert!(calibration.sql_ms >= 0.0);
+    assert!(calibration.weighted_rank.unwrap_or(0.0) > 0.0);
+
+    let settings = Settings::for_tests(dir.path());
+    let app = isolated_app(dir.path(), settings, Arc::new(ScriptedClaude)).await;
+    let opened = app
+        .clone()
+        .oneshot(post(
+            "/api/client/triage",
+            json!({
+                "name": "Nuria Cliente",
+                "domain": "cuenta.test",
+                "email_micomco": "nuria.cuenta@mi.com.co",
+                "reason": "quiero crear una cuenta y completar el registro"
+            }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(opened.status(), StatusCode::OK);
+    let opened_body = json_body(opened).await;
+    assert_eq!(opened_body["ticket"]["status"], "en_bot");
+    let ticket_id = opened_body["ticket"]["id"].as_str().unwrap();
+
+    let confirmed = app
+        .clone()
+        .oneshot(post_eval(
+            "/api/client/message",
+            json!({ "ticket_id": ticket_id, "content": "CONFIRMO" }),
+        ))
+        .await
+        .unwrap();
+    let confirmed_status = confirmed.status();
+    let confirmed_body = json_body(confirmed).await;
+    assert_eq!(confirmed_status, StatusCode::OK, "{confirmed_body}");
+    assert_eq!(confirmed_body["ticket"]["status"], "cerrado");
+    let case_code = confirmed_body["support_case"]["case_code"]
+        .as_str()
+        .unwrap();
+    assert!(case_code.starts_with("CASO-"));
+    assert_eq!(
+        confirmed_body["support_case"]["status"],
+        "Cerrado/Registrado"
+    );
+    assert_eq!(
+        confirmed_body["support_case"]["customer_email"],
+        "nuria.cuenta@mi.com.co"
+    );
+    let detail = confirmed_body["support_case"]["detail"].as_str().unwrap();
+    assert!(detail.contains("crear una cuenta"));
+    assert!(!detail.to_lowercase().contains("confirmo"));
+    assert!(confirmed_body["eval"]["sqlx_fts_ms"].is_number());
+    assert!(
+        confirmed_body["eval"]["distance_threshold"]
+            .as_f64()
+            .unwrap()
+            > 0.6
+    );
+    assert_eq!(confirmed_body["eval"]["weight_values"]["A"], 1.0);
+
+    let again = app
+        .clone()
+        .oneshot(post(
+            "/api/client/message",
+            json!({ "ticket_id": ticket_id, "content": "CONFIRMO" }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(again.status(), StatusCode::OK);
+    let again_body = json_body(again).await;
+    assert_eq!(again_body["support_case"]["case_code"], case_code);
 }

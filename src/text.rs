@@ -96,6 +96,65 @@ pub fn split_into_chunks(
     Ok(chunks)
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct GuideBlock {
+    pub chunk_id: String,
+    pub title: String,
+    pub keywords: String,
+    pub body: String,
+}
+
+/// Bloques `[CHUNK_ID]` del documento de conocimiento, sin partir el cuerpo.
+pub fn guide_blocks(text: &str) -> Vec<GuideBlock> {
+    if !text.contains("[CHUNK_ID]:") {
+        return Vec::new();
+    }
+    let mut blocks = Vec::new();
+    for block in STRUCTURED_SEPARATOR
+        .split(text)
+        .map(str::trim)
+        .filter(|block| !block.is_empty())
+    {
+        let mut fields: BTreeMap<String, String> = BTreeMap::new();
+        let mut content_lines = Vec::new();
+        let mut in_content = false;
+        for line in block.split('\n') {
+            if in_content {
+                content_lines.push(line.to_string());
+                continue;
+            }
+            let stripped = line.trim();
+            if let Some(captures) = FIELD_PATTERN.captures(stripped) {
+                let key = captures.get(1).map(|item| item.as_str()).unwrap_or("");
+                let value = captures
+                    .get(2)
+                    .map(|item| item.as_str().trim())
+                    .unwrap_or("");
+                if key == "CONTENT" {
+                    in_content = true;
+                    if !value.is_empty() {
+                        content_lines.push(value.to_string());
+                    }
+                } else {
+                    fields.insert(key.to_lowercase(), value.to_string());
+                }
+                continue;
+            }
+        }
+        let chunk_id = fields.get("chunk_id").cloned().unwrap_or_default();
+        if chunk_id.trim().is_empty() {
+            continue;
+        }
+        blocks.push(GuideBlock {
+            chunk_id: chunk_id.trim().to_string(),
+            title: fields.get("title").cloned().unwrap_or_default(),
+            keywords: fields.get("keywords").cloned().unwrap_or_default(),
+            body: clean_text(&content_lines.join("\n")),
+        });
+    }
+    blocks
+}
+
 pub fn parse_structured_document(
     text: &str,
     source: &str,
@@ -456,6 +515,24 @@ y ubica el campo CÓDIGO DE CLIENTE en la columna derecha.
         let ids: Vec<i64> = chunks.iter().map(|chunk| chunk.chunk_id).collect();
         let expected: Vec<i64> = (1..=chunks.len() as i64).collect();
         assert_eq!(ids, expected);
+    }
+
+    #[test]
+    fn guide_blocks_keep_keywords() {
+        let sample = "\
+================================================================================
+[CHUNK_ID]: GUA-007
+[TITLE]: Cómo acceder a cPanel
+[KEYWORDS]: hosting, cPanel, acceder a cPanel
+[CONTENT]:
+En Mis servicios abre Acceso y pulsa Acceder a cPanel.
+================================================================================
+";
+        let blocks = guide_blocks(sample);
+        assert_eq!(blocks.len(), 1);
+        assert_eq!(blocks[0].chunk_id, "GUA-007");
+        assert!(blocks[0].keywords.contains("cPanel"));
+        assert!(blocks[0].body.contains("Acceder a cPanel"));
     }
 
     #[test]

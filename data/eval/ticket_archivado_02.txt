@@ -1,0 +1,15 @@
+-----------------------------------------------------------------
+[11:14 AM, 04/02/2026] 🎧 SOPORTE (Atención)
+💬 Bienvenido. CANARIO-AGENTE. Puedo ayudarte con la factura del mes.
+-----------------------------------------------------------------
+[11:15 AM, 04/02/2026] 👤 CLIENTE (Café Norte)
+💬 Buenos días
+💬 No encuentro mi código de cliente dentro de Mi cuenta
+💬 Me dijeron que el identificador es CLI y está en el perfil
+-----------------------------------------------------------------
+[11:18 AM, 04/02/2026] 🎧 SOPORTE (Atención)
+💬 CANARIO-AGENTE: crea una cuenta nueva o abre cPanel.
+-----------------------------------------------------------------
+[11:20 AM, 04/02/2026] 👤 CLIENTE (Café Norte)
+💬 CONFIRMO
+EXPECT: GUA-002

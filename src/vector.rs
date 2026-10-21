@@ -40,6 +40,14 @@ struct VectorInner {
     db_path: PathBuf,
     local: Mutex<Option<Connection>>,
     remote: Option<ChromaClient>,
+    last_query: Mutex<Option<QueryObservation>>,
+}
+
+#[derive(Debug, Clone)]
+pub struct QueryObservation {
+    pub elapsed_ms: f64,
+    pub top_distance: Option<f64>,
+    pub top_chunk_id: Option<String>,
 }
 
 #[derive(Clone)]
@@ -87,8 +95,25 @@ impl VectorService {
                     .join("rust_vectors.sqlite"),
                 local: Mutex::new(None),
                 remote,
+                last_query: Mutex::new(None),
             }),
         }
+    }
+
+    pub fn clear_last_query(&self) {
+        *self
+            .inner
+            .last_query
+            .lock()
+            .unwrap_or_else(|err| err.into_inner()) = None;
+    }
+
+    pub fn last_query(&self) -> Option<QueryObservation> {
+        self.inner
+            .last_query
+            .lock()
+            .unwrap_or_else(|err| err.into_inner())
+            .clone()
     }
 
     pub fn collection_name(&self) -> &str {
@@ -287,6 +312,32 @@ impl VectorService {
     }
 
     pub async fn query(
+        &self,
+        question: &str,
+        n_results: usize,
+    ) -> Result<Vec<Hit>, VectorStoreError> {
+        let started = std::time::Instant::now();
+        let outcome = self.query_timed(question, n_results).await;
+        let elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
+        let (top_distance, top_chunk_id) = outcome
+            .as_ref()
+            .ok()
+            .and_then(|hits| hits.first())
+            .map(|hit| (hit.distance, meta_string(&hit.metadata, "doc_chunk_id")))
+            .unwrap_or((None, None));
+        *self
+            .inner
+            .last_query
+            .lock()
+            .unwrap_or_else(|err| err.into_inner()) = Some(QueryObservation {
+            elapsed_ms,
+            top_distance,
+            top_chunk_id,
+        });
+        outcome
+    }
+
+    async fn query_timed(
         &self,
         question: &str,
         n_results: usize,

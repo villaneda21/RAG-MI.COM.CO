@@ -120,6 +120,47 @@ pub struct AuditEntry {
     pub agent_name: Option<String>,
 }
 
+#[derive(Debug, Clone, Serialize, sqlx::FromRow)]
+pub struct SupportCase {
+    pub id: Uuid,
+    pub case_code: String,
+    pub ticket_id: Uuid,
+    pub customer_email: String,
+    pub category: String,
+    pub detail: String,
+    pub guide_id: Option<String>,
+    pub status: String,
+    pub created_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, sqlx::FromRow)]
+struct LexicalRow {
+    chunk_id: String,
+    weighted_rank: f64,
+    flat_rank: f64,
+}
+
+#[derive(Debug, Clone)]
+pub struct LexicalCalibration {
+    pub sql_ms: f64,
+    pub weighted_chunk: Option<String>,
+    pub weighted_rank: Option<f64>,
+    pub flat_chunk: Option<String>,
+    pub flat_rank: Option<f64>,
+}
+
+impl LexicalCalibration {
+    pub fn empty(sql_ms: f64) -> Self {
+        Self {
+            sql_ms,
+            weighted_chunk: None,
+            weighted_rank: None,
+            flat_chunk: None,
+            flat_rank: None,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BotSettings {
     pub inactivity_warning_minutes: i32,
@@ -1210,6 +1251,141 @@ impl Helpdesk {
         Ok(true)
     }
 
+    pub async fn sync_guides(&self, path: &std::path::Path) -> Result<usize, HelpdeskError> {
+        let raw = tokio::fs::read_to_string(path).await.map_err(|err| {
+            HelpdeskError::Database(format!("No se pudo leer la base de conocimiento: {err}"))
+        })?;
+        let guides = crate::text::guide_blocks(&raw);
+        let mut tx = self.pool.begin().await.map_err(db_err)?;
+        sqlx::query("DELETE FROM knowledge_chunks")
+            .execute(&mut *tx)
+            .await
+            .map_err(db_err)?;
+        for guide in &guides {
+            sqlx::query(
+                r#"
+                INSERT INTO knowledge_chunks (chunk_id, title, keywords, body)
+                VALUES ($1, $2, $3, $4)
+                "#,
+            )
+            .bind(&guide.chunk_id)
+            .bind(logic::fold(&guide.title))
+            .bind(logic::fold(&guide.keywords))
+            .bind(logic::fold(&guide.body))
+            .execute(&mut *tx)
+            .await
+            .map_err(db_err)?;
+        }
+        tx.commit().await.map_err(db_err)?;
+        tracing::info!(
+            "Búsqueda léxica sincronizada: {} guías en knowledge_chunks.",
+            guides.len()
+        );
+        Ok(guides.len())
+    }
+
+    pub async fn calibrate_lexical(
+        &self,
+        question: &str,
+    ) -> Result<LexicalCalibration, HelpdeskError> {
+        let started = std::time::Instant::now();
+        let query = lexical_tsquery(question);
+        if query.is_empty() {
+            return Ok(LexicalCalibration::empty(0.0));
+        }
+        let rows: Vec<LexicalRow> = sqlx::query_as(
+            r#"
+            SELECT chunk_id,
+                   ts_rank(search_vector, to_tsquery('simple', $1))::float8 AS weighted_rank,
+                   ts_rank('{0.25, 0.25, 0.25, 0.25}'::float4[], search_vector, to_tsquery('simple', $1))::float8 AS flat_rank
+            FROM knowledge_chunks
+            WHERE search_vector @@ to_tsquery('simple', $1)
+            ORDER BY weighted_rank DESC
+            LIMIT 5
+            "#,
+        )
+        .bind(&query)
+        .fetch_all(&self.pool)
+        .await
+        .map_err(db_err)?;
+        let sql_ms = started.elapsed().as_secs_f64() * 1000.0;
+        let weighted = rows.first();
+        let flat = rows.iter().max_by(|left, right| {
+            left.flat_rank
+                .partial_cmp(&right.flat_rank)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
+        Ok(LexicalCalibration {
+            sql_ms,
+            weighted_chunk: weighted.map(|row| row.chunk_id.clone()),
+            weighted_rank: weighted.map(|row| row.weighted_rank),
+            flat_chunk: flat.map(|row| row.chunk_id.clone()),
+            flat_rank: flat.map(|row| row.flat_rank),
+        })
+    }
+
+    pub async fn register_support_case(
+        &self,
+        ticket_id: Uuid,
+    ) -> Result<SupportCase, HelpdeskError> {
+        if let Some(existing) = sqlx::query_as::<_, SupportCase>(
+            r#"
+            SELECT id, case_code, ticket_id, customer_email, category, detail, guide_id, status, created_at
+            FROM support_cases
+            WHERE ticket_id = $1
+            "#,
+        )
+        .bind(ticket_id)
+        .fetch_optional(&self.pool)
+        .await
+        .map_err(db_err)?
+        {
+            return Ok(existing);
+        }
+        let ticket = self.ticket_by_id(ticket_id).await?;
+        let messages = self.messages(ticket_id, true).await?;
+        let detail = messages
+            .iter()
+            .rev()
+            .find(|message| {
+                message.sender_type == "client" && !logic::is_confirmo(&message.content)
+            })
+            .map(|message| message.content.clone())
+            .unwrap_or_else(|| "Confirmación del cliente.".to_string());
+        let guide_id = messages.iter().rev().find_map(|message| {
+            if message.sender_type == "bot" || message.sender_type == "system" {
+                logic::first_guide_id(&message.content)
+            } else {
+                None
+            }
+        });
+        let suffix: String = Uuid::new_v4()
+            .simple()
+            .to_string()
+            .chars()
+            .take(8)
+            .collect();
+        let case_code = format!("CASO-{}", suffix.to_ascii_uppercase());
+        sqlx::query_as::<_, SupportCase>(
+            r#"
+            INSERT INTO support_cases (
+                case_code, ticket_id, customer_email, category, detail, guide_id, status
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, 'Cerrado/Registrado')
+            RETURNING id, case_code, ticket_id, customer_email, category, detail, guide_id, status, created_at
+            "#,
+        )
+        .bind(&case_code)
+        .bind(ticket_id)
+        .bind(&ticket.email_micomco)
+        .bind(&ticket.department_name)
+        .bind(detail)
+        .bind(guide_id)
+        .fetch_one(&self.pool)
+        .await
+        .map_err(db_err)
+    }
+
     async fn department_by_name(&self, name: &str) -> Result<Department, HelpdeskError> {
         sqlx::query_as("SELECT id, name FROM departments WHERE name = $1")
             .bind(name)
@@ -1244,6 +1420,28 @@ impl Helpdesk {
         .map_err(db_err)?
         .ok_or_else(|| HelpdeskError::NotFound("No encontramos esa respuesta rápida.".into()))
     }
+}
+
+fn lexical_tsquery(text: &str) -> String {
+    const STOP: &[&str] = &[
+        "una", "que", "por", "con", "del", "las", "los", "para", "esta", "este", "esto", "pero",
+        "mas", "the", "and", "quiero", "necesito", "hola", "buenos", "dias", "favor",
+    ];
+    logic::fold(text)
+        .chars()
+        .map(|character| {
+            if character.is_ascii_alphanumeric() || character.is_whitespace() {
+                character
+            } else {
+                ' '
+            }
+        })
+        .collect::<String>()
+        .split_whitespace()
+        .filter(|token| token.len() >= 3 && !STOP.contains(token))
+        .take(32)
+        .collect::<Vec<_>>()
+        .join(" | ")
 }
 
 fn timeout_statuses() -> Vec<String> {

@@ -43,7 +43,9 @@ docker compose up -d
 cargo run
 ```
 
-El contenedor crea el usuario `rag`, la clave `rag` y la base `rag_micomco`, y lo publica en el host como puerto 5433.
+El contenedor crea el usuario `rag`, la clave `rag` y la base `rag_micomco`, y lo publica en el host como puerto 5433. `docker compose` también construye `micomco_backend` (binario Rust en release) con `lc_messages=C` en PostgreSQL 16. En la sustentación: `./run_demo.sh` o `run_demo.bat`.
+
+La evaluación offline está en `scripts/evaluate_batch.py`. Lee `data/eval/ticket_archivado_*.txt`, descarta los turnos de soporte y mide latencia, `tsvector` y deflexión. El informe y el guion de defensa quedan en `docs/REPORTE_FINAL_S14_S15_S16.md` y `docs/LIVE_DEMO_SCRIPT.md`.
 
 ## Arquitectura
 

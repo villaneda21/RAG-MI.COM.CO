@@ -8,8 +8,9 @@ use crate::conversations::HistoryTurn;
 use crate::rag::RagService;
 
 use super::logic::{
-    client_confirms_resolution, handoff_area, lacks_knowledge, requests_human, visible_reply,
-    HandoffKind, COVERAGE_GAP_NOTICE, DEMAND_NOTICE, DEPT_SUPPORT, SATISFACTION_QUESTION,
+    client_confirms_resolution, first_guide_id, handoff_area, is_confirmo, lacks_knowledge,
+    requests_human, visible_reply, HandoffKind, COVERAGE_GAP_NOTICE, DEMAND_NOTICE, DEPT_SUPPORT,
+    SATISFACTION_QUESTION,
 };
 use super::store::{Helpdesk, HelpdeskError, Message, TicketRow};
 
@@ -17,6 +18,8 @@ use super::store::{Helpdesk, HelpdeskError, Message, TicketRow};
 pub struct ClientView {
     pub ticket: TicketRow,
     pub messages: Vec<Message>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub support_case: Option<super::store::SupportCase>,
 }
 
 pub async fn triage(
@@ -40,6 +43,9 @@ pub async fn accept_client_message(
     media_type: &str,
 ) -> Result<ClientView, HelpdeskError> {
     let ticket = helpdesk.ticket_by_id(ticket_id).await?;
+    if is_confirmo(content) {
+        return confirm_case(helpdesk, &ticket, content, media_type, media_url).await;
+    }
     if ticket.status == "resuelto" || ticket.status == "cerrado" {
         let opened = helpdesk
             .open_followup(&ticket, content, media_type, media_url)
@@ -68,7 +74,46 @@ pub async fn client_view(
 ) -> Result<ClientView, HelpdeskError> {
     let ticket = helpdesk.ticket_by_id(ticket_id).await?;
     let messages = helpdesk.messages(ticket_id, true).await?;
-    Ok(ClientView { ticket, messages })
+    Ok(ClientView {
+        ticket,
+        messages,
+        support_case: None,
+    })
+}
+
+async fn confirm_case(
+    helpdesk: &Helpdesk,
+    ticket: &TicketRow,
+    content: &str,
+    media_type: &str,
+    media_url: Option<&str>,
+) -> Result<ClientView, HelpdeskError> {
+    if ticket.status != "resuelto" && ticket.status != "cerrado" {
+        helpdesk
+            .record_client_message(
+                ticket.id,
+                content,
+                media_type,
+                media_url,
+                &ticket.customer_name,
+            )
+            .await?;
+    }
+    let case = helpdesk.register_support_case(ticket.id).await?;
+    if ticket.status == "en_bot" || ticket.status == "nuevo" {
+        helpdesk
+            .post_bot_message(
+                ticket.id,
+                "Confirmación recibida. Dejé el caso registrado y cierro esta conversación.",
+                Some("cerrado"),
+                "status_change",
+                "El cliente confirmó con CONFIRMO y el caso quedó en support_cases.",
+            )
+            .await?;
+    }
+    let mut view = client_view(helpdesk, ticket.id).await?;
+    view.support_case = Some(case);
+    Ok(view)
 }
 
 async fn reply_as_bot(
@@ -176,7 +221,7 @@ async fn reply_as_bot(
     if lacks_knowledge(&answer) {
         return escalate(helpdesk, &ticket, HandoffKind::Knowledge, &question).await;
     }
-    let visible = visible_reply(&answer);
+    let visible = associate_guide(&visible_reply(&answer), rag);
     let asked_confirmation = visible.contains(SATISFACTION_QUESTION);
     helpdesk
         .post_bot_message(
@@ -192,6 +237,26 @@ async fn reply_as_bot(
         )
         .await?;
     client_view(helpdesk, ticket_id).await
+}
+
+fn associate_guide(answer: &str, rag: &RagService) -> String {
+    if first_guide_id(answer).is_some() {
+        return answer.to_string();
+    }
+    let Some(observation) = rag.vector.last_query() else {
+        return answer.to_string();
+    };
+    let (Some(chunk), Some(distance)) = (observation.top_chunk_id, observation.top_distance) else {
+        return answer.to_string();
+    };
+    if first_guide_id(&chunk).is_none() {
+        return answer.to_string();
+    }
+    let threshold = 1.0 - rag.settings.retrieval_min_similarity;
+    if distance > threshold {
+        return answer.to_string();
+    }
+    format!("{answer}\n\nGuía asociada: {chunk}")
 }
 
 fn client_session_note(ticket: &TicketRow) -> String {

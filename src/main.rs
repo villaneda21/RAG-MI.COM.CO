@@ -102,8 +102,14 @@ async fn main() -> ExitCode {
         .max_connections(20)
         .acquire_timeout(Duration::from_secs(5));
     state.helpdesk.set_pool_options(pool_options);
-    if let Err(err) = state.helpdesk.establish().await {
-        eprintln!("[run] {err}");
+    match state.helpdesk.establish().await {
+        Ok(desk) => {
+            let path = state.rag.settings.default_document_path.clone();
+            if let Err(err) = desk.sync_guides(&path).await {
+                tracing::warn!("No se sincronizó la búsqueda léxica: {err}");
+            }
+        }
+        Err(err) => eprintln!("[run] {err}"),
     }
     let host = state.rag.settings.host.clone();
     let port = state.rag.settings.port;

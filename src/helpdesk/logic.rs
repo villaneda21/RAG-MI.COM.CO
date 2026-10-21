@@ -93,6 +93,9 @@ const CONFIRMATIONS: &[&str] = &[
     "esa era",
     "no necesito nada mas",
     "esta bien",
+    "confirmo",
+    "si confirmo",
+    "confirmo gracias",
 ];
 
 static MD_LINK: LazyLock<Regex> = LazyLock::new(|| {
@@ -271,6 +274,25 @@ pub fn client_confirms_resolution(text: &str) -> bool {
         .collect::<Vec<_>>()
         .join(" ");
     CONFIRMATIONS.contains(&compact.as_str())
+}
+
+pub fn is_confirmo(text: &str) -> bool {
+    let compact = fold(text).split_whitespace().collect::<Vec<_>>().join(" ");
+    matches!(
+        compact.as_str(),
+        "confirmo" | "si confirmo" | "confirmo gracias" | "confirmo el caso"
+    )
+}
+
+pub fn first_guide_id(text: &str) -> Option<String> {
+    static GUIDE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"(?i)\b((?:GUA|LEG|DOM|HST|CFG|DAT|PRV|ANX|INTRO)-\d{3})\b")
+            .expect("regex de guía")
+    });
+    GUIDE
+        .captures(text)
+        .and_then(|captures| captures.get(1))
+        .map(|item| item.as_str().to_ascii_uppercase())
 }
 
 pub fn media_decision(mime: &str, filename: &str, bytes: &[u8]) -> MediaDecision {
@@ -502,6 +524,14 @@ mod tests {
         ));
         assert!(!client_confirms_resolution("¿ya quedó?"));
         assert!(requests_human("quiero hablar con un agente"));
+        assert!(is_confirmo("CONFIRMO"));
+        assert!(is_confirmo("Si confirmo"));
+        assert!(!is_confirmo("no confirmo todavía"));
+        assert_eq!(
+            first_guide_id("Revisa la guía GUA-007."),
+            Some("GUA-007".into())
+        );
+        assert_eq!(first_guide_id("sin código"), None);
         assert!(requests_human("comunícame con soporte"));
         assert!(requests_human("pásame con un asesor"));
         assert!(!requests_human("el soporte del correo no abre"));

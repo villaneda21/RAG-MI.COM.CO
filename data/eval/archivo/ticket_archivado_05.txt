@@ -1,0 +1,14 @@
+-----------------------------------------------------------------
+[08:21 AM, 07/02/2026] 🎧 SOPORTE (Atención)
+💬 Buenos días. CANARIO-AGENTE. Revisa la guía de crear cuenta si quieres.
+-----------------------------------------------------------------
+[08:22 AM, 07/02/2026] 👤 CLIENTE (Taller Rueda)
+💬 Buenos días
+💬 Por favor comunícame con soporte, quiero hablar con una persona
+-----------------------------------------------------------------
+[08:23 AM, 07/02/2026] 🎧 SOPORTE (Atención)
+💬 CANARIO-AGENTE: te paso el acceso a cPanel y el código de cliente.
+-----------------------------------------------------------------
+[08:24 AM, 07/02/2026] 👤 CLIENTE (Taller Rueda)
+💬 CONFIRMO
+EXPECT: ESCALATE

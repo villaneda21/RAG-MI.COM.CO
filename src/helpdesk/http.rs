@@ -1,6 +1,7 @@
 //! Rutas del simulador de cliente, el CRM y la administración.
 
 use std::path::PathBuf;
+use std::time::Instant;
 
 use axum::body::Bytes;
 use axum::extract::{DefaultBodyLimit, FromRequest, Multipart, Path, Query, Request, State};
@@ -135,8 +136,14 @@ async fn crm_page(State(state): State<AppState>) -> Result<Html<String>, AppErro
 
 async fn client_triage(
     State(state): State<AppState>,
+    headers: HeaderMap,
     Body(body): Body<TriageBody>,
 ) -> Result<Json<Value>, AppError> {
+    let started = Instant::now();
+    let measure = eval_requested(&headers);
+    if measure {
+        state.rag.vector.clear_last_query();
+    }
     let helpdesk = require(&state).await?;
     let view = service::triage(
         &helpdesk,
@@ -152,17 +159,29 @@ async fn client_triage(
         .customer_by_id(view.ticket.customer_id)
         .await
         .map_err(map_helpdesk)?;
-    Ok(Json(json!({
+    let mut payload = json!({
         "customer": customer,
         "ticket": view.ticket,
         "messages": view.messages,
-    })))
+    });
+    if let Some(case) = view.support_case {
+        payload["support_case"] = json!(case);
+    }
+    if measure {
+        payload["eval"] = eval_snapshot(&state, &helpdesk, &body.reason, started).await;
+    }
+    Ok(Json(payload))
 }
 
 async fn client_message(
     State(state): State<AppState>,
     request: Request,
 ) -> Result<Json<Value>, AppError> {
+    let started = Instant::now();
+    let measure = eval_requested(request.headers());
+    if measure {
+        state.rag.vector.clear_last_query();
+    }
     let helpdesk = require(&state).await?;
     let content_type = request
         .headers()
@@ -187,6 +206,7 @@ async fn client_message(
         ),
         None => (None, "text"),
     };
+    let question = incoming.content.clone();
     let view = service::accept_client_message(
         &helpdesk,
         &state.rag,
@@ -197,7 +217,11 @@ async fn client_message(
     )
     .await
     .map_err(map_helpdesk)?;
-    Ok(view_json(view))
+    let mut payload = view_value(view);
+    if measure {
+        payload["eval"] = eval_snapshot(&state, &helpdesk, &question, started).await;
+    }
+    Ok(Json(payload))
 }
 
 async fn client_ticket(
@@ -477,10 +501,62 @@ fn ticket_filter(query: TicketQuery) -> Result<TicketFilter, AppError> {
 }
 
 fn view_json(view: ClientView) -> Json<Value> {
-    Json(json!({
+    Json(view_value(view))
+}
+
+fn view_value(view: ClientView) -> Value {
+    let mut payload = json!({
         "ticket": view.ticket,
         "messages": view.messages,
-    }))
+    });
+    if let Some(case) = view.support_case {
+        payload["support_case"] = json!(case);
+    }
+    payload
+}
+
+fn eval_requested(headers: &HeaderMap) -> bool {
+    headers
+        .get("x-eval-run")
+        .and_then(|value| value.to_str().ok())
+        .is_some_and(|value| !value.trim().is_empty())
+}
+
+async fn eval_snapshot(
+    state: &AppState,
+    helpdesk: &Helpdesk,
+    question: &str,
+    started: Instant,
+) -> Value {
+    let observation = state.rag.vector.last_query();
+    let lexical = match helpdesk.calibrate_lexical(question).await {
+        Ok(value) => value,
+        Err(err) => {
+            tracing::warn!("Calibración léxica no disponible: {err}");
+            super::store::LexicalCalibration::empty(0.0)
+        }
+    };
+    let min_similarity = state.rag.settings.retrieval_min_similarity;
+    json!({
+        "server_ms": started.elapsed().as_secs_f64() * 1000.0,
+        "vector_ms": observation.as_ref().map(|item| item.elapsed_ms),
+        "top_distance": observation.as_ref().and_then(|item| item.top_distance),
+        "top_chunk_id": observation.as_ref().and_then(|item| item.top_chunk_id.clone()),
+        "distance_threshold": 1.0 - min_similarity,
+        "min_similarity": min_similarity,
+        "sqlx_fts_ms": lexical.sql_ms,
+        "weighted_chunk": lexical.weighted_chunk,
+        "weighted_rank": lexical.weighted_rank,
+        "flat_chunk": lexical.flat_chunk,
+        "flat_rank": lexical.flat_rank,
+        "tsvector_weights": {
+            "A": "titulo",
+            "B": "palabras_clave",
+            "C": "cuerpo",
+            "D": "sin_uso"
+        },
+        "weight_values": { "A": 1.0, "B": 0.4, "C": 0.2, "D": 0.1 }
+    })
 }
 
 async fn require(state: &AppState) -> Result<Helpdesk, AppError> {
