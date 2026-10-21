@@ -2,6 +2,7 @@
 
 use std::env;
 use std::path::{Path, PathBuf};
+use std::time::Duration;
 
 const API_KEY_PLACEHOLDERS: &[&str] = &[
     "tu_api_key_aqui",
@@ -12,6 +13,12 @@ const API_KEY_PLACEHOLDERS: &[&str] = &[
 ];
 
 pub const CLAUDE_FALLBACK_MODELS: &[&str] = &["claude-haiku-4-5", "claude-haiku-4-5-20251001"];
+
+/// Tiempo máximo de la consulta vectorial y de Claude en el centro de ayuda.
+pub const RAG_PIPELINE_TIMEOUT: Duration = Duration::from_secs(15);
+
+/// Similitud de coseno mínima para considerar un fragmento relevante.
+pub const RETRIEVAL_MIN_SIMILARITY: f64 = 0.35;
 
 /// Puerto 5433: contenedor Docker. El 5432 lo ocupa el PostgreSQL nativo de Windows.
 pub const HELPDESK_DATABASE_URL: &str =
@@ -65,6 +72,10 @@ pub struct Settings {
     pub templates_dir: PathBuf,
     pub database_url: String,
     pub media_dir: PathBuf,
+    pub crm_secret_token: String,
+    pub retrieval_min_similarity: f64,
+    pub require_relevant_context: bool,
+    pub rag_timeout: Duration,
 }
 
 impl Settings {
@@ -72,6 +83,7 @@ impl Settings {
         let root = find_project_root();
         ensure_env_file(&root);
         ensure_database_url(&root);
+        ensure_crm_token(&root);
         let _ = dotenvy::from_path(root.join(".env"));
         Self::from_env(root)
     }
@@ -114,6 +126,10 @@ impl Settings {
             templates_dir: project_root.join("templates"),
             database_url: prefer_docker_port(env_string("DATABASE_URL", HELPDESK_DATABASE_URL)),
             media_dir: project_root.join("data").join("media"),
+            crm_secret_token: env_string("CRM_SECRET_TOKEN", ""),
+            retrieval_min_similarity: RETRIEVAL_MIN_SIMILARITY,
+            require_relevant_context: true,
+            rag_timeout: RAG_PIPELINE_TIMEOUT,
             chroma_host,
             project_root,
         }
@@ -132,6 +148,8 @@ impl Settings {
         settings.chroma_host = None;
         settings.anthropic_api_key.clear();
         settings.chroma_collection_name = "test_knowledge_base".to_string();
+        settings.crm_secret_token = "test-crm-token".to_string();
+        settings.require_relevant_context = false;
         settings
     }
 
@@ -199,6 +217,54 @@ pub fn prefer_docker_port(url: String) -> String {
         }
     }
     url
+}
+
+pub fn ensure_crm_token(root: &Path) {
+    let env_path = root.join(".env");
+    let current = std::fs::read_to_string(&env_path).unwrap_or_default();
+    let mut saw = false;
+    let mut changed = false;
+    let mut lines = Vec::new();
+    for line in current.lines() {
+        let trimmed = line.trim();
+        if !trimmed.starts_with('#') && trimmed.starts_with("CRM_SECRET_TOKEN=") {
+            saw = true;
+            let value = trimmed
+                .trim_start_matches("CRM_SECRET_TOKEN=")
+                .trim()
+                .trim_matches('"');
+            if value.is_empty() {
+                lines.push(format!("CRM_SECRET_TOKEN={}", fresh_crm_token()));
+                changed = true;
+                continue;
+            }
+        }
+        lines.push(line.to_string());
+    }
+    if !saw {
+        if lines.last().is_some_and(|line| !line.is_empty()) {
+            lines.push(String::new());
+        }
+        lines.push("# Token Bearer para /api/crm y /api/admin.".to_string());
+        lines.push(format!("CRM_SECRET_TOKEN={}", fresh_crm_token()));
+        changed = true;
+    }
+    if !changed {
+        return;
+    }
+    let mut body = lines.join("\n");
+    if !body.ends_with('\n') {
+        body.push('\n');
+    }
+    if let Err(err) = std::fs::write(&env_path, body) {
+        tracing::warn!("No se pudo escribir CRM_SECRET_TOKEN en .env: {err}");
+    } else {
+        tracing::info!("CRM_SECRET_TOKEN quedó escrito en .env. El CRM lo pide al entrar.");
+    }
+}
+
+fn fresh_crm_token() -> String {
+    uuid::Uuid::new_v4().simple().to_string()
 }
 
 pub fn ensure_env_file(root: &Path) {

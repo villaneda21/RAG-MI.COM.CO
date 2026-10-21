@@ -1,5 +1,7 @@
 //! Turno del cliente: enrutado, RAG sin fuentes y cierre con confirmación.
 
+use std::time::Duration;
+
 use uuid::Uuid;
 
 use crate::conversations::HistoryTurn;
@@ -7,7 +9,7 @@ use crate::rag::RagService;
 
 use super::logic::{
     client_confirms_resolution, handoff_area, lacks_knowledge, requests_human, visible_reply,
-    HandoffKind, SATISFACTION_QUESTION,
+    HandoffKind, COVERAGE_GAP_NOTICE, DEMAND_NOTICE, DEPT_SUPPORT, SATISFACTION_QUESTION,
 };
 use super::store::{Helpdesk, HelpdeskError, Message, TicketRow};
 
@@ -135,17 +137,37 @@ async fn reply_as_bot(
                 }
             })
             .collect::<Vec<_>>();
-        match rag
-            .ask_with_session(
-                &question,
-                &history,
-                Some(&ticket_id.to_string()),
-                &client_session_note(&ticket),
-            )
-            .await
-        {
-            Ok(response) => response.answer,
-            Err(err) => {
+        let session_note = client_session_note(&ticket);
+        let pipeline = async {
+            if rag.settings.require_relevant_context {
+                let (hits, _) = rag.retrieve(&question, &history).await;
+                if !RagService::context_is_relevant(&hits, rag.settings.retrieval_min_similarity) {
+                    return Ok(None);
+                }
+            }
+            match rag
+                .ask_with_session(
+                    &question,
+                    &history,
+                    Some(&ticket_id.to_string()),
+                    &session_note,
+                )
+                .await
+            {
+                Ok(response) => Ok(Some(response.answer)),
+                Err(err) => Err(err),
+            }
+        };
+        match tokio::time::timeout(pipeline_budget(rag), pipeline).await {
+            Err(_elapsed) => {
+                tracing::warn!("La consulta RAG superó los 15 segundos en {ticket_id}");
+                return queue_for_support(helpdesk, ticket_id, DEMAND_NOTICE).await;
+            }
+            Ok(Ok(None)) => {
+                return queue_for_support(helpdesk, ticket_id, COVERAGE_GAP_NOTICE).await;
+            }
+            Ok(Ok(Some(answer))) => answer,
+            Ok(Err(err)) => {
                 tracing::warn!("El asistente no pudo responder en {ticket_id}: {err}");
                 return escalate(helpdesk, &ticket, HandoffKind::Knowledge, &question).await;
             }
@@ -188,6 +210,26 @@ INSTRUCCIÓN ESTRICTA: El cliente YA está identificado. NUNCA le vuelvas a pedi
         id = ticket.id,
         department = ticket.department_name,
     )
+}
+
+fn pipeline_budget(rag: &RagService) -> Duration {
+    let configured = rag.settings.rag_timeout;
+    if configured.is_zero() {
+        Duration::from_secs(15)
+    } else {
+        configured
+    }
+}
+
+async fn queue_for_support(
+    helpdesk: &Helpdesk,
+    ticket_id: Uuid,
+    notice: &str,
+) -> Result<ClientView, HelpdeskError> {
+    helpdesk
+        .handoff_with_notice(ticket_id, DEPT_SUPPORT, notice)
+        .await?;
+    client_view(helpdesk, ticket_id).await
 }
 
 async fn escalate(

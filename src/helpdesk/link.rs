@@ -3,12 +3,13 @@
 
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex as StdMutex};
 use std::time::{Duration, Instant};
 
+use sqlx::postgres::PgPoolOptions;
 use tokio::sync::{Mutex, RwLock};
 
-use super::store::Helpdesk;
+use super::store::{pool_options, Helpdesk};
 use super::worker::spawn_inactivity_worker;
 
 #[derive(Clone)]
@@ -19,6 +20,7 @@ pub struct HelpdeskHandle {
     worker_started: Arc<AtomicBool>,
     database_url: String,
     media_dir: PathBuf,
+    pool_options: Arc<StdMutex<PgPoolOptions>>,
 }
 
 impl HelpdeskHandle {
@@ -30,7 +32,15 @@ impl HelpdeskHandle {
             worker_started: Arc::new(AtomicBool::new(false)),
             database_url,
             media_dir,
+            pool_options: Arc::new(StdMutex::new(pool_options())),
         }
+    }
+
+    pub fn set_pool_options(&self, options: PgPoolOptions) {
+        *self
+            .pool_options
+            .lock()
+            .unwrap_or_else(|err| err.into_inner()) = options;
     }
 
     pub async fn connected(&self) -> bool {
@@ -57,7 +67,12 @@ impl HelpdeskHandle {
             self.start_worker(&ready);
             return Ok(ready);
         }
-        match Helpdesk::connect(&self.database_url, self.media_dir.clone()).await {
+        let options = self
+            .pool_options
+            .lock()
+            .unwrap_or_else(|err| err.into_inner())
+            .clone();
+        match Helpdesk::connect_with(&self.database_url, self.media_dir.clone(), options).await {
             Ok(helpdesk) => {
                 self.start_worker(&helpdesk);
                 *self.slot.write().await = Some(helpdesk.clone());

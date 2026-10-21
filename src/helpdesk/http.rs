@@ -3,9 +3,11 @@
 use std::path::PathBuf;
 
 use axum::body::Bytes;
-use axum::extract::{FromRequest, Multipart, Path, Query, Request, State};
-use axum::http::StatusCode;
-use axum::response::{Html, IntoResponse};
+use axum::extract::{DefaultBodyLimit, FromRequest, Multipart, Path, Query, Request, State};
+use axum::http::header::AUTHORIZATION;
+use axum::http::{HeaderMap, StatusCode};
+use axum::middleware::{self, Next};
+use axum::response::{Html, IntoResponse, Response};
 use axum::routing::{get, post, put};
 use axum::{Json, Router};
 use base64::Engine;
@@ -21,14 +23,10 @@ use super::logic::{media_decision, MediaDecision, GIF_REJECTION};
 use super::service::{self, ClientView};
 use super::store::{BotSettings, Helpdesk, HelpdeskError, TicketFilter};
 
-pub fn routes() -> Router<AppState> {
-    Router::new()
-        .route("/client", get(client_page))
-        .route("/crm", get(crm_page))
-        .route("/crm/admin", get(crm_page))
-        .route("/api/client/triage", post(client_triage))
-        .route("/api/client/message", post(client_message))
-        .route("/api/client/tickets/:id", get(client_ticket))
+const MEDIA_BODY_LIMIT: usize = 15 * 1024 * 1024;
+
+pub fn routes(state: AppState) -> Router<AppState> {
+    let guarded = Router::new()
         .route("/api/crm/tickets", get(crm_tickets))
         .route("/api/crm/tickets/:id", get(crm_ticket))
         .route("/api/crm/tickets/:id/transfer", put(crm_transfer))
@@ -54,6 +52,77 @@ pub fn routes() -> Router<AppState> {
             put(update_snippet_path).delete(delete_snippet_path),
         )
         .route("/api/admin/rules", get(get_rules).put(put_rules))
+        .route_layer(middleware::from_fn_with_state(
+            state.clone(),
+            require_crm_token,
+        ));
+    Router::new()
+        .route("/client", get(client_page))
+        .route("/crm", get(crm_page))
+        .route("/crm/admin", get(crm_page))
+        .route("/api/client/triage", post(client_triage))
+        .route(
+            "/api/client/message",
+            post(client_message).layer(DefaultBodyLimit::max(MEDIA_BODY_LIMIT)),
+        )
+        .route("/api/client/tickets/:id", get(client_ticket))
+        .merge(guarded)
+}
+
+async fn require_crm_token(
+    State(state): State<AppState>,
+    request: Request,
+    next: Next,
+) -> Result<Response, AppError> {
+    let expected = state.rag.settings.crm_secret_token.trim();
+    if expected.is_empty() {
+        return Err(AppError::unauthorized(
+            "El CRM no tiene CRM_SECRET_TOKEN configurado.",
+        ));
+    }
+    let provided = presented_token(request.headers());
+    if !tokens_match(provided.as_deref().unwrap_or(""), expected) {
+        return Err(AppError::unauthorized(
+            "No autorizado. Envía Authorization: Bearer con el token del CRM.",
+        ));
+    }
+    Ok(next.run(request).await)
+}
+
+fn presented_token(headers: &HeaderMap) -> Option<String> {
+    if let Some(value) = headers
+        .get(AUTHORIZATION)
+        .and_then(|value| value.to_str().ok())
+    {
+        let mut parts = value.split_whitespace();
+        let scheme = parts.next().unwrap_or("");
+        let token = parts.next().unwrap_or("");
+        if scheme.eq_ignore_ascii_case("bearer") && !token.is_empty() && parts.next().is_none() {
+            return Some(token.to_string());
+        }
+    }
+    headers
+        .get("x-api-key")
+        .and_then(|value| value.to_str().ok())
+        .map(str::trim)
+        .filter(|value| !value.is_empty())
+        .map(ToString::to_string)
+}
+
+fn tokens_match(provided: &str, expected: &str) -> bool {
+    let left = provided.as_bytes();
+    let right = expected.as_bytes();
+    if right.is_empty() {
+        return false;
+    }
+    let mut diff = left.len() ^ right.len();
+    let width = left.len().max(right.len());
+    for index in 0..width {
+        let left_byte = left.get(index).copied().unwrap_or(0);
+        let right_byte = right.get(index).copied().unwrap_or(0);
+        diff |= usize::from(left_byte ^ right_byte);
+    }
+    diff == 0
 }
 
 async fn client_page(State(state): State<AppState>) -> Result<Html<String>, AppError> {
@@ -606,7 +675,7 @@ fn mime_from_data_url(raw: &str) -> Option<String> {
     }
 }
 
-const MAX_BODY: usize = 12 * 1024 * 1024;
+const MAX_BODY: usize = MEDIA_BODY_LIMIT;
 
 struct Body<T>(T);
 

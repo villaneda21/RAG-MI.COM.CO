@@ -1,6 +1,8 @@
 //! Flujo del centro de ayuda contra PostgreSQL de prueba.
 
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 
 use async_trait::async_trait;
 use axum::body::Body;
@@ -20,6 +22,10 @@ use tempfile::tempdir;
 use tower::ServiceExt;
 
 const TEST_DB: &str = "postgres://rag:rag@127.0.0.1:5432/rag_micomco_test?sslmode=disable";
+const CRM_TOKEN: &str = "test-crm-token";
+
+static DB_LOCK: tokio::sync::Mutex<()> = tokio::sync::Mutex::const_new(());
+static CLAUDE_CALLS: AtomicUsize = AtomicUsize::new(0);
 
 struct ScriptedClaude;
 
@@ -77,6 +83,7 @@ fn post(uri: &str, payload: Value) -> Request<Body> {
         .method("POST")
         .uri(uri)
         .header("content-type", "application/json")
+        .header("authorization", format!("Bearer {CRM_TOKEN}"))
         .body(Body::from(payload.to_string()))
         .unwrap()
 }
@@ -86,12 +93,23 @@ fn put(uri: &str, payload: Value) -> Request<Body> {
         .method("PUT")
         .uri(uri)
         .header("content-type", "application/json")
+        .header("authorization", format!("Bearer {CRM_TOKEN}"))
         .body(Body::from(payload.to_string()))
+        .unwrap()
+}
+
+fn authed_empty(method: &str, uri: &str) -> Request<Body> {
+    Request::builder()
+        .method(method)
+        .uri(uri)
+        .header("authorization", format!("Bearer {CRM_TOKEN}"))
+        .body(Body::empty())
         .unwrap()
 }
 
 #[tokio::test]
 async fn helpdesk_triage_crm_and_inactivity() {
+    let _guard = DB_LOCK.lock().await;
     let dir = tempdir().unwrap();
     std::fs::write(dir.path().join("documento.txt"), "guia de soporte\n").unwrap();
     let media = dir.path().join("media");
@@ -140,12 +158,55 @@ async fn helpdesk_triage_crm_and_inactivity() {
     assert!(home_html.contains("triage-form"));
     assert!(home_html.contains("Nuevo Chat de Prueba"));
     assert!(home_html.contains("Chats activos de prueba"));
+    assert!(home_html.contains("El bot está analizando tu consulta..."));
+    assert!(home_html.contains("scrollTo"));
+    assert!(home_html.contains("setText"));
     let crm = app
         .clone()
         .oneshot(Request::builder().uri("/crm").body(Body::empty()).unwrap())
         .await
         .unwrap();
     assert_eq!(crm.status(), StatusCode::OK);
+    let crm_html =
+        String::from_utf8(crm.into_body().collect().await.unwrap().to_bytes().to_vec()).unwrap();
+    assert!(crm_html.contains("Acceso al CRM"));
+    assert!(crm_html.contains("playSoftAlert"));
+    assert!(crm_html.contains("setText"));
+    let denied = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri("/api/crm/agents")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(denied.status(), StatusCode::UNAUTHORIZED);
+    let wrong = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri("/api/crm/agents")
+                .header("authorization", "Bearer no-es-el-token")
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(wrong.status(), StatusCode::UNAUTHORIZED);
+    let by_key = app
+        .clone()
+        .oneshot(
+            Request::builder()
+                .uri("/api/crm/departments")
+                .header("x-api-key", CRM_TOKEN)
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+    assert_eq!(by_key.status(), StatusCode::OK);
 
     let triage = app
         .clone()
@@ -457,6 +518,10 @@ async fn helpdesk_triage_crm_and_inactivity() {
     let image_url = image["media_url"].as_str().unwrap();
     assert!(image_url.starts_with("/media/"));
     assert!(image_url.ends_with(".png"));
+    let stored_name = image_url
+        .trim_start_matches("/media/")
+        .trim_end_matches(".png");
+    uuid::Uuid::parse_str(stored_name).expect("el archivo usa un UUID");
     assert!(media
         .join(image_url.trim_start_matches("/media/"))
         .is_file());
@@ -491,12 +556,7 @@ async fn helpdesk_triage_crm_and_inactivity() {
 
     let agents = json_body(
         app.clone()
-            .oneshot(
-                Request::builder()
-                    .uri("/api/crm/agents")
-                    .body(Body::empty())
-                    .unwrap(),
-            )
+            .oneshot(authed_empty("GET", "/api/crm/agents"))
             .await
             .unwrap(),
     )
@@ -513,12 +573,10 @@ async fn helpdesk_triage_crm_and_inactivity() {
 
     let queue = app
         .clone()
-        .oneshot(
-            Request::builder()
-                .uri(format!("/api/crm/tickets?view=bot&agent_id={agent_id}"))
-                .body(Body::empty())
-                .unwrap(),
-        )
+        .oneshot(authed_empty(
+            "GET",
+            &format!("/api/crm/tickets?view=bot&agent_id={agent_id}"),
+        ))
         .await
         .unwrap();
     assert_eq!(queue.status(), StatusCode::OK);
@@ -700,13 +758,10 @@ async fn helpdesk_triage_crm_and_inactivity() {
     assert_eq!(edited.status(), StatusCode::OK);
     let removed = app
         .clone()
-        .oneshot(
-            Request::builder()
-                .method("DELETE")
-                .uri(format!("/api/admin/snippets/{snippet_id}"))
-                .body(Body::empty())
-                .unwrap(),
-        )
+        .oneshot(authed_empty(
+            "DELETE",
+            &format!("/api/admin/snippets/{snippet_id}"),
+        ))
         .await
         .unwrap();
     assert_eq!(removed.status(), StatusCode::OK);
@@ -779,4 +834,135 @@ async fn helpdesk_triage_crm_and_inactivity() {
         .any(|entry| entry.action_type == "auto_timeout"));
 
     helpdesk.save_rules(&original_rules).await.unwrap();
+}
+
+struct CountingClaude;
+
+#[async_trait]
+impl SupportClient for CountingClaude {
+    fn is_configured(&self) -> bool {
+        true
+    }
+
+    async fn generate_support_reply(
+        &self,
+        _question: String,
+        _history: Vec<HistoryTurn>,
+        _session_id: String,
+        _case_service: rag_micomco::cases::CaseService,
+        _context: String,
+        _session_note: String,
+    ) -> Result<SupportTurn, ClaudeServiceError> {
+        CLAUDE_CALLS.fetch_add(1, Ordering::SeqCst);
+        Ok(SupportTurn {
+            text: "Esta respuesta no debería enviarse.".into(),
+            case: None,
+        })
+    }
+}
+
+struct SlowClaude;
+
+#[async_trait]
+impl SupportClient for SlowClaude {
+    fn is_configured(&self) -> bool {
+        true
+    }
+
+    async fn generate_support_reply(
+        &self,
+        _question: String,
+        _history: Vec<HistoryTurn>,
+        _session_id: String,
+        _case_service: rag_micomco::cases::CaseService,
+        _context: String,
+        _session_note: String,
+    ) -> Result<SupportTurn, ClaudeServiceError> {
+        tokio::time::sleep(Duration::from_millis(400)).await;
+        Ok(SupportTurn {
+            text: "respuesta tardía".into(),
+            case: None,
+        })
+    }
+}
+
+async fn isolated_app(
+    dir: &std::path::Path,
+    mut settings: Settings,
+    claude: Arc<dyn SupportClient>,
+) -> axum::Router {
+    settings.crm_secret_token = CRM_TOKEN.to_string();
+    let media = dir.join("media");
+    let helpdesk = Helpdesk::connect(TEST_DB, media)
+        .await
+        .expect("PostgreSQL de prueba");
+    let rag = assemble_rag(
+        settings,
+        Arc::new(HashEmbedder { dimensions: 32 }),
+        Some(claude),
+    );
+    let state: StateWithDesk = AppState::try_with_helpdesk(rag, Some(helpdesk)).unwrap();
+    router(state)
+}
+
+#[tokio::test]
+async fn helpdesk_transfers_when_the_guide_has_no_match() {
+    let _guard = DB_LOCK.lock().await;
+    let dir = tempdir().unwrap();
+    std::fs::write(dir.path().join("documento.txt"), "guia\n").unwrap();
+    let mut settings = Settings::for_tests(dir.path());
+    settings.require_relevant_context = true;
+    CLAUDE_CALLS.store(0, Ordering::SeqCst);
+    let app = isolated_app(dir.path(), settings, Arc::new(CountingClaude)).await;
+    let opened = app
+        .oneshot(post(
+            "/api/client/triage",
+            json!({
+                "name": "Eva Cliente",
+                "domain": "vacio.test",
+                "email_micomco": "eva.vacio@mi.com.co",
+                "reason": "necesito un procedimiento que no está en la guía"
+            }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(opened.status(), StatusCode::OK);
+    let body = json_body(opened).await;
+    assert_eq!(body["ticket"]["status"], "esperando_agente");
+    assert_eq!(body["ticket"]["department_name"], "Soporte Técnico");
+    let notice = message_text(&body, "system");
+    assert!(notice.contains(
+        "no encontré información exacta en nuestra base de conocimientos para tu consulta"
+    ));
+    assert_eq!(CLAUDE_CALLS.load(Ordering::SeqCst), 0);
+}
+
+#[tokio::test]
+async fn helpdesk_queues_the_case_when_rag_times_out() {
+    let _guard = DB_LOCK.lock().await;
+    let dir = tempdir().unwrap();
+    std::fs::write(dir.path().join("documento.txt"), "guia\n").unwrap();
+    let mut settings = Settings::for_tests(dir.path());
+    settings.rag_timeout = Duration::from_millis(80);
+    let app = isolated_app(dir.path(), settings, Arc::new(SlowClaude)).await;
+    let opened = app
+        .oneshot(post(
+            "/api/client/triage",
+            json!({
+                "name": "Otto Cliente",
+                "domain": "lento.test",
+                "email_micomco": "otto.lento@mi.com.co",
+                "reason": "el correo no abre desde ayer"
+            }),
+        ))
+        .await
+        .unwrap();
+    assert_eq!(opened.status(), StatusCode::OK);
+    let body = json_body(opened).await;
+    assert_eq!(body["ticket"]["status"], "esperando_agente");
+    assert_eq!(body["ticket"]["department_name"], "Soporte Técnico");
+    let notice = message_text(&body, "system");
+    assert!(notice.contains("alta demanda"));
+    assert!(!notice.contains("respuesta tardía"));
+    assert!(!message_text(&body, "bot").contains("respuesta tardía"));
 }

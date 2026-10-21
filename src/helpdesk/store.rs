@@ -199,11 +199,19 @@ LIMIT 200
 
 impl Helpdesk {
     pub async fn connect(database_url: &str, media_dir: PathBuf) -> Result<Self, String> {
-        let pool = match open_pool(database_url).await {
+        Self::connect_with(database_url, media_dir, pool_options()).await
+    }
+
+    pub async fn connect_with(
+        database_url: &str,
+        media_dir: PathBuf,
+        options: PgPoolOptions,
+    ) -> Result<Self, String> {
+        let pool = match open_pool(database_url, options.clone()).await {
             Ok(pool) => pool,
             Err(err) if missing_database(&err) => {
                 create_database(database_url).await?;
-                open_pool(database_url)
+                open_pool(database_url, options)
                     .await
                     .map_err(|retry| connection_help(database_url, &retry))?
             }
@@ -641,8 +649,17 @@ impl Helpdesk {
     }
 
     pub async fn handoff_to_team(&self, ticket_id: Uuid, area: &str) -> Result<(), HelpdeskError> {
-        let department = self.department_by_name(area).await?;
         let notice = handoff_notice(&ticket_label(ticket_id), area);
+        self.handoff_with_notice(ticket_id, area, &notice).await
+    }
+
+    pub async fn handoff_with_notice(
+        &self,
+        ticket_id: Uuid,
+        area: &str,
+        notice: &str,
+    ) -> Result<(), HelpdeskError> {
+        let department = self.department_by_name(area).await?;
         let mut tx = self.pool.begin().await.map_err(db_err)?;
         let updated = sqlx::query(
             r#"
@@ -662,7 +679,7 @@ impl Helpdesk {
         if updated.rows_affected() == 0 {
             return Err(HelpdeskError::NotFound("No encontramos ese chat.".into()));
         }
-        insert_message(&mut tx, &system_note(ticket_id, &notice)).await?;
+        insert_message(&mut tx, &system_note(ticket_id, notice)).await?;
         insert_audit(
             &mut tx,
             ticket_id,
@@ -1416,10 +1433,14 @@ async fn insert_audit(
     Ok(())
 }
 
-async fn open_pool(database_url: &str) -> Result<PgPool, String> {
+pub fn pool_options() -> PgPoolOptions {
     PgPoolOptions::new()
-        .max_connections(8)
-        .acquire_timeout(Duration::from_secs(8))
+        .max_connections(20)
+        .acquire_timeout(Duration::from_secs(5))
+}
+
+async fn open_pool(database_url: &str, options: PgPoolOptions) -> Result<PgPool, String> {
+    options
         .connect(database_url)
         .await
         .map_err(|err| err.to_string())
@@ -1446,7 +1467,7 @@ async fn create_database(database_url: &str) -> Result<(), String> {
     }
     let admin = PgPoolOptions::new()
         .max_connections(1)
-        .acquire_timeout(Duration::from_secs(8))
+        .acquire_timeout(Duration::from_secs(5))
         .connect_with(options.database("postgres"))
         .await
         .map_err(|err| connection_help(database_url, &err.to_string()))?;

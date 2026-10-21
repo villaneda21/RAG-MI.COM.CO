@@ -2,8 +2,10 @@
 
 use std::net::SocketAddr;
 use std::process::ExitCode;
+use std::time::Duration;
 
 use clap::Parser;
+use sqlx::postgres::PgPoolOptions;
 use tracing_subscriber::EnvFilter;
 
 use rag_micomco::build_rag;
@@ -96,6 +98,10 @@ async fn main() -> ExitCode {
     if let Err(err) = std::fs::create_dir_all(&media_dir) {
         tracing::error!("No se pudo crear {}: {err}", media_dir.display());
     }
+    let pool_options = PgPoolOptions::new()
+        .max_connections(20)
+        .acquire_timeout(Duration::from_secs(5));
+    state.helpdesk.set_pool_options(pool_options);
     if let Err(err) = state.helpdesk.establish().await {
         eprintln!("[run] {err}");
     }

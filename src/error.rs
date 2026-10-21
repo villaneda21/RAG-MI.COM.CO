@@ -50,6 +50,10 @@ impl AppError {
     pub fn unsupported(detail: impl Into<String>) -> Self {
         Self::new(StatusCode::UNSUPPORTED_MEDIA_TYPE, detail)
     }
+
+    pub fn unauthorized(detail: impl Into<String>) -> Self {
+        Self::new(StatusCode::UNAUTHORIZED, detail)
+    }
 }
 
 impl IntoResponse for AppError {

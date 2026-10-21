@@ -36,6 +36,8 @@ Con PostgreSQL en marcha, el mismo proceso sirve el simulador de WhatsApp y el C
 
 `DATABASE_URL` apunta a `127.0.0.1:5433`. Ese puerto es el contenedor Docker. El `5432` pertenece al PostgreSQL de Windows, que responde con un error de autenticación y no tiene el usuario `rag`. Si el `.env` todavía dice 5432, el servidor lo cambia a 5433 al arrancar. Luego aplica las migraciones de `migrations/` y el temporizador revisa la inactividad cada minuto. Las respuestas al cliente no incluyen fuentes ni URLs; el chat de conocimiento en `/` sigue mostrándolas.
 
+El CRM pide `CRM_SECRET_TOKEN` al entrar y lo envía como `Authorization: Bearer`. Si la variable no está en `.env`, el arranque escribe una. `/api/crm` y `/api/admin` responden 401 sin ese token. El pool de PostgreSQL usa 20 conexiones y 5 segundos para adquirir una.
+
 ```bash
 docker compose up -d
 cargo run

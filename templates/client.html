@@ -17,6 +17,8 @@
         .thread-bg { background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%); }
         audio { height: 36px; width: 220px; }
         #toast { transition: opacity 180ms ease, transform 180ms ease; }
+        #thinking p { animation: pulse-text 1.2s ease-in-out infinite; }
+        @keyframes pulse-text { 50% { opacity: 0.45; } }
     </style>
 </head>
 <body class="h-screen overflow-hidden bg-zinc-200 text-slate-800">
@@ -118,6 +120,40 @@
             select.value = knownId ? ticketId : '';
         }
 
+        function setText(node, value) {
+            node.textContent = value == null ? '' : String(value);
+        }
+
+        function scrollThread(node) {
+            node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
+        }
+
+        function showThinking() {
+            hideThinking();
+            const row = document.createElement('div');
+            row.id = 'thinking';
+            row.className = 'flex justify-start';
+            row.setAttribute('aria-live', 'polite');
+            const bubble = document.createElement('div');
+            bubble.className = 'rounded-2xl rounded-bl-md border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-500 shadow-sm';
+            const label = document.createElement('p');
+            label.className = 'flex items-center gap-2';
+            setText(label, 'El bot está analizando tu consulta...');
+            const dot = document.createElement('span');
+            dot.className = 'inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-500';
+            dot.setAttribute('aria-hidden', 'true');
+            label.appendChild(dot);
+            bubble.appendChild(label);
+            row.appendChild(bubble);
+            thread.appendChild(row);
+            scrollThread(thread);
+        }
+
+        function hideThinking() {
+            const node = document.getElementById('thinking');
+            if (node) node.remove();
+        }
+
         function toast(text) {
             const node = document.getElementById('toast');
             node.textContent = text;
@@ -152,7 +188,7 @@
                     row.className = 'flex justify-center';
                     const note = document.createElement('p');
                     note.className = 'max-w-md rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2 text-center text-xs leading-relaxed text-slate-600 shadow-sm';
-                    note.textContent = message.content + (clock(message.created_at) ? ' · ' + clock(message.created_at) : '');
+                    setText(note, message.content + (clock(message.created_at) ? ' · ' + clock(message.created_at) : ''));
                     row.appendChild(note);
                     thread.appendChild(row);
                     return;
@@ -189,7 +225,7 @@
                 if (message.content && !placeholder) {
                     const text = document.createElement('p');
                     text.className = 'whitespace-pre-wrap leading-relaxed';
-                    text.textContent = message.content;
+                    setText(text, message.content);
                     bubble.appendChild(text);
                 }
                 const meta = document.createElement('p');
@@ -199,7 +235,7 @@
                 row.appendChild(bubble);
                 thread.appendChild(row);
             });
-            thread.scrollTop = thread.scrollHeight;
+            scrollThread(thread);
         }
 
         function handlerLine(ticket) {
@@ -378,6 +414,8 @@
             if (!content && !file) return;
             sending = true;
             document.getElementById('send').disabled = true;
+            document.getElementById('attach').disabled = true;
+            showThinking();
             try {
                 const body = { ticket_id: ticketId, content };
                 if (file) {
@@ -416,7 +454,10 @@
                 render(payload);
             } finally {
                 sending = false;
-                document.getElementById('send').disabled = false;
+                hideThinking();
+                const open = Boolean(ticketId);
+                document.getElementById('send').disabled = !open;
+                document.getElementById('attach').disabled = !open;
             }
         }
 

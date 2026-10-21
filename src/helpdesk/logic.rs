@@ -29,6 +29,10 @@ pub fn handoff_notice(label: &str, area: &str) -> String {
 
 pub const COVERAGE_MARK: &str = "[[SIN_COBERTURA]]";
 
+pub const DEMAND_NOTICE: &str = "⚠️ Estamos experimentando una alta demanda en nuestras consultas. Tu caso ha sido encolado para que un agente de soporte técnico te atienda a la brevedad.";
+
+pub const COVERAGE_GAP_NOTICE: &str = "no encontré información exacta en nuestra base de conocimientos para tu consulta. He transferido tu caso al equipo de Soporte Técnico para que un especialista te ayude.";
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum HandoffKind {
     Human,

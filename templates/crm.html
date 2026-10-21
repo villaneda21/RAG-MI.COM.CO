@@ -19,6 +19,15 @@
     </style>
 </head>
 <body class="h-screen overflow-hidden bg-zinc-100 text-zinc-800">
+    <div id="auth-gate" class="fixed inset-0 z-40 hidden items-center justify-center bg-zinc-900/40 p-4">
+        <form id="auth-form" class="w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <h1 class="text-base font-semibold text-zinc-900">Acceso al CRM</h1>
+            <p class="mt-1 text-sm leading-relaxed text-zinc-500">Pega el valor de CRM_SECRET_TOKEN definido en el archivo .env.</p>
+            <input id="auth-token" type="password" autocomplete="current-password" required class="mt-4 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-indigo-400" placeholder="Token">
+            <p id="auth-error" class="mt-2 hidden text-sm text-rose-600"></p>
+            <button class="mt-4 w-full rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700" type="submit">Entrar</button>
+        </form>
+    </div>
     <div class="flex h-full min-h-0 flex-col">
         <header class="flex h-14 shrink-0 items-center gap-3 border-b border-zinc-200 bg-white px-4">
             <a href="/crm" class="text-sm font-semibold tracking-tight text-zinc-900">Mesa <span class="text-indigo-600">MI</span></a>
@@ -204,11 +213,92 @@
             toast._t = setTimeout(() => node.classList.add('hidden'), 12000);
         }
 
+        const TOKEN_KEY = 'crm_secret_token';
+        let messageTail = '';
+        let knownWaiting = null;
+        let polling = false;
+
+        function setText(node, value) {
+            node.textContent = value == null ? '' : String(value);
+        }
+
+        function scrollThread(node) {
+            node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
+        }
+
+        function showAuthGate(message) {
+            const gate = document.getElementById('auth-gate');
+            gate.classList.remove('hidden');
+            gate.classList.add('flex');
+            const error = document.getElementById('auth-error');
+            if (message) {
+                setText(error, message);
+                error.classList.remove('hidden');
+            } else {
+                error.classList.add('hidden');
+            }
+        }
+
+        function hideAuthGate() {
+            const gate = document.getElementById('auth-gate');
+            gate.classList.add('hidden');
+            gate.classList.remove('flex');
+        }
+
+        function armAlert() {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if (!Ctx) return null;
+            if (!armAlert.ctx) armAlert.ctx = new Ctx();
+            if (armAlert.ctx.state === 'suspended') armAlert.ctx.resume();
+            return armAlert.ctx;
+        }
+
+        function playSoftAlert() {
+            const ctx = armAlert();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(660, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.06, now + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.46);
+        }
+
         async function api(url, options) {
-            const response = await fetch(url, options);
+            const opts = Object.assign({}, options || {});
+            const headers = new Headers(opts.headers || {});
+            const token = sessionStorage.getItem(TOKEN_KEY) || '';
+            if (token && !headers.has('Authorization')) headers.set('Authorization', 'Bearer ' + token);
+            opts.headers = headers;
+            const response = await fetch(url, opts);
+            if (response.status === 401) {
+                sessionStorage.removeItem(TOKEN_KEY);
+                showAuthGate('El token no es válido.');
+                throw new Error('No autorizado.');
+            }
             const body = await response.json().catch(() => ({}));
             if (!response.ok) throw new Error(body.detail || 'No se pudo completar la solicitud.');
             return body;
+        }
+
+        async function watchQueue() {
+            const data = await api('/api/crm/tickets?view=waiting');
+            const ids = (data.tickets || [])
+                .filter((ticket) => ticket.status === 'esperando_agente')
+                .map((ticket) => ticket.id);
+            if (knownWaiting) {
+                ids.forEach((id) => {
+                    if (!knownWaiting.has(id)) playSoftAlert();
+                });
+            }
+            knownWaiting = new Set(ids);
         }
 
         function clock(iso) {
@@ -410,7 +500,6 @@
 
         function paintMessages(messages) {
             const root = document.getElementById('messages');
-            const atBottom = root.scrollHeight - root.scrollTop - root.clientHeight < 80;
             root.replaceChildren();
             messages.forEach((message) => {
                 if (message.sender_type === 'system') {
@@ -418,7 +507,7 @@
                     row.className = 'flex justify-center';
                     const note = document.createElement('p');
                     note.className = 'max-w-md rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2 text-center text-xs leading-relaxed text-slate-600 shadow-sm';
-                    note.textContent = message.content;
+                    setText(note, message.content);
                     row.appendChild(note);
                     root.appendChild(row);
                     return;
@@ -431,7 +520,7 @@
                     who.textContent = (message.author_name || 'Agente') + ' · ' + clock(message.created_at) + ' · Nota interna';
                     const body = document.createElement('p');
                     body.className = 'mt-1 whitespace-pre-wrap';
-                    body.textContent = message.content;
+                    setText(body, message.content);
                     note.append(who, body);
                     root.appendChild(note);
                     return;
@@ -461,7 +550,7 @@
                 if (!placeholder) {
                     const text = document.createElement('p');
                     text.className = 'whitespace-pre-wrap';
-                    text.textContent = message.content;
+                    setText(text, message.content);
                     bubble.appendChild(text);
                 }
                 const meta = document.createElement('p');
@@ -476,7 +565,11 @@
                 row.appendChild(bubble);
                 root.appendChild(row);
             });
-            if (atBottom) root.scrollTop = root.scrollHeight;
+            const tail = messages.length ? String(messages[messages.length - 1].id || messages.length) : '';
+            if (tail !== messageTail) {
+                messageTail = tail;
+                requestAnimationFrame(() => scrollThread(root));
+            }
         }
 
         function paintSide(data) {
@@ -758,15 +851,38 @@
             document.getElementById('rules-msg').textContent = 'Reglas actualizadas.';
         });
 
-        boot().catch((error) => toast(error.message));
-        if (!adminMode) {
+        async function startCrm() {
+            if (!sessionStorage.getItem(TOKEN_KEY)) {
+                showAuthGate('');
+                return;
+            }
+            hideAuthGate();
+            armAlert();
+            await boot();
+            await watchQueue();
+            if (polling) return;
+            polling = true;
             setInterval(() => {
+                watchQueue().catch(() => {});
+                if (adminMode) return;
                 loadTickets().catch(() => {});
                 if (state.ticketId && document.activeElement !== composerInput) {
                     openTicket(state.ticketId, true).catch(() => {});
                 }
             }, 4000);
         }
+
+        document.getElementById('auth-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const token = document.getElementById('auth-token').value.trim();
+            if (!token) return;
+            sessionStorage.setItem(TOKEN_KEY, token);
+            document.getElementById('auth-error').classList.add('hidden');
+            startCrm().catch((error) => toast(error.message));
+        });
+        document.addEventListener('pointerdown', () => { armAlert(); });
+
+        startCrm().catch((error) => toast(error.message));
     </script>
 </body>
 </html>

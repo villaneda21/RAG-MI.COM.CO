@@ -24,7 +24,7 @@ pub fn router(state: AppState) -> Router {
     let static_dir = state.rag.settings.static_dir.clone();
     let media_dir = state.rag.settings.media_dir.clone();
     Router::new()
-        .merge(crate::helpdesk::routes())
+        .merge(crate::helpdesk::routes(state.clone()))
         .route("/", get(home))
         .route("/health", get(health))
         .route("/api/chat", post(chat))
@@ -35,7 +35,7 @@ pub fn router(state: AppState) -> Router {
         .route("/api/conversations/:session_id", get(get_conversation))
         .nest_service("/static", ServeDir::new(static_dir))
         .nest_service("/media", ServeDir::new(media_dir))
-        .layer(DefaultBodyLimit::max(12 * 1024 * 1024))
+        .layer(DefaultBodyLimit::max(2 * 1024 * 1024))
         .with_state(state)
 }
 

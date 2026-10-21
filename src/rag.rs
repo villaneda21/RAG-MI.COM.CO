@@ -137,7 +137,17 @@ impl RagService {
         })
     }
 
-    async fn retrieve(
+    /// Un fragmento cuenta si su similitud de coseno alcanza el umbral.
+    /// La distancia guardada es `1 - similitud`.
+    pub fn context_is_relevant(hits: &[Hit], min_similarity: f64) -> bool {
+        hits.iter().any(|hit| match hit.distance {
+            Some(distance) if distance.is_finite() => 1.0 - distance >= min_similarity,
+            Some(_) => false,
+            None => true,
+        })
+    }
+
+    pub async fn retrieve(
         &self,
         question: &str,
         history: &[HistoryTurn],
@@ -425,6 +435,25 @@ Para acceder a cPanel se debe entrar a Mis servicios y pulsar Acceder a cPanel.\
             Some(scripted.clone() as Arc<dyn SupportClient>),
         );
         (rag, scripted)
+    }
+
+    #[test]
+    fn weak_hits_do_not_count_as_coverage() {
+        let weak = super::Hit {
+            id: None,
+            document: "otro tema".into(),
+            metadata: serde_json::Map::new(),
+            distance: Some(0.9),
+        };
+        let strong = super::Hit {
+            id: None,
+            document: "el mismo tema".into(),
+            metadata: serde_json::Map::new(),
+            distance: Some(0.2),
+        };
+        assert!(!RagService::context_is_relevant(&[], 0.35));
+        assert!(!RagService::context_is_relevant(&[weak], 0.35));
+        assert!(RagService::context_is_relevant(&[strong], 0.35));
     }
 
     #[test]
