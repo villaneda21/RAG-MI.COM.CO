@@ -19,7 +19,7 @@ Con Docker:
 
 En Windows: `run_demo.bat`.
 
-Eso construye `micomco_backend` y levanta PostgreSQL 16 con `lc_messages=C` en el puerto 5433. La primera vez el contenedor descarga el modelo de embeddings.
+Eso construye `micomco_backend` y levanta PostgreSQL 16 con `lc_messages=C` en el puerto 5433. La imagen Rust es Debian 13: el ONNX Runtime no enlaza en Debian 12. Si una construcción anterior se quedó a medias, repite con `docker compose build --no-cache micomco_backend`. La primera vez el contenedor descarga el modelo de embeddings.
 
 Sin Docker:
 

@@ -1,6 +1,8 @@
-# Binario de release del centro de ayuda. La primera ejecución descarga el
-# modelo de embeddings si el índice local todavía no existe.
-FROM rust:1-bookworm AS build
+# ONNX Runtime (fastembed / ort-sys) referencia __isoc23_strtol y
+# std::__cxx11::basic_string::_M_replace_cold. Esos símbolos existen en
+# glibc >= 2.38 y en la libstdc++ de Debian 13. Bookworm (glibc 2.36) no
+# enlaza el binario.
+FROM rust:1-trixie AS build
 WORKDIR /src
 COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
 COPY src ./src
@@ -9,9 +11,9 @@ COPY templates ./templates
 COPY static ./static
 RUN cargo build --release --bin rag-micomco
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates \
+    && apt-get install -y --no-install-recommends ca-certificates libstdc++6 \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=build /src/target/release/rag-micomco /usr/local/bin/rag-micomco

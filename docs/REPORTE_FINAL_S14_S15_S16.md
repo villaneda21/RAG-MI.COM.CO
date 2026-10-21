@@ -80,7 +80,7 @@ Con una clave válida de Anthropic, un acierto de GUA-001, GUA-002 o GUA-007 pue
 `docker-compose.yml` levanta:
 
 - `postgres`: imagen `postgres:16-alpine`, comando `postgres -c lc_messages=C`, usuario `rag`, base `rag_micomco`, puerto del host `5433`, healthcheck `pg_isready`.
-- `micomco_backend`: compilación multi-etapa del binario release. `DATABASE_URL` apunta al servicio `postgres` en el puerto interno 5432. El arranque aplica las migraciones y sincroniza las guías.
+- `micomco_backend`: compilación multi-etapa del binario release sobre Debian 13 (Trixie). `DATABASE_URL` apunta al servicio `postgres` en el puerto interno 5432. El arranque aplica las migraciones y sincroniza las guías. La imagen de compilación es `rust:1-trixie` y la de ejecución `debian:trixie-slim` con `libstdc++6`, porque el ONNX Runtime de fastembed pide glibc 2.38 o posterior.
 
 `./run_demo.sh` y `run_demo.bat` ejecutan `docker compose up --build -d` e imprimen `/client` y `/crm`. El token de la demostración es `CRM_SECRET_TOKEN` o, si no se define, `demo-crm-token`.
 
