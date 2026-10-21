@@ -1,6 +1,7 @@
 import os
 import re
 import glob
+import sys
 import time
 import json
 import csv
@@ -11,7 +12,7 @@ from datetime import datetime
 # CONFIGURACIÓN DEL ENTORNO DE PRUEBAS
 # ==========================================
 BASE_URL = os.getenv("API_URL", "http://localhost:8000")
-TICKETS_DIR = os.getenv("TICKETS_DIR", "./data/tickets")
+TICKETS_DIR = os.getenv("TICKETS_DIR", "./data/eval")
 REPORTS_DIR = "./reports"
 
 GREEN = "\033[92m"
@@ -20,8 +21,6 @@ RED = "\033[91m"
 CYAN = "\033[96m"
 BOLD = "\033[1m"
 RESET = "\033[0m"
-
-WORKING_TRIAGE_KEYSET = None
 
 def parse_ticket_file(file_path):
     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
@@ -51,42 +50,44 @@ def parse_ticket_file(file_path):
     full_problem = " ".join(client_messages) if client_messages else None
     return client_name, full_problem
 
-def send_triage_autodetect(client_name, email, domain, problem_text):
-    global WORKING_TRIAGE_KEYSET
+def triage_payload(client_name, email, domain, problem_text):
+    """JSON de POST /api/client/triage.
 
-    headers = {"Content-Type": "application/json"}
+    TriageBody deserializa exactamente estas cuatro cadenas:
+    name, domain, email_micomco, reason. Un nombre distinto produce HTTP 422.
+    El servicio rechaza reason de más de 4000 caracteres y name de más de 120.
+    """
+    return {
+        "name": (client_name or "Cliente Evaluación").strip()[:120],
+        "domain": (domain or "mi-dominio.com.co").strip()[:160],
+        "email_micomco": email.strip()[:160],
+        "reason": problem_text.strip()[:4000],
+    }
 
-    # Lista ampliada de variantes estructurales para Axum/Serde
-    candidate_payloads = [
-        {"name": client_name, "email_micomco": email, "domain": domain, "problem_description": problem_text},
-        {"name": client_name, "email": email, "domain": domain, "description": problem_text},
-        {"name": client_name, "email_micomco": email, "domain": domain, "description": problem_text},
-        {"name": client_name, "email": email, "domain": domain, "problem_description": problem_text},
-        {"name": client_name, "email": email, "domain": domain, "subject": "Soporte Técnico", "issue": problem_text},
-        {"name": client_name, "email_micomco": email, "domain": domain, "subject": "Falla Reportada", "message": problem_text},
-        {"name": client_name, "email": email, "domain": domain, "category": "Hosting", "description": problem_text},
-        {"name": client_name, "email_micomco": email, "domain": domain, "category": "Soporte", "problem_description": problem_text},
-    ]
 
-    if WORKING_TRIAGE_KEYSET is not None:
-        payload = candidate_payloads[WORKING_TRIAGE_KEYSET]
-        return requests.post(f"{BASE_URL}/api/client/triage", json=payload, headers=headers, timeout=10)
-
-    for idx, payload in enumerate(candidate_payloads):
-        res = requests.post(f"{BASE_URL}/api/client/triage", json=payload, headers=headers, timeout=10)
-        if res.status_code == 200:
-            WORKING_TRIAGE_KEYSET = idx
-            print(f"{GREEN}✔ Esquema de Triage identificado (Variante #{idx+1}){RESET}")
-            return res
-            
-    return res
+def read_turn(body):
+    ticket = body.get("ticket") or {}
+    messages = body.get("messages") or []
+    reply = "\n".join(
+        message.get("content") or ""
+        for message in messages
+        if message.get("sender_type") in ("bot", "system")
+    )
+    return {
+        "id": ticket.get("id"),
+        "status": ticket.get("status") or "",
+        "department": ticket.get("department_name") or "",
+        "reply": reply,
+    }
 
 def run_evaluation():
     os.makedirs(REPORTS_DIR, exist_ok=True)
     
-    ticket_files = glob.glob(os.path.join(TICKETS_DIR, "ticket_archivado_*.txt"))
+    ticket_files = sorted(
+        glob.glob(os.path.join(TICKETS_DIR, "**/ticket_archivado_*.txt"), recursive=True)
+    )
     if not ticket_files:
-        ticket_files = glob.glob("ticket_archivado_*.txt")
+        ticket_files = sorted(glob.glob("ticket_archivado_*.txt"))
 
     print(f"\n{CYAN}{BOLD}========================================================")
     print("  MI.COM.CO — EVALUACIÓN OFFLINE DE DEFLEXIÓN Y LATENCIA")
@@ -102,6 +103,7 @@ def run_evaluation():
     total_tickets = len(ticket_files)
     deflected_count = 0
     escalated_count = 0
+    failed_count = 0
     total_latencies = []
 
     for idx, filepath in enumerate(ticket_files, 1):
@@ -114,34 +116,43 @@ def run_evaluation():
 
         email_test = f"cliente{idx}@mi.com.co"
         domain_test = "mi-dominio.com.co"
-        problem_snippet = problem_text[:120]
 
         try:
             t1 = time.time()
-            triage_res = send_triage_autodetect(client_name, email_test, domain_test, problem_snippet)
+            payload = triage_payload(client_name, email_test, domain_test, problem_text)
+            triage_res = requests.post(
+                f"{BASE_URL}/api/client/triage",
+                json=payload,
+                headers={"Content-Type": "application/json"},
+                timeout=60,
+            )
             
             if triage_res.status_code != 200:
+                failed_count += 1
                 print(f"[{idx}/{total_tickets}] {RED}❌ {filename}: Error Triage (HTTP {triage_res.status_code}) -> {triage_res.text}{RESET}")
                 continue
 
-            ticket_data = triage_res.json()
-            ticket_id = ticket_data.get("ticket_id") or ticket_data.get("id") or ticket_data.get("data", {}).get("ticket_id")
+            opened = read_turn(triage_res.json())
+            ticket_id = opened["id"]
+            if not ticket_id:
+                failed_count += 1
+                print(f"[{idx}/{total_tickets}] {RED}❌ {filename}: el triage no devolvió ticket.id{RESET}")
+                continue
 
             msg_payload = {
                 "ticket_id": str(ticket_id),
-                "content": problem_text,
-                "media_type": "text"
+                "content": problem_text[:8000],
             }
 
-            msg_res = requests.post(f"{BASE_URL}/api/client/message", json=msg_payload, headers={"Content-Type": "application/json"}, timeout=25)
+            msg_res = requests.post(f"{BASE_URL}/api/client/message", json=msg_payload, headers={"Content-Type": "application/json"}, timeout=60)
             latency_ms = round((time.time() - t1) * 1000, 2)
             total_latencies.append(latency_ms)
 
             if msg_res.status_code == 200:
-                response_data = msg_res.json()
-                bot_reply = response_data.get("reply") or response_data.get("message") or response_data.get("content") or ""
-                status = response_data.get("status", "en_bot")
-                dept = response_data.get("department", "Soporte Técnico")
+                response_data = read_turn(msg_res.json())
+                bot_reply = response_data["reply"] or opened["reply"]
+                status = response_data["status"] or opened["status"] or "en_bot"
+                dept = response_data["department"] or opened["department"] or "Soporte Técnico"
 
                 is_deflected = ("GUA-" in bot_reply or status in ["resuelto", "cerrado"]) and status != "esperando_agente"
 
@@ -168,9 +179,11 @@ def run_evaluation():
                     "bot_response": bot_reply
                 })
             else:
+                failed_count += 1
                 print(f"[{idx}/{total_tickets}] {RED}❌ {filename}: Error Mensaje (HTTP {msg_res.status_code}) -> {msg_res.text}{RESET}")
 
         except Exception as e:
+            failed_count += 1
             print(f"[{idx}/{total_tickets}] {RED}❌ {filename}: Excepción -> {e}{RESET}")
 
     eval_count = len(results)
@@ -217,6 +230,9 @@ def run_evaluation():
 
     print(f"✅ Reporte JSON guardado en: {BOLD}{json_path}{RESET}")
     print(f"✅ Reporte CSV guardado en:  {BOLD}{csv_path}{RESET}\n")
+    if failed_count:
+        print(f"{RED}Fallos HTTP: {failed_count}{RESET}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     run_evaluation()
