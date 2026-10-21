@@ -1,0 +1,140 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4139132
+=================================================================
+Asunto:     Conversación con Sigway  S.A.S
+Grupo ID:   48000640407
+Creado el:  2026-07-23T19:45:14Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[02:08 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[02:08 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Sigway ! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[02:08 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S sigwaysas@gmail.com
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? sigwaysas@gmail.com a tu solicitud actual.
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S sigway.co
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S 2
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Sigway , asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[02:09 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[02:10 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[02:10 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Agradecería que me detallaras explícitamente tu solicitud, especificando cada novedad de lo que te permite gestionar o no. Cualquier captura de pantalla o vídeo, me podría ayudar a entender mejor tu novedad, así que te recomiendo por favor adjuntarla por este medio.
+-----------------------------------------------------------------
+[02:12 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S Hola Marian como estas, me puedes ayudar por favor, es que tengo un correo con Microsoft y el dominio con uds, pero necsito confirgurar los DNS , pero no me permite, parece que ya existen los de mi.com.co y por ende no puedo ni enviar ni recibir correos
+-----------------------------------------------------------------
+[02:12 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S
+-----------------------------------------------------------------
+[02:12 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S
+-----------------------------------------------------------------
+[02:14 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, comprendo. ¿Me confirmas entonces que deseas eliminar los registros de correo de mi.com.co, correcto ?
+-----------------------------------------------------------------
+[02:14 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S si señora
+-----------------------------------------------------------------
+[02:14 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S creo que es la solucion
+-----------------------------------------------------------------
+[02:17 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Listo porfa valida nuevamente y me confirmas si se debe eliminar algún otro
+-----------------------------------------------------------------
+[02:18 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S un momento
+-----------------------------------------------------------------
+[02:18 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale espero tu confirmación
+-----------------------------------------------------------------
+[02:20 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S
+-----------------------------------------------------------------
+[02:20 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S creo que este me falta por eliminar
+-----------------------------------------------------------------
+[02:21 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 listo ese ya quedó eliminado también
+-----------------------------------------------------------------
+[02:22 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S perfecto, gracias
+-----------------------------------------------------------------
+[02:23 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[02:25 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S Si , es posible que me ayudes a agregar los de Microsoft?
+-----------------------------------------------------------------
+[02:27 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale esos registros debes crearlos desde tu panel de configuración pero si gustas te puedo guiar en el proceso
+-----------------------------------------------------------------
+[02:27 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S Por favor
+-----------------------------------------------------------------
+[02:28 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S Es que los creo pero sigo con la novedad
+-----------------------------------------------------------------
+[02:29 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale si gustas muéstrame cómo estás realizando el proceso de configuración y te indico si debes cambiar algo
+-----------------------------------------------------------------
+[02:30 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S Te puedo enviar un vídeo ?
+-----------------------------------------------------------------
+[02:30 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S Marian una consulta, uds me colaboran agregando los de Microsoft?
+-----------------------------------------------------------------
+[02:30 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S Marian una consulta, uds me colaboran agregando los de Microsoft?
+-----------------------------------------------------------------
+[02:32 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Si puedes enviarnos un video y vamos validando, no te podemos configurar como tal los registros a menos que falle el proceso
+-----------------------------------------------------------------
+[02:33 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S dale, tranquila
+-----------------------------------------------------------------
+[02:33 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S voy a eliminarlos y los vuelvo a montar
+-----------------------------------------------------------------
+[02:33 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S no te preocupes
+-----------------------------------------------------------------
+[02:33 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S muchas gracias
+-----------------------------------------------------------------
+[02:34 PM, 23rd Jul] 👤 CLIENTE (Sigway)
+💬 S.A.S igual cualquier cosa me vuelvo a comunicar
+-----------------------------------------------------------------
+[02:35 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

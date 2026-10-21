@@ -1,0 +1,74 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4139793
+=================================================================
+Asunto:     Conversación con Juliana
+Grupo ID:   48000640407
+Creado el:  2026-07-24T14:23:26Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[08:18 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 Buenos días
+-----------------------------------------------------------------
+[08:18 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas ? ¡Hola! Bienvenido/a a nuestro canal de ventas. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC. ⏳Horario de atención: Lunes a Viernes 9:00am a 5:30pm
+-----------------------------------------------------------------
+[08:18 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas ? Por favor, indícame tu correo electrónico para poder asignarte a una de nuestras agentes:
+-----------------------------------------------------------------
+[08:19 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 jrdelahoz@olimpica.com.co
+-----------------------------------------------------------------
+[08:19 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas Por favor selecciona la opción correspondiente a la solicitud que necesitas realizar: 1️⃣ Compras y transferencias ? 2️⃣ Renovaciones ? 3️⃣ Pagar con saldo a favor ? 4️⃣ Pago con retenciones ? 5️⃣ Canal de Soporte ⚙️
+-----------------------------------------------------------------
+[08:20 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 5
+-----------------------------------------------------------------
+[08:20 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas Recuerda, que nuestro número oficial de Soporte ⚙️ es el siguiente: ?https://api.whatsapp.com/send/?phone=573127823611&text=¡Hola+Team+MI.COM.CO! Te recomendamos que nos escribas a este número principalmente para obtener una asistencia más rápida y eficiente.
+-----------------------------------------------------------------
+[08:20 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas Aún así, no te preocupes, en este momento te estoy transfiriendo directamente a nuestro canal de soporte a través de este medio. Solo te pedimos contactarnos por nuestro número principal la próxima vez.
+-----------------------------------------------------------------
+[08:20 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas Uno de nuestros agentes humanos estará contigo en breve para brindarte la asistencia que necesitas. Por favor selecciona el área correspondiente para asignarte: 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ?
+-----------------------------------------------------------------
+[08:20 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 4
+-----------------------------------------------------------------
+[08:20 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas ✅ Juliana, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia). ? Cuéntame tu solicitud detalladamente, por favor adjunta, imágenes o videos si es posible.
+-----------------------------------------------------------------
+[08:21 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 Buenos días, el día de ayer realicé la renovación de los dominios grupoolimpica.net y grupoolimpica.com por 3 años pero me aparecen renovados por un solo año. El número de orden es ORD-00011387
+-----------------------------------------------------------------
+[08:32 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[08:33 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 Quedo atento
+-----------------------------------------------------------------
+[08:34 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero te encuentres muy bien, claro ya estoy validando tu caso dame un momento
+-----------------------------------------------------------------
+[09:06 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 Algún avance?
+-----------------------------------------------------------------
+[09:08 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Muchas gracias por tu amable paciencia, ya deben aparecer con la fecha correcta porfa me confirmas
+-----------------------------------------------------------------
+[09:09 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 Ya aparece la fecha correcta, muchas gracias por el apoyo
+-----------------------------------------------------------------
+[09:10 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[09:11 AM, 24th Jul] 👤 CLIENTE (Juliana)
+💬 Eso sería todo
+-----------------------------------------------------------------
+[09:11 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, perfecto, Marcaré tu caso como resuelto, Cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

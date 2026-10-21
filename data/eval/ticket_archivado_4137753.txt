@@ -1,0 +1,80 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137753
+=================================================================
+Asunto:     Conversación con Daniel Enrique Escobar Arboleda Desco  Sirviendo Justo A  Tiempo
+Grupo ID:   48000640407
+Creado el:  2026-07-22T19:11:48Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[01:15 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo buenas tardes como esta
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Daniel Enrique Escobar Arboleda Desco Sirviendo Justo A !?️? ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (daniel1041esk.arb@gmail.com). ?: Daniel Enrique Escobar Arboleda Desco Sirviendo Justo A , estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo envie una consulta para soporte
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo descoapp.com
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Disculpa, no entendí tu respuesta. Escribe solo el número de tu consulta para asignarte al área correcta. ¡Gracias!
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo 3
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Daniel Enrique Escobar Arboleda Desco Sirviendo Justo A , asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[01:16 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo Asunto: Passenger/Node no recarga la aplicación tras reinicio (todos los métodos estándar agotados) Hola, tengo una app Node.js en Setup Node.js App con esta configuración: Application Root: proveedorD/backend Startup File: server.js Application URL: descoapp.com (dominio raíz) Problema: cualquier cambio en server.js no se refleja en producción, confirmado con múltiples pruebas de control: Agregué una ruta de prueba app.get("/og-test-12345", ...) — nunca responde, siempre devuelve el index.html normal de mi SPA. Confirmé por Git que el archivo en disco (/home/zdescoaz6/proveedorD/backend/server.js) sí tiene el cambio. Probé: botón "Reiniciar", luego "Detener" + "Iniciar" completo, purga de LiteSpeed Cache, y forzar tmp/restart.txt (confirmado con nueva fecha de modificación) — en los 4 casos, el resultado es idéntico byte a byte (mismo ETag: W/"2bec-19f830a32bd", mismo Last-Modified: Tue, 21 Jul 2026 04:58:31 GMT). Cuando uso el botón "Detener" (sin iniciar), sí veo el comportamiento esperado (listado de directorio de Apache), lo que confirma que Passenger normalmente sí controla el dominio — pero al "Iniciar" de nuevo, parece seguir sirviendo un proceso/versión anterior en caché. ¿Podrían verificar en el servidor si hay algún proceso Node huérfano para mi cuenta (zdescoaz6), o algo en la configuración de Passenger/LiteSpeed que esté impidiendo que se recargue el código actualizado?
+-----------------------------------------------------------------
+[01:16 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[01:18 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo ok muchas gracias estoy atento
+-----------------------------------------------------------------
+[01:25 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero te encuentres bien dame un momento ya me encuentro validando tu caso
+-----------------------------------------------------------------
+[01:31 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo OK MUCHAS GRACIAS
+-----------------------------------------------------------------
+[01:42 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Podrías porfa intentar detener y reiniciar la app desde Setup Node.js App y me confirmas si ya funciona correctamente
+-----------------------------------------------------------------
+[01:45 PM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Enrique Escobar Arboleda Desco Sirviendo Justo A Tiempo OK
+-----------------------------------------------------------------
+[01:47 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, quedo atenta a tu confirmación.
+-----------------------------------------------------------------
+[02:00 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Sigo atenta a tu confirmación.
+-----------------------------------------------------------------
+[02:06 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Debido a que no se recibió respuesta, se marcará este caso como cerrado; espero estés de acuerdo. Cualquier inquietud que tengas, no dudes en comunicarte; con gusto te ayudaremos. Espero tengas un muy bonito día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

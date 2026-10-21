@@ -1,0 +1,74 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137611
+=================================================================
+Asunto:     Conversación con .
+Grupo ID:   48000640407
+Creado el:  2026-07-22T16:53:54Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[11:36 AM, 22nd Jul] 👤 CLIENTE (Hola)
+💬 11:36 AM, 22nd Jul Bot ¡Hola .! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[11:36 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[11:36 AM, 22nd Jul] 👤 CLIENTE (Co)
+💬 11:36 AM, 22nd Jul Bot ✅ ¡Perfecto! He asignado el correo ? guerra.04@hotmail.com.co a tu solicitud actual.
+-----------------------------------------------------------------
+[11:36 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[11:37 AM, 22nd Jul] 👤 CLIENTE (Co)
+💬 11:37 AM, 22nd Jul Bot ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[11:37 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[11:38 AM, 22nd Jul] 👤 CLIENTE (Nd)
+💬 Jul Bot ✅ ., asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[11:38 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[11:39 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[11:39 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Agradecería que me detallaras explícitamente tu solicitud, especificando cada novedad de lo que te permite gestionar o no. Cualquier captura de pantalla o vídeo, me podría ayudar a entender mejor tu novedad, así que te recomiendo por favor adjuntarla por este medio.
+-----------------------------------------------------------------
+[11:40 AM, 22nd Jul] 👤 CLIENTE (Hola)
+💬 Vale. Solicito su ayuda para revisar la configuración del dominio humancore.com.co, ya que no es posible acceder al sitio web después de instalar WordPress.
+-----------------------------------------------------------------
+[11:40 AM, 22nd Jul] 👤 CLIENTE (Al)
+💬 acceder a: http://humancore.com.co https://humancore.com.co https://humancore.com.co/wp-admin el navegador muestra: ERR_CONNECTION_REFUSED
+-----------------------------------------------------------------
+[11:41 AM, 22nd Jul] 👤 CLIENTE (Al)
+💬 intentar emitir el certificado SSL desde cPanel aparece el siguiente mensaje: Domain Control Validation failed: "humancore.com.co" resolves to a loopback IP address: 127.0.0.1. DNS-based DCV also failed. Al consultar el DNS público utilizando Google DNS (8.8.8.8) obtengo el siguiente resultado: nslookup humancore.com.co 8.8.8.8 Nombre: humancore.com.co Address: 127.0.0.1
+-----------------------------------------------------------------
+[11:41 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo dame un momento ya valido el tema y te confirmo
+-----------------------------------------------------------------
+[11:43 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Te confirmo que ya realicé el ajuste necesario para que puedas ingresar, pero este tarda en propagarse de 2 a 4 horas aproximadamente, te recomiendo volver a validar después de este tiempo
+-----------------------------------------------------------------
+[11:43 AM, 22nd Jul] 👤 CLIENTE (Que)
+💬 faltaba?
+-----------------------------------------------------------------
+[11:44 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Faltaba apuntar el dominio con el hosting en los registros A, ya hicimos el ajuste internamente
+-----------------------------------------------------------------
+[11:44 AM, 22nd Jul] 👤 CLIENTE (El)
+💬 SSL tambien?
+-----------------------------------------------------------------
+[11:45 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 sip, este está relacionado con los registros A entonces pasado el tiempo de propagación también debe quedar activo el certificado
+-----------------------------------------------------------------
+[11:46 AM, 22nd Jul] 👤 CLIENTE (Listo)
+💬 Muchas Gracias. Ten Buen día
+-----------------------------------------------------------------
+[11:48 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

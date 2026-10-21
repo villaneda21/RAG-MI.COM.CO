@@ -1,0 +1,74 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137434
+=================================================================
+Asunto:     Conversación con Natalie Monsalve     Manzano
+Grupo ID:   48000640407
+Creado el:  2026-07-22T14:33:25Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[08:43 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano Hola, buen día
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Natalie Monsalve !?️? ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (hopcreattivo@gmail.com). ?: Natalie Monsalve , estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano maki32.com
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano 2
+-----------------------------------------------------------------
+[08:44 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Natalie Monsalve , asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[08:44 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[08:45 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[08:45 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano Cambié las dns de mi dominio mientras construyo mi web en este hosting, pero no puedo ingresar al panel de wordpress por este mismo cambio, pueden ajustarlo por favor para construir mi web en el hosting, y luego si apuntar mi dominio a esta web? Por el momento está apuntando a mi portafolio de behance.net, entonces me apoyan por favor?
+-----------------------------------------------------------------
+[08:50 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Lo que ocurre es que WordPress necesita que el dominio apunte directamente a la IP del hosting para poder construir y acceder al panel. Como actualmente tu dominio está apuntando a Behance, el panel de WordPress no es accesible desde ahí. Tienes dos opciones: Opción 1 — La más sencilla ✅ Apuntamos temporalmente tu dominio a la IP de este hosting para que puedas construir tu web en WordPress sin problema. Una vez lista, tu sitio ya estará funcionando directamente. Opción 2 — Si quieres mantener Behance activo mientras construyes, puedes crear un subdominio (por ejemplo: construccion.tudominio.com) y allí montas el WordPress para que puedas trabajar con calma. Cuando tu web esté lista, debes moverla al dominio principal. Es un poco más complejo, pero te permite mantener tu portafolio visible mientras tanto.
+-----------------------------------------------------------------
+[08:51 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano Si, la mas sencilla estaría bien.
+-----------------------------------------------------------------
+[08:51 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano mientras pueda construirla sin problema
+-----------------------------------------------------------------
+[08:51 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano o si ustedes pueden decirme como hago lo del subdominio
+-----------------------------------------------------------------
+[08:51 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano mejor
+-----------------------------------------------------------------
+[08:56 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Claro ya te dejo el paso a paso de ambas opciones Opción 1 — Apuntar el dominio al hosting Ingresa a mi.com.co → Mis servicios → clic en tu dominio Ve a DNS en el menú izquierdo Edita los registros A de nombre @ y www y coloca esta IP: 54.84.0.47 Guarda y espera 1 a 2 horas para que propague Opción 2 — Crear un subdominio Ingresa a mi.com.co → Mis servicios → clic en tu dominio → DNS y agrega un registro A con el nombre de tu subdominio (ej: wip) apuntando a la IP 54.84.0.47 Ingresa a cPanel desde tu hosting → busca Subdominios y crea el mismo subdominio (ej: wip.tudominio.com) Instala WordPress en ese subdominio desde Softaculous Construyes tu web ahí sin afectar tu dominio principal Cuando esté lista, puedes seguir esta guía para moverla al dominio principal ? https://www.hostinger.co/tutoriales/como-mover-wordpress-a-un-dominio-diferente
+-----------------------------------------------------------------
+[09:06 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 ¿Te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[09:10 AM, 22nd Jul] 👤 CLIENTE (Natalie)
+💬 Monsalve Manzano no, muchas gracias.
+-----------------------------------------------------------------
+[09:13 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

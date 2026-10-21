@@ -1,0 +1,152 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4139804
+=================================================================
+Asunto:     Conversación con Navan Drivers un producto navan transportes sas
+Grupo ID:   48000640407
+Creado el:  2026-07-24T14:30:12Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[06:53 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Buen día
+-----------------------------------------------------------------
+[06:53 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ? *Mr.Web*: Nos emociona anunciarte que nuestro equipo de soporte para hosting, dominios y correos estará disponible en el horario de 8:00 a.m. a 05:00 p.m. Aprovecha este tiempo para recibir la asistencia que necesitas. ¡Estamos aquí para ayudarte! 1️⃣ Crear un ticket y nos pondremos en contacto en horario laboral. 2️⃣ Deja tu consulta aquí y te responderemos al siguiente día hábil. 3️⃣ Finalizar el chat actual. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[06:53 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co ¡Hola {user.first_name}! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es ayudarte. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos.
+-----------------------------------------------------------------
+[06:54 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Necesito su ayuda con un trabajo ar de CNAME
+-----------------------------------------------------------------
+[06:54 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Claro, te ayudo con el CNAME ? Para orientarte bien necesito un poco más de detalle: 1. ¿El dominio está registrado y administrado en mi.com.co? 2. ¿Qué exactamente quieres lograr con el CNAME? - Apuntar tu dominio a otra plataforma (por ejemplo, Heroku, Wix, etc.) - Crear los CNAME de correo (autodiscover, autoconfig) - Otro caso específico 3. ¿Cuál es el subdominio y el destino que necesitas configurar? (por ejemplo: app.midominio.com → miapp.herokudns.com) Con esos datos te explico paso a paso cómo crear o modificar el registro CNAME en tu panel de mi.com.co.
+-----------------------------------------------------------------
+[06:55 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas primero mis datos correo oesm.adorador@gmail.com navandrivers.com.co
+-----------------------------------------------------------------
+[06:55 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Perfecto, gracias por los datos ? Ahora necesito que me confirmes lo siguiente para ayudarte bien con el CNAME: 1. ¿El dominio navandrivers.com.co está administrado en mi.com.co (es decir, ves el dominio en tu panel de mi.com.co)? 2. ¿Para qué necesitas el CNAME exactamente? - Apuntar un subdominio a otra plataforma (por ejemplo, Heroku, página web externa, etc.) - Configurar CNAME para correo (por ejemplo: autodiscover o autoconfig) - Otro caso (descríbelo brevemente) 3. Si ya tienes el dato técnico, indícame: - Nombre / subdominio que quieres crear (ejemplo: app, www, autodiscover) - Destino al que debe apuntar (ejemplo: miapp.herokudns.com, autodiscover.mi.com.co, etc.) Con esa información te doy los pasos específicos para crear o modificar el registro CNAME de tu dominio navandrivers.com.co.
+-----------------------------------------------------------------
+[06:56 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Dale, Orlando — dos cosas ? _1) Los nombres: quedan tal cual, no los toco._ Pide Y Dale Paraguay y Pide Y Dale Guatemala se quedan como están. _2) Lo del DNS — te lo ubico exacto, porque acabo de verificarlo en vivo:_ Tu Colombia ya entra por tu marca (lo comprobé, carga perfecto): ? _pideydale.navandrivers.com.co/login_ ✅ Pero _Paraguay y Guatemala todavía no cargan_ — les falta _un registro DNS_ que aún no está creado (comprobado ahora mismo: paraguay. y guatemala. no resuelven; Colombia sí). _¿Dónde se arregla?_ En el _mismo panel donde se creó el registro de "pideydale"_ — donde tu proveedor administra el dominio _navandrivers.com.co_ (la zona DNS). Quien dio de alta el de Colombia entra ahí y agrega estos _dos registros_, calcaditos: _Registro 1 — Paraguay_ • Tipo: _CNAME_ • Nombre/Host: _paraguay_ • Valor/Destino: _34c6221a38568601.vercel-dns-016.com_ _Registro 2 — Guatemala_ • Tipo: _CNAME_ • Nombre/Host: _guatemala_ • Valor/Destino: _34c6221a38568601.vercel-dns-016.com_ En cuanto los agregues (propaga en minutos, a veces un par de horas), _paraguay.navandrivers.com.co/login_ y _guatemala.navandrivers.com.co/login_ abren con tu marca, igual que Colombia. ¿Querés que quede pendiente de que los agreguen para verificarlo en vivo con vos?
+-----------------------------------------------------------------
+[06:56 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Perfecto, Orlando, gracias por detallar todo tan claro ? Con lo que me indicas, lo que falta es crear dos registros CNAME nuevos en la zona DNS del dominio navandrivers.com.co, en el mismo lugar donde ya está configurado pideydale.navandrivers.com.co. Lo que debe hacer quien administra el dominio (en mi.com.co o en el proveedor donde esté la zona DNS) es agregar exactamente estos registros: Registro 1 — Paraguay - Tipo: CNAME - Nombre / Host: paraguay - Valor / Destino: 34c6221a38568601.vercel-dns-016.com Registro 2 — Guatemala - Tipo: CNAME - Nombre / Host: guatemala - Valor / Destino: 34c6221a38568601.vercel-dns-016.com Una vez creados: - paraguay.navandrivers.com.co/login - guatemala.navandrivers.com.co/login van a empezar a resolver hacia Vercel igual que Colombia. El cambio suele propagarse en minutos, aunque en algunos casos puede tardar hasta unas horas. Yo no tengo la capacidad de entrar al panel y crear los registros por ti, pero sí puedo ayudarte a revisar que queden bien configurados una vez los agreguen. Cuando te confirmen que ya los crearon, dime y seguimos con la verificación paso a paso ? Más información: DNS Archivo - Soporte MI.COM.CO DNS Archivo - Soporte MI.COM.CO Dominio DNS soporte y configuraciones - mi.com.co
+-----------------------------------------------------------------
+[06:56 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co ¿Le ha parecido útil?
+-----------------------------------------------------------------
+[06:59 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas No
+-----------------------------------------------------------------
+[06:59 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Lamento saber que no fue útil.
+-----------------------------------------------------------------
+[06:59 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Me ayudas paso a paso por favor , no sé cómo hacerlo por eso contesto un servicio profesional como ustedes
+-----------------------------------------------------------------
+[06:59 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Claro, te acompaño paso a paso ? Primero te explico el flujo general según nuestras guías, y luego lo aterrizamos a tus dos CNAME (paraguay y guatemala). ### 1. Ingresar al panel donde administras el dominio Para crear o modificar registros CNAME: - Ingresa a mi.com.co - En la parte superior derecha, haz clic en el icono de perfil - Inicia sesión con tu usuario ### 2. Ir a la administración del dominio - Una vez dentro del panel, ubica la sección de Dominios - Selecciona tu dominio navandrivers.com.co - En las opciones del dominio, entra a la parte de DNS / Zona DNS / Registros (donde ves MX, A, CNAME, TXT, etc.) > Si tu zona DNS no está en mi.com.co sino en otro proveedor, la creación de los CNAME debe hacerse allí. En ese caso, la lógica es la misma: buscar la sección de DNS/Zona DNS del dominio. ### 3. Crear los registros CNAME En la zona DNS, busca la opción de “Agregar registro” o similar y crea dos registros CNAME con estos datos: Registro 1 — Paraguay - Tipo de registro: CNAME - Nombre / Host / Subdominio: paraguay - Valor / Destino: 34c6221a38568601.vercel-dns-016.com Registro 2 — Guatemala - Tipo de registro: CNAME - Nombre / Host / Subdominio: guatemala - Valor / Destino: 34c6221a38568601.vercel-dns-016.com Guarda los cambios en la zona DNS. ### 4. Esperar propagación Según nuestras ayudas, los cambios DNS pueden tardar en propagarse. Normalmente: - Se ve en minutos - Puede tardar hasta unas horas en algunos casos Después de eso, deberían funcionar: - paraguay.navandrivers.com.co/login - guatemala.navandrivers.com.co/login --- Para seguir contigo bien de la mano, dime: 1. ¿Alcanzaste a entrar ya al panel donde ves el dominio navandrivers.com.co? 2. ¿Ves alguna opción que diga DNS, Zona DNS o Registros? Según lo que veas en pantalla, te voy guiando con el siguiente clic exacto ? Más información: Dominio DNS soporte y configuraciones - mi.com.co DNS Archivo - Soporte MI.COM.CO DNS Archivo - Soporte MI.COM.CO Registros MX y TX - Soporte MI.COM.CO
+-----------------------------------------------------------------
+[06:59 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co ¿Le ha parecido útil?
+-----------------------------------------------------------------
+[07:01 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Es aquí ?
+-----------------------------------------------------------------
+[07:01 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Voy contigo ? En este momento no veo tu pantalla, así que necesito que me cuentes qué ves para confirmar si es el lugar correcto. Por favor dime (o mándame captura si la plataforma lo permite): 1. El título o nombre de la página donde estás (por ejemplo: "Dominios", "Zona DNS", "Editor DNS", "Registros"). 2. Si ves una lista de registros con columnas tipo: - Nombre / Host - Tipo (A, MX, CNAME, TXT…) - Valor / Destino 3. ¿Ves algún botón que diga “Agregar registro”, “Añadir”, “Nuevo registro” o similar? Con esa descripción te digo exactamente: “sí, es ahí” y cuál es el siguiente clic que debes hacer para crear los CNAME de paraguay y guatemala.
+-----------------------------------------------------------------
+[07:02 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Sin estoy en agregar registro dice: tipo nonbre valor ttl
+-----------------------------------------------------------------
+[07:02 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Perfecto, sí, estás justo en el lugar correcto ? Ahora vamos a crear los dos registros uno por uno. ### Registro CNAME para Paraguay En ese formulario de Agregar registro llena así: - Tipo: selecciona CNAME - Nombre: paraguay - Valor: 34c6221a38568601.vercel-dns-016.com - TTL: puedes dejar el valor que viene por defecto (el que te ponga el sistema) Luego guarda / aceptar / crear (el botón que te aparezca). Cuando termines ese, hacemos el segundo: ### Registro CNAME para Guatemala Vuelve a Agregar registro y llena: - Tipo: CNAME - Nombre: guatemala - Valor: 34c6221a38568601.vercel-dns-016.com - TTL: igual, deja el valor por defecto Y guarda de nuevo. Después de crear los dos, dime si ya los ves listados en la tabla de registros (tipo CNAME, nombre paraguay y guatemala), y luego probamos juntos: - paraguay.navandrivers.com.co/login - guatemala.navandrivers.com.co/login Más información: DNS Archivo - Soporte MI.COM.CO DNS Archivo - Soporte MI.COM.CO Dominio DNS soporte y configuraciones - mi.com.co
+-----------------------------------------------------------------
+[07:02 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co ¿Le ha parecido útil?
+-----------------------------------------------------------------
+[07:05 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Ya lo hice y ahora ?
+-----------------------------------------------------------------
+[07:05 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co ¡Excelente, muy bien hecho! ? Ahora vienen los últimos pasos: ### 1. Verificar que los registros quedaron creados En la tabla de registros DNS, confirma que veas algo así: - Tipo: CNAME | Nombre: paraguay | Valor: 34c6221a38568601.vercel-dns-016.com - Tipo: CNAME | Nombre: guatemala | Valor: 34c6221a38568601.vercel-dns-016.com Si los ves así, la parte técnica ya está lista. ### 2. Probar las URLs En tu navegador, prueba: - https://paraguay.navandrivers.com.co/login - https://guatemala.navandrivers.com.co/login Puede que: - Ya carguen bien (ideal ✅), o - Todavía estén en proceso de propagación y tarden unos minutos / hasta un rato en verse. Dime qué ves exactamente al abrir cada una (pantalla en blanco, error, página de tu marca, etc.) y con eso te digo si es solo tema de espera de DNS o si falta algún ajuste adicional del lado de la aplicación.
+-----------------------------------------------------------------
+[07:06 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Me sale ese mensaje, cuando trato de abrir el de Paraguay
+-----------------------------------------------------------------
+[07:06 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Gracias por avisar, vamos a revisar juntos ? Para poder ayudarte bien necesito que me digas exactamente qué mensaje te aparece cuando abres: - https://paraguay.navandrivers.com.co/login Por ejemplo, algo como: - "No se puede acceder a este sitio" - "DNS address could not be found" - "Error 404" - "Error 500" - Algún texto de tu aplicación Si puedes, copia el mensaje completo o descríbelo tal cual aparece. Mientras tanto, confirma también: 1. ¿El de Colombia (https://pideydale.navandrivers.com.co/login) sigue cargando bien? 2. ¿El de Guatemala te muestra el mismo mensaje que Paraguay o algo diferente? Con esos detalles te digo si es tema de DNS (propagación / configuración) o algo de la aplicación en Vercel.
+-----------------------------------------------------------------
+[07:07 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas El de Colombia si funciona
+-----------------------------------------------------------------
+[07:07 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Perfecto, que Colombia funcione nos confirma que la lógica general está bien ? Ahora necesitamos dos datos clave para entender qué pasa con Paraguay (y también con Guatemala): 1. ¿Qué mensaje exacto ves al abrir: - https://paraguay.navandrivers.com.co/login - https://guatemala.navandrivers.com.co/login Escríbelo tal cual aparece (o copia el texto del error). 2. Confirma por favor que en la tabla DNS los registros se ven así: - Tipo: CNAME | Nombre: paraguay | Valor: 34c6221a38568601.vercel-dns-016.com - Tipo: CNAME | Nombre: guatemala | Valor: 34c6221a38568601.vercel-dns-016.com Con el mensaje de error y la confirmación de cómo quedaron los registros, te digo si solo hay que esperar propagación de DNS o si el problema está del lado de la aplicación (Vercel) y qué revisar a continuación.
+-----------------------------------------------------------------
+[07:08 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Este sitio web no puede proporcionar una conexión segura paraguay.navandrivers.com.co ha enviado una respuesta no válida. ERR_SSL_PROTOCOL_ERROR
+-----------------------------------------------------------------
+[07:08 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Gracias por el detalle del mensaje, eso ayuda mucho ? El error ERR_SSL_PROTOCOL_ERROR significa que el DNS ya está resolviendo, pero el certificado SSL / configuración HTTPS del lado de la aplicación (Vercel) todavía no está listo para ese subdominio. Es decir: - Los CNAME de paraguay y guatemala están bien creados. - Falta que la plataforma donde está tu app (Vercel) reconozca esos subdominios y les genere/active el certificado SSL. Desde nuestro lado (mi.com.co) ya hiciste lo que tocaba en DNS. Yo no tengo la capacidad de entrar a Vercel ni a tu aplicación para completar esa parte. Lo que corresponde ahora es que, en tu plataforma (Vercel): 1. Se agreguen los dominios: - paraguay.navandrivers.com.co - guatemala.navandrivers.com.co dentro del proyecto donde ya está configurado pideydale.navandrivers.com.co. 2. Se espere a que Vercel emita y active el certificado SSL para esos nuevos subdominios. Una vez hecho eso en Vercel, las URLs: - https://paraguay.navandrivers.com.co/login - https://guatemala.navandrivers.com.co/login deberían abrir igual de bien que Colombia. Desde mi.com.co ya dejaste los registros CNAME correctos; el siguiente paso depende de la configuración de tu app/hosting externo (Vercel). Más información: DNS Archivo - Soporte MI.COM.CO DNS Archivo - Soporte MI.COM.CO Dominio DNS soporte y configuraciones - mi.com.co
+-----------------------------------------------------------------
+[07:08 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co ¿Le ha parecido útil?
+-----------------------------------------------------------------
+[07:09 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas OK, ahora necesito que me ayudes con otra cosa, yo tengo el dominio comprado con ustedes y necesito colocarlo en otra página web que ya tengo y me dice que use mi propio dominio. Cómo hago
+-----------------------------------------------------------------
+[07:09 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Te ayudo con gusto ? Con el dominio comprado en mi.com.co tienes dos caminos típicos para usarlo en otra página web que ya tienes: 1. Apuntar el dominio por DNS a esa otra página (por registros A, CNAME, etc.). 2. Redireccionar el dominio hacia una URL (por ejemplo, que tudominio.com lleve a https://tuotraweb.com). Para decirte los pasos exactos, necesito que me aclares: 1. ¿En qué plataforma está esa otra página web? (por ejemplo: Wix, WordPress.com, Shopify, Vercel, Squarespace, etc.). 2. ¿Esa plataforma te está pidiendo específicamente que: - "Cambies los servidores DNS" (nameservers), o - "Crees registros A / CNAME" con unos datos que ellos te dan, o - Solo que "uses tu propio dominio" sin más detalle. 3. ¿Quieres que tu dominio principal (por ejemplo navandrivers.com.co) muestre directamente esa página, o un subdominio (como www.navandrivers.com.co)? Con esa información te doy el paso a paso desde tu panel de mi.com.co para que tu dominio quede apuntando correctamente a esa otra página web.
+-----------------------------------------------------------------
+[07:10 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Está en marea.pro
+-----------------------------------------------------------------
+[07:10 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Perfecto, entonces tu página está en marea.pro y quieres usar tu dominio de mi.com.co para que apunte allá ? En estos casos, normalmente hay dos opciones: - Marea.pro te da registros DNS (A / CNAME) para que los crees en tu dominio. - O te pide cambiar servidores DNS (nameservers). Como no tengo acceso a tu cuenta de marea.pro, te explico el lado de mi.com.co y tú aplicas los datos que ellos te den. ### Paso 1: Entra al panel de tu dominio en mi.com.co 1. Ingresa a mi.com.co. 2. Arriba a la derecha, haz clic en el icono de perfil. 3. Inicia sesión. 4. Ve a la sección Dominios. 5. Haz clic en tu dominio (por ejemplo navandrivers.com.co). 6. Entra a DNS / Zona DNS / Registros (donde ya estuviste creando CNAME). ### Paso 2: Apuntar el dominio a marea.pro (vía DNS) En marea.pro, busca la sección donde dice algo como “Conectar dominio propio” o “Usar tu propio dominio”. Allí deberían mostrarte: - Un registro A (IP) y/o - Un registro CNAME (nombre tipo tuapp.marea.pro) Con esos datos, en la Zona DNS de mi.com.co: A) Si marea.pro te da un registro A (IP) - Tipo: A - Nombre: @ (para el dominio raíz) o www (si te piden usar www.tudominio.com) - Valor: la IP que te dé marea.pro B) Si marea.pro te da un CNAME - Tipo: CNAME - Nombre: www (o el subdominio que te indiquen) - Valor: el host que te dé marea.pro (por ejemplo sites.marea.pro) Guarda los cambios. ### Paso 3: Esperar propagación - Los cambios DNS pueden tardar algunos minutos, a veces un poco más. - Luego prueba en el navegador: https://tudominio.com o https://www.tudominio.com según como lo hayas configurado. --- Para poder darte instrucciones más específicas, dime por favor qué te muestra marea.pro en la parte de “usar tu propio dominio”: - ¿Te da una IP? - ¿Te da un CNAME? - ¿Te dice que cambies los nameservers? Si me copias aquí esos datos, te digo exactamente qué llenar en Tipo / Nombre / Valor dentro de tu Zona DNS en mi.com.co. Más información: Dominio DNS soporte y configuraciones - mi.com.co Dominio DNS soporte y configuraciones - mi.com.co
+-----------------------------------------------------------------
+[07:10 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co ¿Le ha parecido útil?
+-----------------------------------------------------------------
+[07:10 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas
+-----------------------------------------------------------------
+[07:10 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co I currently cannot understand rich media such as images, videos, or audio notes. Could you please type your query here?
+-----------------------------------------------------------------
+[07:12 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Ok, preguntó el constructor no está funcionando ?
+-----------------------------------------------------------------
+[07:12 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Te entiendo, vamos a aclararlo ? Cuando dices “el constructor no está funcionando”, ¿te refieres a alguno de estos casos? 1. Miconstructor de mi.com.co (el constructor de páginas web que ofrecemos nosotros) no abre, da error o no te deja publicar. 2. El constructor de marea.pro no funciona bien al intentar conectar tu dominio. 3. Otra cosa distinta (por ejemplo, no ves tu sitio, no carga el editor, etc.). Como por políticas no puedo revisar directamente el estado de servicios en tiempo real, necesito que me cuentes: - ¿En qué página estás cuando ves que “no funciona”? (URL aproximada o nombre: miconstructor, marea.pro, etc.). - ¿Qué mensaje de error o qué comportamiento ves exactamente? (pantalla en blanco, error, botón que no responde, etc.). Con esos detalles te digo si es algo de configuración de dominio/DNS que podamos ajustar desde mi.com.co, o si es un tema propio de la plataforma del constructor que estás usando.
+-----------------------------------------------------------------
+[07:14 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas El de mi.com.co ? No me deja abrirlo
+-----------------------------------------------------------------
+[07:14 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co Permítame ponerle en contacto con uno de mis compañeros para que le ayuden.
+-----------------------------------------------------------------
+[07:48 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas * File attached - File.mp4 *
+-----------------------------------------------------------------
+[07:48 AM, 24th Jul] 🎧 SOPORTE (Agente)
+💬 IA mi.com.co I currently cannot understand rich media such as images, videos, or audio notes. Could you please type your query here?
+-----------------------------------------------------------------
+[08:56 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero te encuentres muy bien, por lo que veo en el video intentas contratar un servicio de mi constructor, pero lamento informarte que ya no estamos ofreciendo este servicio, te podemos recomendar nuestro servicio de hosting
+-----------------------------------------------------------------
+[08:57 AM, 24th Jul] 👤 CLIENTE (Navan)
+💬 Drivers un producto navan transportes sas Cuál es ese
+-----------------------------------------------------------------
+[09:02 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Claro el servicio de hosting lo puedes ver en esta página https://mi.com.co/hosting y te indica las características que tiene
+-----------------------------------------------------------------
+[09:11 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Cuéntame, ¿te puedo ayudar con algo más? Si gustas te remito al área de ventas para que te indiquen más información al respecto
+-----------------------------------------------------------------
+[09:22 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Debido a que no se recibió respuesta, se marcará este caso como cerrado; espero estés de acuerdo. Cualquier inquietud que tengas, no dudes en comunicarte; con gusto te ayudaremos. Espero tengas un muy bonito día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

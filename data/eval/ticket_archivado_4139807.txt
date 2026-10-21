@@ -1,0 +1,209 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4139807
+=================================================================
+Asunto:     Conversación con Ronald Rendón PLOT CONSULTORES SAS Quewiin
+Grupo ID:   48000640407
+Creado el:  2026-07-24T14:32:07Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[08:12 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[08:12 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Ronald Rendón PLOT CONSULTORES SAS! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[08:12 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[08:13 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin gerencia@plotconsultores.com.co
+-----------------------------------------------------------------
+[08:13 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? gerencia@plotconsultores.com.co a tu solicitud actual.
+-----------------------------------------------------------------
+[08:13 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[08:14 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin plotconsultores.com.co
+-----------------------------------------------------------------
+[08:14 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[08:14 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[08:14 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin 2
+-----------------------------------------------------------------
+[08:14 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ✅ Ronald Rendón PLOT CONSULTORES SAS, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[08:14 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[08:15 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[08:19 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Es que está fallando el dominio y no sé si esto compromete también la recepción de correos en mi correo corporativo con el mismo dominio.
+-----------------------------------------------------------------
+[08:22 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero te encuentres muy bien dame un momento ya valido tu caso
+-----------------------------------------------------------------
+[08:22 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Hola Valeria
+-----------------------------------------------------------------
+[08:22 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Gracias Valeria
+-----------------------------------------------------------------
+[08:24 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin es que tambien estan actualizando la pagina web y me informan esto, no se si tenga que ver con el problema que tengo.
+-----------------------------------------------------------------
+[08:24 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Le comento que, realmente lo que pasó fue que, como el dominio (el de mi.com.co) estaba conectado al antiguo hosting que tenían anteriormente, estaba enviando a las personas a descargar un archivo malicioso; por lo que Google los tenía como sitio web malicioso.
+-----------------------------------------------------------------
+[08:26 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, comprendo, ¿y cambiaron la zona DNS a la del hosting con nosotros, correcto?
+-----------------------------------------------------------------
+[08:27 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Hasta donde tengo entendido todo esta con ustedes
+-----------------------------------------------------------------
+[08:27 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Tengo esto
+-----------------------------------------------------------------
+[08:28 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin
+-----------------------------------------------------------------
+[08:32 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Revisamos tu caso y encontramos algo importante que te explicamos: Tu dominio plotconsultores.com.co tiene los nameservers apuntando al hosting (hostns1.hello.co, hostns2.hello.co), lo que significa que la zona DNS activa está en el hosting, no en el panel de mi.com.co. Por eso los registros que ves en mi.com.co no están propagándose — el servidor que manda actualmente es el hosting. Lo que debes hacer: Ingresar al Zone Editor de tu cPanel (como se ve en tu captura) y configurar allí los registros de correo que necesites .
+-----------------------------------------------------------------
+[08:34 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin pero espera es que no se como se hace ese tema tu me puedes guiar
+-----------------------------------------------------------------
+[08:35 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin esto es lo que me indicas
+-----------------------------------------------------------------
+[08:36 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Claro con gusto te guío, esos datos de la imagen son tus DNS que apuntan al hosting ahora para editar los registros debes ingresar a tu hosting y luego en la parte de acceder darle en la opción de ingresar al cpanel
+-----------------------------------------------------------------
+[08:38 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Aqui
+-----------------------------------------------------------------
+[08:38 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin
+-----------------------------------------------------------------
+[08:38 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 si correcto
+-----------------------------------------------------------------
+[08:38 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Ahora que debo hacer despues de ingresar
+-----------------------------------------------------------------
+[08:39 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Ya estoy aqui
+-----------------------------------------------------------------
+[08:39 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Luego vas a la sección de tu cpanel que dice dominio y en el apartado de zone editor
+-----------------------------------------------------------------
+[08:40 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin
+-----------------------------------------------------------------
+[08:40 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin
+-----------------------------------------------------------------
+[08:41 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Listo
+-----------------------------------------------------------------
+[08:41 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Perfecto dale en la opción de administrar
+-----------------------------------------------------------------
+[08:41 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Listo
+-----------------------------------------------------------------
+[08:41 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin
+-----------------------------------------------------------------
+[08:42 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 y ahí después debes seleccionar el tipo de dato MX y creas los registros que te indique tu proveedor de correo
+-----------------------------------------------------------------
+[08:42 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin este
+-----------------------------------------------------------------
+[08:43 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin pero no se cuales son los registros del proveedor de correo.
+-----------------------------------------------------------------
+[08:43 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin esos son de Google
+-----------------------------------------------------------------
+[08:44 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Donde los puedo conseguir
+-----------------------------------------------------------------
+[08:44 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Que pena con tigo preguntarte todo pero de sistemas no tengo mucho conocimiento
+-----------------------------------------------------------------
+[08:44 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale no te precupes aqui estamos para ayudarte, en ese caso debes contactar con ellos y que te indiquen cuáles son y apenas te los pasen nosotros te guiamos en la configuración
+-----------------------------------------------------------------
+[08:45 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Seran estos
+-----------------------------------------------------------------
+[08:50 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale el mx no dice cuál es el servidor ni la prioridad del registro, necesitamos consultar esos datos, el txt sí lo puedes ir creando con estos datos en nombre colocas solo tu dominio y en destino la info que te señale
+-----------------------------------------------------------------
+[08:51 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Mira esto es lo que me indica el chat de google
+-----------------------------------------------------------------
+[08:55 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Sera que si actuañlizamos eso podemos arreglar el problema
+-----------------------------------------------------------------
+[08:58 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Perfecto esa sí es la información que necesitamos en tu hosting lo puedes configurar editando el registros que ya te aparece colocando en destino la info que te da Google y prioridad uno
+-----------------------------------------------------------------
+[08:59 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin en este lado, aqui
+-----------------------------------------------------------------
+[08:59 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin quedaria asi
+-----------------------------------------------------------------
+[09:03 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 En destino colócale esta info donde dice editar le das
+-----------------------------------------------------------------
+[09:05 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Mira
+-----------------------------------------------------------------
+[09:05 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Asi quedaria
+-----------------------------------------------------------------
+[09:06 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Correcto, así quedaría listo el mx ahora pasemos al registro tipo txt
+-----------------------------------------------------------------
+[09:07 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin este
+-----------------------------------------------------------------
+[09:10 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Correcto ese es el que vamos a editar y le colocas en destino esta info
+-----------------------------------------------------------------
+[09:11 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Asi
+-----------------------------------------------------------------
+[09:12 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 correcto así tal cual
+-----------------------------------------------------------------
+[09:15 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin Asi quedo
+-----------------------------------------------------------------
+[09:20 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Perfecto eso sería todo en 1 o 2 horas ya debería volver a funcionar tu correo, en cuanto a tu página web te recomiendo seguir estos pasos Una vez el sitio esté limpio, ingresa a Google Search Console (search.google.com/search-console) Ve a Seguridad y acciones manuales → Problemas de seguridad Haz clic en "Solicitar revisión" y describe qué se hizo para solucionar el problema Google revisará el sitio en 1 a 3 días hábiles y retirará la advertencia si todo está en orden
+-----------------------------------------------------------------
+[09:24 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 ¿Te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[09:25 AM, 24th Jul] 👤 CLIENTE (Ronald)
+💬 Rendón PLOT CONSULTORES SAS Quewiin No valeria, mil gracia por tu ayuda
+-----------------------------------------------------------------
+[09:25 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

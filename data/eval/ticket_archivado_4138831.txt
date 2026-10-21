@@ -1,0 +1,107 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4138831
+=================================================================
+Asunto:     Conversación con Augusto ?
+Grupo ID:   48000640407
+Creado el:  2026-07-23T14:52:38Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[04:20 PM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ⏰ ¡Vaya! No he recibido respuesta de tu parte en los últimos 15 minutos. Quiero informarte que tu sesión actual del chat ha finalizado. Si necesitas más ayuda o tienes alguna otra pregunta, no dudes en escribirnos nuevamente. Estaremos encantados de atenderte con todo gusto y brindarte la asistencia que necesitas. ¡Estamos aquí para ayudarte! ?
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? hola
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Augusto ?!?️? ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (edgaraah126@gmail.com). ?: Augusto ?, estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? https://techcodex.co
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? 3
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Augusto ?, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[09:00 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[09:01 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? necesito ayuda con la publicación de mi sitio techcodex.co. Estoy intentando conectar por FTP/SFTP desde VS Code con mi usuario de hosting, pero la conexión siempre expira por timeout. Ya validé desde mi equipo lo siguiente: El servidor 44.211.14.38 sí responde por HTTPS (puerto 443). Los puertos de transferencia no responden: 21 (FTP): timeout 22 (SFTP): timeout 990 (FTPS): timeout Ya desactivé antivirus y VPN y el problema persiste. Mi IP pública actual es: 45.230.33.147 Usuario de cPanel/FTP: rtechcor2 Solicito por favor: Confirmar si FTP/SFTP/FTPS están habilitados en mi cuenta. Confirmar el host y puerto correctos para conexión remota. Hacer whitelist/desbloqueo de mi IP 45.230.33.147 en el firewall del servidor. Confirmar la ruta correcta de publicación para mi dominio (por ejemplo public_html o subcarpeta específica del dominio). Confirmar si hay alguna restricción de acceso por país/red/proveedor. Gracias, quedo atento.
+-----------------------------------------------------------------
+[09:01 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[09:03 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? vale Valeria quedo atento
+-----------------------------------------------------------------
+[09:06 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Hola, confirmamos los datos correctos para tu conexión FTP que puedes ver desde tu cpanel en la opción de Cuentas de FTP Servidor: ftp.techcodex.co Usuario: rtechcor2 Puerto: 1257 (FTPS explícito) Ruta: /home/rtechcor2 Intenta conectarte desde VS Code con estos datos
+-----------------------------------------------------------------
+[09:15 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? vale voy a realizar el cambio
+-----------------------------------------------------------------
+[09:15 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale perfecto quedo atenta a tu confirmación
+-----------------------------------------------------------------
+[09:25 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? amistad tengo un problema es que la contraseña pata el acceso ftp me dice que no es
+-----------------------------------------------------------------
+[09:25 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? yo estoy trabajando una que me indica un correo que ustedes me enviaron
+-----------------------------------------------------------------
+[09:25 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? nJFKm0kwzp
+-----------------------------------------------------------------
+[09:26 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo, ya te envío una nueva contraseña a tu correo dame un momento
+-----------------------------------------------------------------
+[09:28 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? vale Valeria muchas gracias quedo atento
+-----------------------------------------------------------------
+[09:31 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Listo porfa valida tu correo administrador
+-----------------------------------------------------------------
+[09:31 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? vale voy a revisarlo
+-----------------------------------------------------------------
+[09:32 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale quedo atenta a tu confirmación
+-----------------------------------------------------------------
+[09:32 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? si ya me llego el correo voy a cambiarlo en la propiedades y te notifico si todo va bien
+-----------------------------------------------------------------
+[09:33 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? Valeria perfecto, ya pude realizar la carga de los archivos al hosting
+-----------------------------------------------------------------
+[09:34 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? muchas gracias por tu ayuda
+-----------------------------------------------------------------
+[09:34 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Me alegra mucho escuchar eso. Cuéntame, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[09:35 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? Valeria solo tenia ese dificultad nada mas, te agradezco mucho su ayuda
+-----------------------------------------------------------------
+[09:35 AM, 23rd Jul] 👤 CLIENTE (Augusto)
+💬 ? que tengas un excelente dia estimada
+-----------------------------------------------------------------
+[09:39 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto. Cualquier otra inquietud, no dudes en informarnos. Muchas gracias y ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

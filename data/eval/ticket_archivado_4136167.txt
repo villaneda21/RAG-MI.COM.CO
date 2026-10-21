@@ -1,0 +1,77 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4136167
+=================================================================
+Asunto:     Conversación con David M Lozada
+Grupo ID:   48000640407
+Creado el:  2026-07-21T14:36:13Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[08:06 PM, 19th Jul] 👤 CLIENTE (David)
+💬 M Lozada ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[08:06 PM, 19th Jul] 🤖 BOT ASISTENTE
+💬 ? *Mr.Web*: Nos emociona anunciarte que nuestro equipo de soporte para hosting, dominios y correos estará disponible en el horario de 8:00 a.m. a 05:00 p.m. Aprovecha este tiempo para recibir la asistencia que necesitas. ¡Estamos aquí para ayudarte! 1️⃣ Crear un ticket y nos pondremos en contacto en horario laboral. 2️⃣ Deja tu consulta aquí y te responderemos al siguiente día hábil. 3️⃣ Finalizar el chat actual. ⚽¡Participa por una PlayStation 5! Predice qué equipos avanzan en cada fase del Torneo y suma puntos en la Tabla Goleadora 2026. Aplican TyC. ? https://mi.com.co/tablagoleadora
+-----------------------------------------------------------------
+[08:08 PM, 19th Jul] 👤 CLIENTE (David)
+💬 M Lozada Soy David Lozada. Tengo el dominio jollismastercleaning.com y estoy teniendo problemas con el constructor de página.
+-----------------------------------------------------------------
+[08:08 PM, 19th Jul] 🤖 BOT ASISTENTE
+💬 ? *Mr.Web*: Parece que no seleccionaste una opción válida, David M Lozada. Por favor, elige una opción de la lista y escribe el número correspondiente:
+-----------------------------------------------------------------
+[08:08 PM, 19th Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Crear un ticket y te contactaremos en horario laboral. 2️⃣ Déjanos tu solicitud en el chat y te responderemos al siguiente día hábil. 3️⃣ Finalizar chat para comunicarme en horario laboral. 4️⃣ Soporte correo, dominio y hosting.
+-----------------------------------------------------------------
+[08:09 PM, 19th Jul] 👤 CLIENTE (David)
+💬 M Lozada 4
+-----------------------------------------------------------------
+[08:09 PM, 19th Jul] 🤖 BOT ASISTENTE
+💬 ? Mr.Web: ¡Te informamos que hemos actualizado nuestro horario de atención en Soporte! Ahora estamos disponibles para ayudarte desde las 8:00 a.m. hasta las 08:00 p.m. No olvides que también puedes ponerte en contacto con nosotros enviando un ticket a nuestro correo de soporte: soporte@mi.com.co. Estamos aquí para asistirte en el horario que mejor te convenga.
+-----------------------------------------------------------------
+[08:09 PM, 19th Jul] 🤖 BOT ASISTENTE
+💬 ? Mr.Web: En un momento, uno de nuestros dedicados agentes de soporte se ocupará de tu caso. ¿Podrías indicarme en qué consiste tu solicitud, por favor?
+-----------------------------------------------------------------
+[08:09 PM, 19th Jul] 👤 CLIENTE (David)
+💬 M Lozada Soy David Lozada. Tengo el dominio jollismastercleaning.com y estoy teniendo problemas con el constructor de página.
+-----------------------------------------------------------------
+[08:31 AM, 20th Jul] 👤 CLIENTE (David)
+💬 M Lozada Hola
+-----------------------------------------------------------------
+[08:37 AM, 21st Jul] 👤 CLIENTE (David)
+💬 M Lozada Hola
+-----------------------------------------------------------------
+[08:37 AM, 21st Jul] 👤 CLIENTE (David)
+💬 M Lozada Buenos días
+-----------------------------------------------------------------
+[08:50 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Agradecería que me detallaras explícitamente tu solicitud, especificando cada novedad de lo que te permite gestionar o no. Cualquier captura de pantalla o vídeo, me podría ayudar a entender mejor tu novedad, así que te recomiendo por favor adjuntarla por este medio.
+-----------------------------------------------------------------
+[08:56 AM, 21st Jul] 👤 CLIENTE (David)
+💬 M Lozada * File attached - File.mp4 *
+-----------------------------------------------------------------
+[09:07 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Muchas gracias dame un momento ya valido tu caso
+-----------------------------------------------------------------
+[09:25 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Te confirmo que ya se realizó un ajuste interno en aproximadamente 1 o 2 horas debería terminar de propagar y funcionar correctamente las actualizaciones a tu página
+-----------------------------------------------------------------
+[09:25 AM, 21st Jul] 👤 CLIENTE (David)
+💬 M Lozada Gracias ??
+-----------------------------------------------------------------
+[09:25 AM, 21st Jul] 👤 CLIENTE (David)
+💬 M Lozada Igualmente el certificado SSL ?
+-----------------------------------------------------------------
+[09:28 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Si es correcto, el ssl también debe quedar activo. ¿Te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[09:28 AM, 21st Jul] 👤 CLIENTE (David)
+💬 M Lozada No muchas gracias. Cualquier cosa vuelvo a escribir ✌??
+-----------------------------------------------------------------
+[09:28 AM, 21st Jul] 👤 CLIENTE (David)
+💬 M Lozada Eres muy amable y gracias por tu tiempo
+-----------------------------------------------------------------
+[09:30 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

@@ -1,0 +1,119 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137515
+=================================================================
+Asunto:     Conversación con KEVIN
+Grupo ID:   48000640407
+Creado el:  2026-07-22T15:28:58Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[03:09 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 Hola buenas tardes
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, KEVIN!?️? ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (administracion@neurotechai.com.co). ?: KEVIN, estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 notaría65.co
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 1
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ KEVIN, asignación lista. Un agente humano te atenderá pronto ??‍???‍?. ⏰ Atendemos lunes a viernes 8:00 am a 5:00 pm (Colombia).
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[03:10 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 Quiero ampliar el almacenamiento de un buzón
+-----------------------------------------------------------------
+[03:10 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Esteban Gómez*, Ingeniero de Soporte TI especializado en el área de correos y estoy aquí para ayudarte con tu novedad actual.
+-----------------------------------------------------------------
+[03:10 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[03:11 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 Hola Esteban buenas tardes, esque tengo una consulta
+-----------------------------------------------------------------
+[03:12 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 Quiero ampliar el almacenamiento de uno de mis buzones actualmente está en 25 GB y quisiera que quedara de 50 GB estoy en el apartado para ampliar el almacenamiento pero quiero rectificar que estoy haciendo el proceso bien
+-----------------------------------------------------------------
+[03:13 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 25*
+-----------------------------------------------------------------
+[03:13 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 Haciendo la compra de esta manera si quedaría de 50 GB o seguiría de 24
+-----------------------------------------------------------------
+[03:50 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 si señor, esto lo haces dentro del buzon de correo que deseas ampliar su capacidad
+-----------------------------------------------------------------
+[04:08 PM, 21st Jul] 👤 CLIENTE (Kevin)
+💬 Osea que así quedaría con 50 GB
+-----------------------------------------------------------------
+[04:29 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 si señor con esa cuenta de correo unicamenete, ya que la ampliacion es individual
+-----------------------------------------------------------------
+[09:23 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Hola buen día
+-----------------------------------------------------------------
+[09:26 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Hola Kevin, buen dia, como te con la ampliacion del espacion de tu ceunta?
+-----------------------------------------------------------------
+[09:40 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Bien gracias ya realice el pago y en el dashboard ya sale que hay 50 GB en ese buzón pero en el correo como tal sigue saliendo 25 GB
+-----------------------------------------------------------------
+[09:59 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[10:02 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Hola, dame un momento ya estoy validando tu caso
+-----------------------------------------------------------------
+[10:06 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Vale gracias
+-----------------------------------------------------------------
+[10:07 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Listo porfa valida nuevamente tu servicio ya debe tener el espacio adicional
+-----------------------------------------------------------------
+[10:09 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 ya reviso dame un momento
+-----------------------------------------------------------------
+[10:09 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Claro te espero
+-----------------------------------------------------------------
+[10:10 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Listo mil gracias ya sale el almacenamiento
+-----------------------------------------------------------------
+[10:10 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Muchas gracias
+-----------------------------------------------------------------
+[10:10 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Eres muy ama
+-----------------------------------------------------------------
+[10:10 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Amable*
+-----------------------------------------------------------------
+[10:13 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Dale con mucho gusto, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[10:13 AM, 22nd Jul] 👤 CLIENTE (Kevin)
+💬 Eso es todo de momento, muchas gracias
+-----------------------------------------------------------------
+[10:13 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

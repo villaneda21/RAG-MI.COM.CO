@@ -1,0 +1,125 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4136134
+=================================================================
+Asunto:     Conversación con Jorge Castro
+Grupo ID:   48000640407
+Creado el:  2026-07-21T14:28:37Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[10:56 AM, 20th Jul] 👤 CLIENTE (Jorge)
+💬 Castro ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[10:56 AM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ? *Mr.Web*: Nos emociona anunciarte que nuestro equipo de soporte para hosting, dominios y correos estará disponible en el horario de 8:00 a.m. a 05:00 p.m. Aprovecha este tiempo para recibir la asistencia que necesitas. ¡Estamos aquí para ayudarte! 1️⃣ Crear un ticket y nos pondremos en contacto en horario laboral. 2️⃣ Deja tu consulta aquí y te responderemos al siguiente día hábil. 3️⃣ Finalizar el chat actual. ⚽¡Participa por una PlayStation 5! Predice qué equipos avanzan en cada fase del Torneo y suma puntos en la Tabla Goleadora 2026. Aplican TyC. ? https://mi.com.co/tablagoleadora
+-----------------------------------------------------------------
+[10:57 AM, 20th Jul] 👤 CLIENTE (Jorge)
+💬 Castro 2
+-----------------------------------------------------------------
+[10:57 AM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ? Mr.Web: ¡Genial! Veo que has seleccionado la opción 2️⃣. Tu chat se ha registrado en nuestra lista de espera para ser atendido fuera de nuestro horario laboral. ? Por favor, indícame un correo electrónico donde podamos contactarte para asignar tu chat:
+-----------------------------------------------------------------
+[10:57 AM, 20th Jul] 👤 CLIENTE (Jorge)
+💬 Castro MI pagina web impulsocommunication.com esta fuera del aire y fui a subir un contenido nuevo y me sale imposible conectarse con el servidor
+-----------------------------------------------------------------
+[10:57 AM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ? Mr.Web: ¡Vaya! No encontré un correo válido en tu mensaje. Por favor, verifica que esté bien escrito y sin caracteres especiales. ¡Inténtalo de nuevo! ? ¿Podrías escribir solo tu correo, por favor?
+-----------------------------------------------------------------
+[10:59 AM, 20th Jul] 👤 CLIENTE (Jorge)
+💬 Castro impulsocommunication@gmail.com
+-----------------------------------------------------------------
+[10:59 AM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ? Mr.Web: Por favor, escribe el número correspondiente a la opción que mejor describa tu consulta Jorge Castro: 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[11:00 AM, 20th Jul] 👤 CLIENTE (Jorge)
+💬 Castro 3
+-----------------------------------------------------------------
+[11:00 AM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ? *Mr.Web*: He completado tu asignación a nuestro canal de Soporte general?⚙. Jorge Castro, recuerda que en horario laboral un agente humano resolverá la duda que me escribas en este momento. ??‍???‍? ⏰ Nuestro horario de atención es de lunes a viernes de 8:00 am a 5:00 pm (hora de Colombia).
+-----------------------------------------------------------------
+[11:00 AM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte de la manera más eficiente posible, necesito que me proporciones más información sobre tu solicitud. Por favor, descríbeme detalladamente lo que está sucediendo:
+-----------------------------------------------------------------
+[11:00 AM, 20th Jul] 👤 CLIENTE (Jorge)
+💬 Castro MI pagina web impulsocommunication.com esta fuera del aire y fui a subir un contenido nuevo y me sale imposible conectarse con el servidor
+-----------------------------------------------------------------
+[11:01 AM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[11:01 AM, 20th Jul] 👤 CLIENTE (Jorge)
+💬 Castro Mil gracias Valeria
+-----------------------------------------------------------------
+[08:06 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Hola, muy buenos días, te confirmo que tu página se encuentra correctamente activa, si aún no logras verla te recomiendo borrar caché y validar desde incógnito
+-----------------------------------------------------------------
+[08:16 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Vio mil gracias ya puedo ver la página activa pero no está funcionando el cpanel
+-----------------------------------------------------------------
+[08:18 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Ya borre o caché y ente en modo incógnito
+-----------------------------------------------------------------
+[08:18 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:19 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Use otro máquina y no está cargando ni la página el con el cpanel tampoco
+-----------------------------------------------------------------
+[08:21 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Cuando entro a editar en el cpanel sale esto
+-----------------------------------------------------------------
+[08:21 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:48 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Me muestras porfa todo el proceso que realizas para intentar ingresar al cpanel porfa y adicionalmente me pasas tu ip pública
+-----------------------------------------------------------------
+[08:49 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:50 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:50 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:50 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:50 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:50 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:51 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Mi Ip 186.84.20.252
+-----------------------------------------------------------------
+[08:52 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro
+-----------------------------------------------------------------
+[08:53 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Estaba todo perfecto hasta el fin de semana
+-----------------------------------------------------------------
+[08:54 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale comprendo porfa borra caché e intenta nuevamente, me confirmas si ya te permite porfa, recuerda intentar desde incógnito, por lo que veo el sistema de seguridad bloqueo tu ip por eso no puedes ver tu página pero esta sí está activa
+-----------------------------------------------------------------
+[08:56 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Ya me entra los incógnito y como hacelosnoara que me desbloquee mi la Ip
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 No te preocupes ya realicé el desbloqueo en unas pocas horas vas a poder ingresar sin problema por tu navegador
+-----------------------------------------------------------------
+[09:07 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Gracias quedo atento
+-----------------------------------------------------------------
+[09:17 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, perfecto. ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[09:18 AM, 21st Jul] 👤 CLIENTE (Jorge)
+💬 Castro Gracias ya me dejó entrar desde mi Ip y todo funciona
+-----------------------------------------------------------------
+[09:20 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

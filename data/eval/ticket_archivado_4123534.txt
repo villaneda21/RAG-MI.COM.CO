@@ -1,0 +1,101 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4123534
+=================================================================
+Asunto:     Conversación con ALCONEG SAS
+Grupo ID:   48000640407
+Creado el:  2026-07-10T19:19:37Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[01:36 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[01:36 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola ALCONEG SAS! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ⚽¡Participa por una PlayStation 5! Predice qué equipos avanzan en cada fase del Torneo y suma puntos en la Tabla Goleadora 2026. Aplican TyC. ? https://mi.com.co/tablagoleadora
+-----------------------------------------------------------------
+[01:36 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS alconegconsultores@gmail.com
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? alconegconsultores@gmail.com a tu solicitud actual.
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS alconeg.com.co
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS 3
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ✅ ALCONEG SAS, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[01:37 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[01:38 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[01:39 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS hola
+-----------------------------------------------------------------
+[01:39 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS escribí el 23 de junio
+-----------------------------------------------------------------
+[01:40 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero que te encuentres muy bien. Cuéntame, ¿cómo puedo ayudarte?
+-----------------------------------------------------------------
+[01:40 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS escribí el 23 de junio, con un requerimiento y me dijero esto: "ola, buenos días espero te encuentres bien, te confirmo que tu solicitud se escaló a nuestro equipo de infraestructura, por lo que para darte un mejor seguimiento cerraremos este chat y lo pasaremos a tk, te notificaremos por correo apenas quede completado"
+-----------------------------------------------------------------
+[01:41 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS pero hasta el momento no me ha dado respuesta, no me dieron numero de ticket
+-----------------------------------------------------------------
+[01:42 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS Tengo una aplicación Python creada con "Setup Python App" en mi cuenta de cPanel (usuario: lalconel2, dominio: alconeg.com.co, ruta: flaskapp2). Devuelve error 503 (Service Unavailable) incluso con la app de prueba por defecto, sin código propio subido. la aplicación continúa devolviendo error 503, y el stderr.log muestra que falta el lanzador LSAPI del sistema: /usr/local/lsws/fcgi-bin/lswsgi_wrapper: line 18: /opt/alt/python312/bin/lswsgi: No such file or directory Este mismo error lo he visto ya en TRES versiones distintas de Python: el binario /opt/alt/pythonXXX/bin/lswsgi no existe para python310, python311 ni python312. Es decir, el componente LSAPI (lswsgi) de alt-python no está instalado en el servidor para ninguna versión. Como /opt/alt/ es ruta del sistema (root), no puedo instalarlo desde mi cuenta. Solicito puntualmente: instalar el paquete LSAPI de alt-python que provee el binario lswsgi (por ejemplo alt-python312-lsapi, o el equivalente para la versión que dejen disponible), de modo que /opt/alt/pythonXXX/bin/lswsgi exista y la aplicación pueda arrancar. El entorno virtual ya está bien; lo único que falta es ese binario.
+-----------------------------------------------------------------
+[01:44 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Por lo que veo tienes 2 tks en los cuales se te dio respuesta ids 3706146 y 3700978, pero parece que se envió al correo incorrecto, te confirmo que se realizó el ajuste para tu caso porfa 1. Ingresa a Setup Python App en tu cPanel. 2. En tu aplicación flaskapp2, dale a Restart (reiniciar) para que tome el cambio. Cuéntanos si la aplicación ya levanta sin el error 503
+-----------------------------------------------------------------
+[01:45 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS ok voy a probar
+-----------------------------------------------------------------
+[01:45 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 dale perfecto, quedo atenta a tu confirmación
+-----------------------------------------------------------------
+[01:46 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS ya cambio el error
+-----------------------------------------------------------------
+[01:46 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS ahora es 500
+-----------------------------------------------------------------
+[01:46 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Vale me pasas el error completo porfa y una captura para validarlo en profundidad porfa
+-----------------------------------------------------------------
+[01:56 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 sigo atenta a tu confirmación
+-----------------------------------------------------------------
+[01:56 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS ya, esta solucionado
+-----------------------------------------------------------------
+[01:56 PM, 10th Jul] 👤 CLIENTE (Alconeg)
+💬 SAS gracias
+-----------------------------------------------------------------
+[01:57 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[02:08 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Debido a que no se recibió respuesta, se marcará este caso como cerrado; espero estés de acuerdo. Cualquier inquietud que tengas, no dudes en comunicarte; con gusto te ayudaremos. Espero tengas un muy bonito día
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

@@ -1,0 +1,110 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4140096
+=================================================================
+Asunto:     Conversación con Juanita Moreno  M
+Grupo ID:   48000640407
+Creado el:  2026-07-24T17:26:10Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[09:50 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Hola
+-----------------------------------------------------------------
+[09:50 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas ? ¡Hola! Bienvenido/a a nuestro canal de ventas. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC. ⏳Horario de atención: Lunes a Viernes 9:00am a 5:30pm
+-----------------------------------------------------------------
+[09:50 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas ? Por favor, indícame tu correo electrónico para poder asignarte a una de nuestras agentes:
+-----------------------------------------------------------------
+[09:50 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M juanitam@antifragil.org
+-----------------------------------------------------------------
+[09:50 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas Por favor selecciona la opción correspondiente a la solicitud que necesitas realizar: 1️⃣ Compras y transferencias ? 2️⃣ Renovaciones ? 3️⃣ Pagar con saldo a favor ? 4️⃣ Pago con retenciones ? 5️⃣ Canal de Soporte ⚙️
+-----------------------------------------------------------------
+[09:51 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M 1
+-----------------------------------------------------------------
+[09:51 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas Para ayudarte mejor, necesito que me indiques en qué proceso estás interesado: 1️⃣ No tengo servicios y deseo adquirirlos con ustedes. 2️⃣ Ya tengo servicios con ustedes, pero deseo comprar más. 3️⃣ Tengo servicios con otro proveedor y deseo pasarme con ustedes.
+-----------------------------------------------------------------
+[09:52 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Opción 2
+-----------------------------------------------------------------
+[09:52 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas ? Por favor, indícame tu nombre de dominio o escribe cualquier palabra o frase si no tienes uno:
+-----------------------------------------------------------------
+[09:52 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M antifragil.org
+-----------------------------------------------------------------
+[09:52 AM, 24th Jul] 👤 CLIENTE (Wa)
+💬 - Ventas ¡Hola! Soy Isa Salazar ??‍?, y estoy aquí para ayudarte. ¿Me podrías indicar en qué servicios adicionales estás interesado?
+-----------------------------------------------------------------
+[09:54 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Cuentame por favor que servivio deseas adquirir y asociar al nombre de dominio antifragil.org, correo electronico o Hosting para alojar tu pagina web
+-----------------------------------------------------------------
+[10:00 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Hola Isa, necesito comprar el certificado de seguridad de mi dominio para que a las personas no les aparezca que es un sitio inseguro
+-----------------------------------------------------------------
+[10:00 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M
+-----------------------------------------------------------------
+[10:01 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Nuestro servicio de Hosting lo trae incluido, no comercializamos solo el certificado de seguridad sssl
+-----------------------------------------------------------------
+[10:09 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Y con quién podría comprarlo? Necesito que el dominio les aparezca seguro
+-----------------------------------------------------------------
+[10:16 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 No tengo conocimiento que compañia comercialzia
+-----------------------------------------------------------------
+[10:57 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M El dominio que más aparece como conexión no privada, es un DNS CNAME para tracking, sabes si puede ser problema de la seguridad que ustedes dicen que tiene el dominio?
+-----------------------------------------------------------------
+[11:04 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 El dominio no es quien aloja el certificadeo de seguridad, es tu hosting
+-----------------------------------------------------------------
+[11:04 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Pero vamos a hacer lo siguiente, te voy a dejar con nuestro equipo de soporte para que le puedas hacer ese tipo de consultas
+-----------------------------------------------------------------
+[11:05 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Ya que veoi que el hosting lo tienes contratado con nosotros
+-----------------------------------------------------------------
+[11:07 AM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[11:10 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Dale Valeria, quedo muy atenta, muchas gracias.
+-----------------------------------------------------------------
+[11:24 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Me confirmas por qué en qué parte sale la conexión no privada porfa
+-----------------------------------------------------------------
+[11:25 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Mira por ejemplo en este link, que es cuando yo oprimo un botón de un newsletter que envío a través del CRM https://track.antifragil.org/f/a/9ug5xP9U1I7NnsB3IBmW_Q~~/AAArHBA~/DOx1bYAZ-0m0Z2ZLG2oJrCJ1y5nrZpqJrsEreKZWssVlcASf9B7U-EyPYdwJeCQzqXuQfe96t1XfKh7tqphBiu9YSEcvWOPtNq9LhWy3huryV7-oBRrZupqYjZZ7DsHwCEvHrv1qH93Vyg_epvayetgS1JPUGLwwMlUkU3B53r2x74uQO1F3CNqrGB75noLD5bbUJvZePpTP79W0awJkqbfWcDW2PDTCs9BlXiIMJibpxDn6oTc2ZS4hW89GH1pu
+-----------------------------------------------------------------
+[11:26 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Cuando le doy clic aquí o en cualquiera de los botones del mailing, es que me sale eso.
+-----------------------------------------------------------------
+[11:32 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Gracias por la captura, confirma exactamente lo que identificamos. Cuando haces clic en cualquier botón del newsletter, el link pasa primero por track.antifragil.org para registrar el clic en tu CRM y ese subdominio no tiene SSL, por eso aparece la advertencia. Tu sitio principal y tu dominio están perfectamente seguros ; el problema es exclusivo del tracking de tu CRM. Para solucionarlo definitivamente necesitas ingresar a tu CRM y activar el SSL para el dominio personalizado de tracking.
+-----------------------------------------------------------------
+[11:54 AM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Pero solo es activarlo o con ustedes debo comprar la seguridad para ese dominio personalizado?
+-----------------------------------------------------------------
+[11:58 AM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 El dominio personalizado de tracking es track.antifragil.org — que es un subdominio tuyo que apunta al servidor de tu CRM. Desde tu CRM La mayoría de los CRMs como ActiveCampaign, HubSpot o Brevo permiten activar SSL para dominios personalizados de tracking directamente desde su panel sin costo adicional. Solo necesitas encontrar esa opción en la configuración de tu CRM.
+-----------------------------------------------------------------
+[12:19 PM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M Perfecto, muchas gracias
+-----------------------------------------------------------------
+[12:21 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[12:21 PM, 24th Jul] 👤 CLIENTE (Juanita)
+💬 Moreno M No, gracias esa era la única pregunta que tenía, si necesito algo más me vuelvo a contactar, muchas graciasss
+-----------------------------------------------------------------
+[12:22 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, Cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---
