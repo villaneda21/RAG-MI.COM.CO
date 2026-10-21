@@ -1,0 +1,92 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137484
+=================================================================
+Asunto:     Conversación con COMESTIBLES ALDOR SAS
+Grupo ID:   48000640407
+Creado el:  2026-07-22T15:10:41Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[08:38 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Buen dia
+-----------------------------------------------------------------
+[08:38 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola COMESTIBLES ALDOR SAS! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[08:38 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[08:38 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS alexanderestradapena2026@gmail.com
+-----------------------------------------------------------------
+[08:38 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? alexanderestradapena2026@gmail.com a tu solicitud actual.
+-----------------------------------------------------------------
+[08:38 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[08:39 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS aldor-online.com
+-----------------------------------------------------------------
+[08:39 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[08:39 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[08:39 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS 1
+-----------------------------------------------------------------
+[08:39 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ COMESTIBLES ALDOR SAS, asignación lista. Un agente humano te atenderá pronto ??‍???‍?. ⏰ Atendemos lunes a viernes 8:00 am a 5:00 pm (Colombia).
+-----------------------------------------------------------------
+[08:39 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[08:40 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Esteban Gómez*, Ingeniero de Soporte TI especializado en el área de correos y estoy aquí para ayudarte con tu novedad actual.
+-----------------------------------------------------------------
+[08:40 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[08:41 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Hola esteban
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Es que adquiri el dominio aldor-online.com pero al momento de ingresar no me deja recibir ni enviar correos, creo que falta algo de configuracion del dns algo asi
+-----------------------------------------------------------------
+[08:43 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Tu me podrias colaborar
+-----------------------------------------------------------------
+[08:45 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 recibes algun rebote?
+-----------------------------------------------------------------
+[08:46 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Asi es
+-----------------------------------------------------------------
+[08:46 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Dice que direccion no encontrada
+-----------------------------------------------------------------
+[08:46 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Rebota el correo
+-----------------------------------------------------------------
+[08:52 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 regalame el pantallazo del rebote porfa.
+-----------------------------------------------------------------
+[08:57 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Dame un momento
+-----------------------------------------------------------------
+[09:01 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 quedo atento.
+-----------------------------------------------------------------
+[09:04 AM, 22nd Jul] 👤 CLIENTE (Comestibles)
+💬 ALDOR SAS Mira que intente de nuevo y ya me quedo activo
+-----------------------------------------------------------------
+[09:08 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 vale.
+-----------------------------------------------------------------
+[09:08 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 puedo ayudarte con algo más?
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

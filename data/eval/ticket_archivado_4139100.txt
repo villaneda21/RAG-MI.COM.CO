@@ -1,0 +1,77 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4139100
+=================================================================
+Asunto:     Conversación con Santiago
+Grupo ID:   48000640407
+Creado el:  2026-07-23T19:03:37Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[01:27 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[01:27 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Santiago! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[01:27 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[01:28 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 tiendartecom@gmail.com
+-----------------------------------------------------------------
+[01:28 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? tiendartecom@gmail.com a tu solicitud actual.
+-----------------------------------------------------------------
+[01:28 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[01:28 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 tiendarte.co
+-----------------------------------------------------------------
+[01:28 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[01:28 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[01:29 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 2
+-----------------------------------------------------------------
+[01:29 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Santiago, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[01:29 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[01:30 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[01:31 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 Buenas tardes. Realicé el registro del dominio tiendarte.co a través de su plataforma, el cual aparecía disponible en su buscador. La solicitud quedó registrada con el número SOL-00455893 pero lamentablemente no se completó exitosamente. Agradezco su ayuda para revisar el caso y gestionar el registro al precio promocional ofrecido, teniendo en cuenta que el inconveniente se presentó en el proceso interno de su plataforma. Quedo atento a su respuesta. Muchas gracias
+-----------------------------------------------------------------
+[01:34 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Hola espero te encuentres bien, claro dame un momento ya valido tu caso
+-----------------------------------------------------------------
+[01:35 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 Gracias, quedo atento.
+-----------------------------------------------------------------
+[01:44 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Listo, porfa valida nuevamente ya deben aparecer tus 2 servicios activos
+-----------------------------------------------------------------
+[01:45 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 Sí señora ya me aparece
+-----------------------------------------------------------------
+[01:45 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 mil gracias.
+-----------------------------------------------------------------
+[01:46 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[01:46 PM, 23rd Jul] 👤 CLIENTE (Santiago)
+💬 Con eso está bien, mil gracias.
+-----------------------------------------------------------------
+[01:52 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

@@ -1,0 +1,71 @@
+{
+  "deflection_rate_pct": 0.0,
+  "deflected": 0,
+  "escalated": 5,
+  "tickets": 5,
+  "confusion_matrix": {
+    "tp": 0,
+    "tn": 2,
+    "fp": 0,
+    "fn": 3,
+    "unresolved": 0,
+    "error": 0
+  },
+  "support_cases": {
+    "archives_with_confirmo": 5,
+    "rows_created": 5
+  },
+  "retrieval_agreement": {
+    "vector_top_equals_expected": 3,
+    "weighted_tsvector_equals_expected": 3,
+    "note": "La columna plana (pesos 0.25) representa la búsqueda léxica sin priorizar título ni palabras clave. La columna ponderada es el tsvector nuevo: A título 1.0, B palabras clave 0.4, C cuerpo 0.2. El índice vectorial es la arquitectura Rust actual."
+  },
+  "rows": [
+    {
+      "file": "ticket_archivado_05.txt",
+      "expected": "ESCALATE",
+      "outcome": "escalated",
+      "label": "tn",
+      "guide_cited": null,
+      "case_code": "CASO-39429C6A",
+      "case_created": true
+    },
+    {
+      "file": "ticket_archivado_01.txt",
+      "expected": "GUA-001",
+      "outcome": "escalated",
+      "label": "fn",
+      "guide_cited": null,
+      "case_code": "CASO-E9298F4F",
+      "case_created": true
+    },
+    {
+      "file": "ticket_archivado_02.txt",
+      "expected": "GUA-002",
+      "outcome": "escalated",
+      "label": "fn",
+      "guide_cited": null,
+      "case_code": "CASO-7C258325",
+      "case_created": true
+    },
+    {
+      "file": "ticket_archivado_03.txt",
+      "expected": "GUA-007",
+      "outcome": "escalated",
+      "label": "fn",
+      "guide_cited": null,
+      "case_code": "CASO-D76B7B8D",
+      "case_created": true
+    },
+    {
+      "file": "ticket_archivado_04.txt",
+      "expected": "ESCALATE",
+      "outcome": "escalated",
+      "label": "tn",
+      "guide_cited": null,
+      "case_code": "CASO-AA847EA7",
+      "case_created": true
+    }
+  ],
+  "interpretation": "Un caso deflectado exige que la respuesta cite una guía y que el ticket no quede en esperando_agente. Si Claude no está configurado, el centro de ayuda escala y la tasa de deflexión cae aunque el índice haya encontrado la guía. vector_top_equals_expected mide esa recuperación aparte de la deflexión. Esta corrida no tenía ANTHROPIC_API_KEY."
+}

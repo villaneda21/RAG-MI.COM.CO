@@ -1,0 +1,74 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4138907
+=================================================================
+Asunto:     Conversación con Jhon  C.
+Grupo ID:   48000640407
+Creado el:  2026-07-23T15:49:54Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[07:34 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[07:34 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? *Mr.Web*: Nos emociona anunciarte que nuestro equipo de soporte para hosting, dominios y correos estará disponible en el horario de 8:00 a.m. a 05:00 p.m. Aprovecha este tiempo para recibir la asistencia que necesitas. ¡Estamos aquí para ayudarte! 1️⃣ Crear un ticket y nos pondremos en contacto en horario laboral. 2️⃣ Deja tu consulta aquí y te responderemos al siguiente día hábil. 3️⃣ Finalizar el chat actual. ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[07:35 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. 2
+-----------------------------------------------------------------
+[07:35 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Mr.Web: ¡Genial! Veo que has seleccionado la opción 2️⃣. Tu chat se ha registrado en nuestra lista de espera para ser atendido fuera de nuestro horario laboral. ? Por favor, indícame un correo electrónico donde podamos contactarte para asignar tu chat:
+-----------------------------------------------------------------
+[07:35 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. jhon980416@gmail.com
+-----------------------------------------------------------------
+[07:35 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Mr.Web: Por favor, escribe el número correspondiente a la opción que mejor describa tu consulta Jhon : 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[07:35 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. 3
+-----------------------------------------------------------------
+[07:35 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? *Mr.Web*: He completado tu asignación a nuestro canal de Soporte general?⚙. Jhon , recuerda que en horario laboral un agente humano resolverá la duda que me escribas en este momento. ??‍???‍? ⏰ Nuestro horario de atención es de lunes a viernes de 8:00 am a 5:00 pm (hora de Colombia).
+-----------------------------------------------------------------
+[07:35 AM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte de la manera más eficiente posible, necesito que me proporciones más información sobre tu solicitud. Por favor, descríbeme detalladamente lo que está sucediendo:
+-----------------------------------------------------------------
+[07:36 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. es que no esta funcionando mi pagina aparece el hosting suspendido https://dresbet.co/cgi-sys/suspendedpage.cgi
+-----------------------------------------------------------------
+[07:36 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C.
+-----------------------------------------------------------------
+[09:53 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Hola muchas gracias por tu amable paciencia, puedes validar nuevamente el ingreso y me confirmas si te permite el acceso correctamente
+-----------------------------------------------------------------
+[10:11 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 sigo atenta a tu confirmación
+-----------------------------------------------------------------
+[10:12 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. Si ya me sirve sin embargo al entrar al link principal me aparece esto
+-----------------------------------------------------------------
+[10:12 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C.
+-----------------------------------------------------------------
+[10:13 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. Ahora que tenga tiempo lo reviso tal vez se desconfiguro
+-----------------------------------------------------------------
+[10:18 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo, ¿me confirmas que salía antes, porfa ,o cómo lo tenías configurado?
+-----------------------------------------------------------------
+[10:19 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. El index.html del public
+-----------------------------------------------------------------
+[10:24 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, comprendo. ¿Te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[10:40 AM, 23rd Jul] 👤 CLIENTE (Jhon)
+💬 C. No, muchas gracias
+-----------------------------------------------------------------
+[10:41 AM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

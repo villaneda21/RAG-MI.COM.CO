@@ -1,0 +1,71 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4136670
+=================================================================
+Asunto:     Conversación con Insiste
+Grupo ID:   48000640407
+Creado el:  2026-07-21T20:00:11Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[02:35 PM, 21st Jul] 👤 CLIENTE (Insiste)
+💬 ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[02:35 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Insiste! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[02:35 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[02:35 PM, 21st Jul] 👤 CLIENTE (Insiste)
+💬 mcastillo@almacol.com
+-----------------------------------------------------------------
+[02:35 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? mcastillo@almacol.com a tu solicitud actual.
+-----------------------------------------------------------------
+[02:35 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[02:36 PM, 21st Jul] 👤 CLIENTE (Insiste)
+💬 almacol.com
+-----------------------------------------------------------------
+[02:36 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[02:36 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[02:36 PM, 21st Jul] 👤 CLIENTE (Insiste)
+💬 2
+-----------------------------------------------------------------
+[02:36 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ Insiste, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[02:36 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[02:37 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[02:38 PM, 21st Jul] 👤 CLIENTE (Insiste)
+💬 en los registros del DNS tenemos una configuración que nos solicito nuestro proveedor de facturación electrónica que están activos pero al validarlos parecen que no están operativos
+-----------------------------------------------------------------
+[02:38 PM, 21st Jul] 👤 CLIENTE (Insiste)
+💬 02:38 PM, 21st Jul Insiste para ver como me pueden ayudar
+-----------------------------------------------------------------
+[02:40 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero estés muy bien, claro dame un momento ya lo valido
+-----------------------------------------------------------------
+[02:43 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale por lo que veo tu dominio almacol.com tiene con figurada una zona DNS externa por lo que los registros que configures desde mi.com.co no funcionan, debes comunicarte con tu proveedor de zona DNS para crear los registros desde allá ns1.dongee.com ns2.dongee.com ns3.dongee.com https://www.whois.com/whois/almacol.com
+-----------------------------------------------------------------
+[02:48 PM, 21st Jul] 👤 CLIENTE (Insiste)
+💬 Pensé que estaban con mi.com.co
+-----------------------------------------------------------------
+[02:52 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[02:58 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Debido a que no se recibió respuesta, se marcará este caso como cerrado; espero estés de acuerdo. Cualquier inquietud que tengas, no dudes en comunicarte; con gusto te ayudaremos. Espero tengas un muy bonito día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

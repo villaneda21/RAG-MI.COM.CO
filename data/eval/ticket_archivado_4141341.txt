@@ -1,0 +1,89 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4141341
+=================================================================
+Asunto:     Conversación con Andres Moreno
+Grupo ID:   48000640407
+Creado el:  2026-07-27T14:30:42Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[08:27 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno 2
+-----------------------------------------------------------------
+[08:27 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Andres Moreno! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[08:27 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno gerencia@fondofe.com.co
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? gerencia@fondofe.com.co a tu solicitud actual.
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno fondofe.com.co
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno 2
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ✅ Andres Moreno, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[08:31 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[08:32 AM, 27th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[08:35 AM, 27th Jul] 🎧 SOPORTE (Atención)
+💬 Agradecería que me detallaras explícitamente tu solicitud, especificando cada novedad de lo que te permite gestionar o no. Cualquier captura de pantalla o vídeo, me podría ayudar a entender mejor tu novedad, así que te recomiendo por favor adjuntarla por este medio.
+-----------------------------------------------------------------
+[08:36 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno Tengo problemas con mi dominio fondofe.com.co Presentó vencimiento, ya lo renové pero los NS no vuelven a su valor original y tengo absolutamente todo caido.
+-----------------------------------------------------------------
+[08:36 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno Esto dice su portal (q todo está bien apuntado a GoDaddy):
+-----------------------------------------------------------------
+[08:37 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno Pero tanto Godaddy côm una prueba de Ping normal, confirma el fallo...
+-----------------------------------------------------------------
+[08:37 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno andresmoreno@MacBook-Pro-de-MAC ~ % ping fondofe.com.co PING fondofe.com.co (54.237.127.126): 56 data bytes Request timeout for icmp_seq 0 Request timeout for icmp_seq 1 Request timeout for icmp_seq 2 Request timeout for icmp_seq 3 Request timeout for icmp_seq 4 Request timeout for icmp_seq 5 Request timeout for icmp_seq 6 Request timeout for icmp_seq 7 Request timeout for icmp_seq 8 Request timeout for icmp_seq 9 ^C --- fondofe.com.co ping statistics --- 11 packets transmitted, 0 packets received, 100.0% packet loss andresmoreno@MacBook-Pro-de-MAC ~ %
+-----------------------------------------------------------------
+[08:38 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno Las pruebas confirman que su sitio (quien modificó mis NS) no está propagando el cambio de nuevo a los NS q tenía...
+-----------------------------------------------------------------
+[08:41 AM, 27th Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo, te confirmo que realizamos un reinicio en tus DNS porfa espera de 2 a 4 horas y realiza nuevamente pruebas de carga
+-----------------------------------------------------------------
+[08:42 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno 2 a 4 horas caido???
+-----------------------------------------------------------------
+[08:49 AM, 27th Jul] 🎧 SOPORTE (Atención)
+💬 El tiempo que te indicó no es de caída, es propagación DNS . Cuando se hacen cambios en los nameservers, los servidores a nivel mundial necesitan sincronizarse y eso toma entre 2 y 4 horas. Es un proceso normal; en ese tiempo puede verse inestable
+-----------------------------------------------------------------
+[08:54 AM, 27th Jul] 👤 CLIENTE (Andres)
+💬 Moreno
+-----------------------------------------------------------------
+[08:57 AM, 27th Jul] 🎧 SOPORTE (Atención)
+💬 Sí, no te preocupes, esto fue por el reinicio interno que saltó el error, pero sí tiene las DNS correctas y puedes validar la propagación desde esta url https://dnschecker.org/#NS/fondofe.com.co
+-----------------------------------------------------------------
+[09:17 AM, 27th Jul] 🎧 SOPORTE (Atención)
+💬 ¿Te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[09:26 AM, 27th Jul] 🎧 SOPORTE (Atención)
+💬 Debido a que no se recibió respuesta, se marcará este caso como cerrado; espero que estés de acuerdo. Cualquier inquietud que tengas, no dudes en comunicarte; con gusto te ayudaremos. Espero que tengas un muy bonito día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

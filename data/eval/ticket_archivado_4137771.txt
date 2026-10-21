@@ -1,0 +1,332 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137771
+=================================================================
+Asunto:     Conversación con Sandra   Marin
+Grupo ID:   48000640407
+Creado el:  2026-07-22T19:15:55Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[12:51 PM, 20th Jul] 🤖 BOT ASISTENTE
+💬 ⏰ ¡Vaya! No he recibido respuesta de tu parte en los últimos 15 minutos. Quiero informarte que tu sesión actual del chat ha finalizado. Si necesitas más ayuda o tienes alguna otra pregunta, no dudes en escribirnos nuevamente. Estaremos encantados de atenderte con todo gusto y brindarte la asistencia que necesitas. ¡Estamos aquí para ayudarte! ?
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Hola que pasa que no me contestan el ticket que puse desde el viernes?
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Sandra !?️? ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (sandrajwilliams111@gmail.com). ?: Sandra , estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin organikseo.co
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[09:06 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[09:07 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin 3
+-----------------------------------------------------------------
+[09:07 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ Sandra , asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[09:07 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[09:07 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Compré 6GB de ram y solo me dieron 3GB
+-----------------------------------------------------------------
+[09:08 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[09:10 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Me podrías enviar porfa el comprobante de pago para validar el tema
+-----------------------------------------------------------------
+[09:12 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Compré el servidor élite de 30GB y 6GB de RAM
+-----------------------------------------------------------------
+[09:18 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Por lo que veo el servicio que me comentas ya cuenta con ese plan de hosting
+-----------------------------------------------------------------
+[09:18 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Como así? Que tiene que ver eso con que compre 6GB y me dieron 3?
+-----------------------------------------------------------------
+[09:19 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Dame un momento ya valido con el equipo interno el tema y te confirmo
+-----------------------------------------------------------------
+[09:50 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Hola, pudiste averiguar algo? Estoy muy preocupada ese servidor solo saca errores 505, no me entregaron lo que compre, que es lo que esta pasando? Con quien puedo hablar para solucionar este problema? Es eso normal que uno compre un producto y le entreguen otro? Me puedes comunicar con tu supervisor?
+-----------------------------------------------------------------
+[10:02 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale te confirmo que scale el tema para poder ajustar tu ram ya que no quedó con la ram correcta esto está en proceso sobre el tema del error 505 en qué momentos te aparece me envías capturas porfa y me confirmas realizandoq ue acciones te aparecen
+-----------------------------------------------------------------
+[10:04 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Haciendo cualquier cosa, por ejemplo actualizando plugins!
+-----------------------------------------------------------------
+[10:04 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Que angustia! O sea me confirmas por favor el servidor que me entregaron que especificaciones tiene? Costo un ojo de la cara y me entregan esto?
+-----------------------------------------------------------------
+[10:25 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 El sitio tiene un video de fondo cargado directamente desde tu hosting, y eso es justo lo que está generando los errores 503. Nuestros planes de hosting compartido no están diseñados para servir archivos de video pesados directamente — ese tipo de carga satura los recursos de la cuenta y el servidor empieza a rechazar peticiones. La solución que te recomendamos es alojar el video en un servicio externo hecho para eso, como: YouTube (modo unlisted/sin listar si no quieres que aparezca en búsquedas) Vimeo Cloudflare Stream Cualquiera de esos lo sirve de forma mucho más eficiente, y en tu WordPress solo pones el enlace del video — el hosting queda libre para correr el sitio sin ahogarse Adicionalmente, te recomendamos revisar también la cantidad de scripts que cargan al inicio (GTM, HubSpot, WhatsApp popup), porque entre el video y esos scripts, el sitio está arrancando muy pesado.
+-----------------------------------------------------------------
+[10:26 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Como asi??? Y de donde salio ese video??? Yo no manejo videos!!! No limpiaron el servidor cuando me lo entregaron? Me vendieron un servidor con los datos viejos de otro cliente???
+-----------------------------------------------------------------
+[10:27 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin O sea, necesito hablar con tu supervisor! Esto va de mal en peor!!!!
+-----------------------------------------------------------------
+[10:27 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin El sitio lo compre con 6GB, donde estan????
+-----------------------------------------------------------------
+[10:28 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin En 30 servidores mas que tengo todos cargan con HubSpot y WhatsApp scripts, son scripts por Dios santo! Para eso compre 6GB RAM, que tal si me dan lo que pague? Donde me puedo quejar de esto?
+-----------------------------------------------------------------
+[10:29 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Que abuso, me estan abusando!
+-----------------------------------------------------------------
+[10:40 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin
+-----------------------------------------------------------------
+[10:49 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Hola entendemos tu preocupación y queremos darte una respuesta clara y precisa. Nuestros servidores son entregados completamente nuevos y limpios, sin ningún dato, archivo o contenido de clientes anteriores. Esto es parte de nuestro proceso estándar y lo garantizamos. El archivo que se encontró está ubicado dentro de tu propia carpeta ? ? wp-content/uploads/ Esta carpeta es de uso exclusivo tuyo — es donde WordPress almacena todos los archivos que son subidos a tu sitio, ya sea por ti, por algún colaborador, por un plugin o por el tema que tengas instalado. Nosotros no tenemos acceso ni control sobre el contenido que se sube a esa carpeta. ¿Qué te recomendamos hacer? ? ? Ingresa a tu panel de administración de WordPress o al Administrador de archivos en cPanel ? Navega hasta la carpeta wp-content/uploads/ ? Revisa el contenido y elimina cualquier archivo que no reconozcas o que no hayas subido tú ? Si tienes plugins instalados, verifica cuáles tienen permisos de subida de archivos antes que todo queremos ser completamente honestos contigo y pedirte disculpas. Cometimos un error en la información que te proporcionamos respecto a la memoria RAM de tu plan. La capacidad real es de 3GB de RAM y no 6GB como te fue indicado anteriormente. Entendemos que esto genera molestia y es completamente válido — fue un error de nuestra parte y lo reconocemos abiertamente. Queremos que sepas que este tipo de situaciones no reflejan los estándares de calidad que queremos ofrecerte y tomamos muy en serio lo ocurrido. ¿Qué estamos haciendo al respecto? El caso ya fue escalado a nuestra área de administración para revisar la situación a fondo y evaluar una compensación por el inconveniente generado. En cuanto tengamos una respuesta y definición por parte del equipo administrativo, te notificaremos de inmediato. Nuevamente te ofrecemos nuestras más sinceras disculpas y agradecemos tu comprensión.
+-----------------------------------------------------------------
+[10:55 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Esto es gravisimo, porque no solo tuvimos que esperar 4 dias que en Colombia trabajan solo 4 dias a la semana, sino que hemos perdido tiempo valiosisimo tratando de instalar un sitio que solo saca errores!
+-----------------------------------------------------------------
+[10:57 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin O sea, un video de 162Kb es el problema???
+-----------------------------------------------------------------
+[10:59 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Quiere esto decir que este servidor solo maneja texto? Porque imagenes mayores de 160Kb le quedan grande? Esto es aterrorizante! Yo que voy a hacer!!! Pense que ustedes eran una compania seria de servidores!
+-----------------------------------------------------------------
+[11:29 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Tambien quiero recordarles que cuando compre el servidor y los correos me dijo la asesora de ventas explicitamente que en el servidor se podian instalar varias instacias de wordpress ya que yo le pregunte ANTES DE COMPRARLO si podia instalar varios sitios web y ella me confirmo que si, esta conversacion la guarde en mis archivos. Ustedes tambien la tienen! Por favor confirmarme que el servidor es capaz de alojar difernetes sitios web, tal como dice en su pagina
+-----------------------------------------------------------------
+[11:31 AM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin
+-----------------------------------------------------------------
+[11:52 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Hola Sandra, antes que nada queremos agradecerte tu paciencia y reconocer que tienes toda la razón en estar molesta los inconvenientes que has tenido no son para nada la experiencia que queremos darte y lo sentimos genuinamente Sabemos que has invertido tiempo valioso, que hubo errores en la información que te dimos y que eso generó frustración. Eso no estuvo bien de nuestra parte y lo asumimos con total responsabilidad. Queremos que sepas que para nosotros lo más importante eres tú como cliente, y precisamente por eso queremos darte una solución que de verdad te deje tranquila. Si en este momento sientes que prefieres no continuar con el servicio, con mucho gusto gestionamos la devolución completa de tu dinero sin ningún problema
+-----------------------------------------------------------------
+[12:11 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin No entiendo porque simplemente no me dan lo que compre? 6GB en RAM y viarias instancias de wordpress
+-----------------------------------------------------------------
+[12:17 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale nuestro servicio si cuenta con varias instancias de wordpress pero nuestra infraestructura no soporta el manejo de 6 GB de ram solo podemos manejar máximo 3 ram por servicio, en verdad lo lamento mucho no poder hacer más en este caso
+-----------------------------------------------------------------
+[12:20 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Como asi, pero si eso sigue apareciendo en la web de ustedes, o sea yo he sido la unica persona que jamas les ha comprado el servidor de elite??? https://mi.com.co/hosting No entiendo
+-----------------------------------------------------------------
+[02:22 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Hola Sandra, tienes toda la razón y entendemos perfectamente tu confusión Si en nuestra página aparecía esa información, es completamente válido que hayas tomado tu decisión de compra basándote en ella ; eso es lo que corresponde y lo reconocemos. Te contamos que ya estamos actualizando la información en nuestra página web para que ningún otro cliente pase por esta misma situación gracias a ti pudimos identificar este error Este caso ya está escalado de forma urgente a nuestra área administrativa y comercial
+-----------------------------------------------------------------
+[02:31 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Si pero que van a hacer conmigo, yo necesito 6GB o 2 servidores entonces de 3 por el mismo precio, no tengo tiempo de encontrar otro servidor y empezar la migracion!
+-----------------------------------------------------------------
+[02:47 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo. Ya te remito al área de ventas para validar cómo podemos organizar este tema. Feliz día.
+-----------------------------------------------------------------
+[02:50 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Buena tarde, en que te puedo ayduar'
+-----------------------------------------------------------------
+[03:03 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Hola, puedes leer hacia arriba todo el caso para yo no tener que volver a digitar todo eso?
+-----------------------------------------------------------------
+[03:04 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Muy bien, dame un momento por favor
+-----------------------------------------------------------------
+[03:09 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Validando lo que le estabas confirmando a nuestro equipo de soporte, nuestro servicio tiene 3 Gb de ram
+-----------------------------------------------------------------
+[03:10 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 al momento de comprar el servicio, pudiste apreciar las caracteristicas
+-----------------------------------------------------------------
+[03:10 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Si y yo compre 6 pero acepto 2 servidores de 3 o sea compre un servidor elite costosisimo por 6GM.
+-----------------------------------------------------------------
+[03:11 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Esa imagen no aparecia cuando compre el servidor, le tome un screenshot porque obvio ya lo cambiaron como dice en el chat si lees arriba
+-----------------------------------------------------------------
+[03:11 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 nosotos no comcercializamos servicodores, nuestro servicio es de Hosting compartido, por eso el bajo costo que pagaste por el, los servidores son mucho mas costosos
+-----------------------------------------------------------------
+[03:12 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo lo que me indicas, estoy validando, sin embargo, ya que manejamos unas caracteristicas standard para todos nuestros servicios de hosting
+-----------------------------------------------------------------
+[03:13 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Si leiste el chat?
+-----------------------------------------------------------------
+[03:13 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 estoy en eso precisamente, pero te estoy brindado la informacion general
+-----------------------------------------------------------------
+[03:19 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Como te confirma nuestro equipo de soporte, nuestro servicio maneja un standard de 3 Gb sin importar la capacidad de almacenamiento
+-----------------------------------------------------------------
+[03:22 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin No entiendo ellos por que me pasaron contigo, te indentificas por favor, no estas solucionando el problema que ustedes mismos crearon, no sabes como manejar esto, te pido el favor me pases a tu supervisor quein este interesado en dar un mejor servicio al cliente. Gracias
+-----------------------------------------------------------------
+[03:30 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Te doy la información general, porque no contamos con la capacidad de 6 gb de capacidad de Ram, ya estoy validando como te podemos dar una solucion para que tu pagina web, pueda funcionar de manera corecta
+-----------------------------------------------------------------
+[04:02 PM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[04:03 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Gracias Mariana, esto ha sido una pesadilla, estoy aqui desde la 8am y nadie parece poder arreglar este problema
+-----------------------------------------------------------------
+[04:06 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Buenas tardes, de antemano me disculpo por las molestias generadas
+-----------------------------------------------------------------
+[04:19 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Como te comentaban mis compañeros, nuestro servicio maneja un máximo de 3 GB de RAM, independientemente de la capacidad de almacenamiento contratada. Como este límite no nos permite ofrecerte los 6 GB que necesitas para tu desarrollo, nos comprometemos a realizar la devolución completa del dinero pagado por el servicio.
+-----------------------------------------------------------------
+[04:22 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Si eso ya me lo dijeron, entonces podemos manejar dos servidores con los 3gb cada uno
+-----------------------------------------------------------------
+[04:23 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 No, señor, en ese caso no es posible.
+-----------------------------------------------------------------
+[04:25 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Entonces hagame un descuento importante para yo poder complementar con otras herramientas
+-----------------------------------------------------------------
+[04:32 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 ¿Deseas un descuento para que tipo de servicios?
+-----------------------------------------------------------------
+[04:34 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin PAra el que compre y no me dieron completo, para el que pague 6gb y me dieron 3, te acuerdas de la conversacion que hemos estado teniendo por la ultima hora Mariana?
+-----------------------------------------------------------------
+[04:36 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 si señor, dame un momento
+-----------------------------------------------------------------
+[04:36 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 yo ya te confirmo si podemos brindarlo y que descuento
+-----------------------------------------------------------------
+[04:43 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, me indican que en ese caso podemos brindarte un cupón de descuento del 20% para la próxima renovación en tus servicios.
+-----------------------------------------------------------------
+[04:47 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Prefiero el reembolso
+-----------------------------------------------------------------
+[04:48 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 vale, en ese caso por favor, enviame una captura donde se visualicen los datos de la cuenta para proceder con la devolución
+-----------------------------------------------------------------
+[04:51 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Cuenta de shorts Davivienda Sandra Marin
+-----------------------------------------------------------------
+[04:51 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Esto es lo que pague
+-----------------------------------------------------------------
+[04:53 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Me disculpo, por favor, enviame una captura donde se visualicen los datos de la cuenta de Mi.com.co donde adquirio los servicios para proceder con la devolución.
+-----------------------------------------------------------------
+[04:54 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 por otra parte, se realizaria la devolución del servicio de hosting, correcto?
+-----------------------------------------------------------------
+[04:57 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin No, usted me va a devolver el 20% de lo que pague a mi cuenta bancaria y yo mantengo el servidor. Estoy todavia con Mariana? No entiendo porque me pregunta esto? Imagino que despues de 8 horas con el mismo ticket ya no sabe que esta haciendo. Es posible que me pase a su supervisor y yo le explico otra vez la situacion que llevamos desde la 8am aqui y usted no sabe que estamos haciendo?
+-----------------------------------------------------------------
+[04:58 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Si señor, pero lo que te indique es que solo podemos brindarte un 20% de descuento para futuras renovaciones eso es lo que te indique anteriormente
+-----------------------------------------------------------------
+[04:58 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 "me indican que en ese caso podemos brindarte un cupón de descuento del 20% para la próxima renovación en tus servicios."
+-----------------------------------------------------------------
+[05:01 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 No puedo brindarte un descuento sobre un servicio que ya se pagó, por eso al inicio de nuestra conversación te indiqué que en ese caso, al no poder darte las 6 GB de RAM, si lo deseabas, procederíamos con la devolución, posteriormente te indiqué que podemos brindarte el 20% de descuento para la proxima renovación
+-----------------------------------------------------------------
+[05:01 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Esas son las unicas dos opciones que podemos brindarte como solución
+-----------------------------------------------------------------
+[05:02 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Estare muy atenta a que me indiques si deseas que realicemos la devolución del monto pagado por el servicio de hosting y con el la cancelación del servicio o si deseas conservar el servicio y tomar el 20% de descuento que te brindamos para las proximas renovaciones
+-----------------------------------------------------------------
+[05:02 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Que les hace pensar que va a haber renovacion, ustedes obviamente son unos principiantes que ni saben comercializar servidores, ni atender clientes, ni resolver problemas, son un total desastre y si no me pasan al supervisor yo misma lo voy a encontrar y le voy a compartir este chat, que a proposito ya le saque foto ya que ustedes tienen la practica de borrar las conversaciones que no les convienen
+-----------------------------------------------------------------
+[05:03 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Entiendo su molestia y antes de brindarle al información ya lo he validado con el area encargada
+-----------------------------------------------------------------
+[05:04 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Esas son las 2 opciones que me indica mi supervisor
+-----------------------------------------------------------------
+[05:14 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Necesito que me comparta inmediatamente el nombre del gerente general de esa entidad y el email antes de tomar una decision con esto. Es prioritario para mi que se sepa el nivel de atencion que ustedes prestan y la manera como tratan a los clientes.
+-----------------------------------------------------------------
+[05:17 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin No sobra decir que voy a compartir esta aterrorizante experiencia, ademas de la valiosa perdida de MI TIEMPO tratando de que ustedes me resuelvan un problema que ustedes mismos generaron. Desde el viernes estoy con esto, se demoran 4 dias en atender y cuando por fin contestan no saben que hacer y cada que pasa alguien diferente hay que actualizarlos en el problema, o sea unos infantes manejando este negocio ofrecerian mejor calidad. Quedo a la espera del nombre del gerente
+-----------------------------------------------------------------
+[05:17 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, en ese caso le comparto el correo,, el cual es servicioalcliente@mi.com.co
+-----------------------------------------------------------------
+[05:17 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin El nombre del gerente por favor
+-----------------------------------------------------------------
+[05:18 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin eso es un email no tiene importancia como ya se comprobo para ustedes, seguro ni lo abren
+-----------------------------------------------------------------
+[05:21 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Entiendo su molestia y lamento sinceramente la demora y los reprocesos que ha tenido con este caso; es válido que esté inconforme con los tiempos de atención. Por política de la compañía, no compartimos datos personales de directivos (nombre, correo directo, etc.); todos los reclamos formales se canalizan a través de servicioalcliente@mi.com.co, que sí es revisado y donde queda constancia oficial de su queja para escalarla a la gerencia correspondiente.
+-----------------------------------------------------------------
+[05:25 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Es Juan Carlos Herrera todavia el Director Comercial?
+-----------------------------------------------------------------
+[05:28 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Como le mencioné, no estoy autorizada a confirmar ni compartir información sobre cargos o datos personales de directivos de la compañía; esa no es información que manejemos en atención al cliente. Si su interés es que la queja llegue formalmente a la gerencia, el canal válido y el que le da respaldo oficial es servicioalcliente@mi.com.co.
+-----------------------------------------------------------------
+[05:28 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Oh parece ser Paula Andrea Zuluaga Aristizabal.
+-----------------------------------------------------------------
+[05:37 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale. En este caso, ¿podría ayudarte con algo más por este medio?
+-----------------------------------------------------------------
+[05:38 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Resulta que sigo con el error 503 del cual me informan se debe a un video de 150KB de peso y eso tumbo el servidor, puede alguien ayudar con eso? alguien con las habilidades tecnicas para dar respuestas mas logicas que esa?
+-----------------------------------------------------------------
+[06:03 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Para revisarlo a fondo ¿me podrías confirmar estos datos? 1. ¿En qué URL exacta o sección del sitio aparece el error 503? (link completo si es posible) 2. ¿Nos puedes compartir una captura de pantalla del error? 3. ¿El error aparece siempre o solo en momentos específicos (por ejemplo, al subir el video, al reproducirlo, o al cargar cualquier página del sitio)? Con esos datos realizaré las respectivas revisiones y te doy un diagnóstico concreto.
+-----------------------------------------------------------------
+[06:05 PM, 21st Jul] 👤 CLIENTE (Sandra)
+💬 Marin Que le impide leer este chat que empezó a las 8am? Le queda más cómodo preguntarme a mí otra vez? Aquí mismo encontrará toda la información que necesita
+-----------------------------------------------------------------
+[06:24 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Revisando los logs del servidor encontré lo siguiente: • Hay un error recurrente del plugin ip2location-redirection (línea 2376), que falla en cada carga de página y puede generar sobrecarga acumulada si hay varias visitas simultáneas. • A esto se suma que el sitio carga varios scripts pesados al inicio (GTM, HubSpot, WhatsApp popup). • La combinación de estos factores agota los procesos disponibles del hosting compartido en momentos de mayor carga, lo cual genera el error 503. Recomendación inmediata: desactivar temporalmente el plugin ip2location-redirection como prueba.
+-----------------------------------------------------------------
+[06:25 PM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Por otro lado, te cuento que mi horario laboral finaliza en este momento. Voy a dejar toda esta información documentada en el caso para que la persona que continúe mañana ya tenga el diagnóstico completo y no debas repetir nada. Gracias por tu paciencia,
+-----------------------------------------------------------------
+[05:38 AM, 22nd Jul] 👤 CLIENTE (Sandra)
+💬 Marin PAra la persona que sigue con este caso, por favor no me forcen a desmembrar mi sitio web que ha estado funcionando por anios en otros servidores sin problema, la solucion no es apagar la mitad del sitio para que funcione, esa fue la razon por la que compre el servidor elite, para que pudiera funcionar correctamente, tambien me parece que la investigacion esta mal dirigida, en vez de tratar de mirar cuales de mis componentes, normales, que usa todo el planeta tengo, por que no mejor analizan los recursos asignados y si corresponden al servidor elite de 30GB? Ya miraron el cache? Ya miraron otros errores? Pueden poner esto por favor en manos de alguien con conocimiento que estoy perdiendo dinero cada dia con los sitios apagados, sin mencionar que todavia falta montar el otro sitio? PSI estoy reportando este caso con sus superiores porque necesito entender ademas del manejo que se le ha dado a este caso, el cobro de un servidor que no existia, borraron la conversacion en este chat, lo cual empeoro su situacion ya que yo tengo screenshots, etc etc. Por favor dejenme saber cuando el error 503 esta resuelto para proseguir con el montaje del segundo sitio.
+-----------------------------------------------------------------
+[11:33 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Hola Sandra, quiero que sepas que estamos comprometidos con tu caso y que ya encontramos la causa real de los errores y tu servidor SÍ puede con tu sitio, no es un problema de capacidad. Lo que pasaba: WordPress estaba ejecutando tareas internas cientos de veces al día y saturando el servidor. Ya hicimos el ajuste principal. Solo necesitamos que hagas un paso rápido: Entra a cPanel → Cron Jobs → Add New Cron Job • Common Settings: Once Per 15 Minutes • Command: wget -q -O - https://organikseo.co/wp-cron.php?doing_wp_cron > /dev/null 2>&1 Danos aviso cuando lo hagas y confirmamos que todo esté estable
+-----------------------------------------------------------------
+[11:52 AM, 22nd Jul] 👤 CLIENTE (Sandra)
+💬 Marin
+-----------------------------------------------------------------
+[11:53 AM, 22nd Jul] 👤 CLIENTE (Sandra)
+💬 Marin Asi es como dice? Recuerde que tenemos 2 dominios organikseo.co coachme.com.co, necesita que le de acceso al cpanel?
+-----------------------------------------------------------------
+[11:55 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Confirmamos que los ajustes ya quedaron aplicados en organikseo.co Te pedimos que intentes navegar el sitio y pruebes las acciones que antes generaban el error 503 (como actualizar plugins) y nos cuentes cómo va
+-----------------------------------------------------------------
+[01:07 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Cuéntame cómo te fue con las pruebas. ¿Sigues presentando el error?
+-----------------------------------------------------------------
+[01:17 PM, 22nd Jul] 👤 CLIENTE (Sandra)
+💬 Marin No parece que ha mejorado pero me preocupa que eso incida en la recepción de los leads que se supone debe ser inmediata para que los agentes los atiendan, hay manera de mejorar eso?
+-----------------------------------------------------------------
+[01:27 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Entendemos tu preocupación y es muy válida Para confirmarte que la recepción de leads no se ve afectada, ¿nos puedes decir qué plugin o herramienta usas para los formularios de contacto? Por ejemplo: HubSpot, Contact Form 7, Gravity Forms, WPForms, u otro.
+-----------------------------------------------------------------
+[02:05 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Debido a que no se recibió respuesta, se marcará este caso como cerrado; espero estés de acuerdo. Cualquier inquietud que tengas, no dudes en comunicarte; con gusto te ayudaremos. Espero tengas un muy bonito día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

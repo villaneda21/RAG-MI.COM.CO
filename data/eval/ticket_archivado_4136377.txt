@@ -1,0 +1,80 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4136377
+=================================================================
+Asunto:     Conversación con Walter Gomez
+Grupo ID:   48000640407
+Creado el:  2026-07-21T16:45:14Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[11:17 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[11:17 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Walter Gomez! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[11:17 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez mrchechov@gmail.com
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? mrchechov@gmail.com a tu solicitud actual.
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez motorreductores.com.co
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez 2
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ Walter Gomez, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[11:18 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[11:19 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez Tengo un bloqueo del domino por parte de proofpoint y no sabemos la causa
+-----------------------------------------------------------------
+[11:19 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[11:22 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Agradecería que me detallaras explícitamente tu solicitud, especificando cada novedad de lo que te permite gestionar o no. Cualquier captura de pantalla o vídeo, me podría ayudar a entender mejor tu novedad, así que te recomiendo por favor adjuntarla por este medio.
+-----------------------------------------------------------------
+[11:23 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez Tenemos un proveedor que no esta recibiendo correos de nosotros, y por medio de ellos nos dicen que desde proofpoint nos bloquearon por que el dominio esta infectado
+-----------------------------------------------------------------
+[11:23 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez
+-----------------------------------------------------------------
+[11:27 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale por lo que veo desde nuestro lado el dominio no está bloqueado te recomiendo que valides con tu proveedor de hosting y rectifiques que tu página no tenga ningún archivo malicioso
+-----------------------------------------------------------------
+[11:28 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez Una pregunta, ustedes pueden hacer un escaneo y poder mostrarme el resultado para yo enviar evidencia?
+-----------------------------------------------------------------
+[11:33 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 No, al tener únicamente el servicio de dominio con nosotros no tenemoscómoo validar esta información lo siento mucho
+-----------------------------------------------------------------
+[11:34 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez Dale
+-----------------------------------------------------------------
+[11:34 AM, 21st Jul] 👤 CLIENTE (Walter)
+💬 Gomez Muchas gracias
+-----------------------------------------------------------------
+[11:35 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como cerrado, Cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

@@ -1,0 +1,14 @@
+-----------------------------------------------------------------
+[09:02 AM, 03/02/2026] 🎧 SOPORTE (Atención)
+💬 Hola, soy Atención. CANARIO-AGENTE. Si necesitas el panel de facturación, avísame.
+-----------------------------------------------------------------
+[09:03 AM, 03/02/2026] 👤 CLIENTE (Tienda Andina)
+💬 Hola, quiero crear una cuenta en mi.com.co
+💬 El formulario de registro no envía la verificación de correo
+-----------------------------------------------------------------
+[09:06 AM, 03/02/2026] 🎧 SOPORTE (Atención)
+💬 CANARIO-AGENTE: instala el certificado SSL en cPanel y revisa otro trámite.
+-----------------------------------------------------------------
+[09:08 AM, 03/02/2026] 👤 CLIENTE (Tienda Andina)
+💬 CONFIRMO
+EXPECT: GUA-001

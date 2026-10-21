@@ -1,0 +1,143 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4140188
+=================================================================
+Asunto:     Conversación con Wilson   @futbolhoyCo
+Grupo ID:   48000640407
+Creado el:  2026-07-24T18:58:26Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[01:20 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[01:20 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Wilson ! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[01:20 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[01:21 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo woos25@hotmail.com
+-----------------------------------------------------------------
+[01:21 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? woos25@hotmail.com a tu solicitud actual.
+-----------------------------------------------------------------
+[01:21 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[01:21 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo futbolhoy.co
+-----------------------------------------------------------------
+[01:21 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[01:21 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[01:22 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo 2
+-----------------------------------------------------------------
+[01:22 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ✅ Wilson , asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[01:22 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[01:22 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo requiero pegar registro TXT no he podido
+-----------------------------------------------------------------
+[01:22 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo google-site-verification=Al97Ss3QJ2EP1iAQvXSivU5-BIS9j_W1nxfhGnSL8b8
+-----------------------------------------------------------------
+[01:23 PM, 24th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[01:26 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero te encuentres muy bien, me muestras cómo estás realizando el proceso porfa y el error que te aparece
+-----------------------------------------------------------------
+[01:28 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo Buenas tardes Mariana
+-----------------------------------------------------------------
+[01:30 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo aqui estoy
+-----------------------------------------------------------------
+[01:30 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo
+-----------------------------------------------------------------
+[01:32 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo
+-----------------------------------------------------------------
+[01:32 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo aqui que debo colocar?
+-----------------------------------------------------------------
+[01:32 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo estoy tratando de configurar esto
+-----------------------------------------------------------------
+[01:32 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Ahí debe colocar el @ para indicar que es el dominio raíz
+-----------------------------------------------------------------
+[01:33 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo y el TTL 1 hora?
+-----------------------------------------------------------------
+[01:33 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo gracias
+-----------------------------------------------------------------
+[01:33 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo asi queda si? gracias por el apoyo
+-----------------------------------------------------------------
+[01:34 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo
+-----------------------------------------------------------------
+[01:34 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo al verificar sale esto
+-----------------------------------------------------------------
+[01:35 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo
+-----------------------------------------------------------------
+[01:35 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Pero validando tu dominio futbolhoy.co, tiene la zona DNS externa, por lo que debes crear el registro allá para que pueda propagar correctamente ns1.futbolhoy.co. ns2.futbolhoy.co.
+-----------------------------------------------------------------
+[01:38 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo me perdi
+-----------------------------------------------------------------
+[01:41 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo me puede indicar como hacerlo por favor ya que los DNS lo tenemos con uds
+-----------------------------------------------------------------
+[01:41 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Te explico con calma. El problema es que tu dominio futbolhoy.co tiene sus propios servidores DNS (ns1.futbolhoy.co y ns2.futbolhoy.co), lo que significa que los registros DNS que importan no están en mi.com.co sino en otro panel. Es como si tuvieras dos cajas — nosotros solo administramos una, pero la que manda es la otra. Por eso cuando agregas el registro TXT en mi.com.co no funciona — Google lo busca en la caja correcta y no lo encuentra ahí. Lo que necesitas hacer: Ingresar al panel donde administras los nameservers ns1.futbolhoy.co y ns2.futbolhoy.co y agregar el registro TXT de Google ahí.
+-----------------------------------------------------------------
+[01:45 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo AQUI?
+-----------------------------------------------------------------
+[01:45 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo
+-----------------------------------------------------------------
+[01:46 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo
+-----------------------------------------------------------------
+[01:48 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo a ver si comprendo, eso lo deberia hacer donde tengo el HOSTING?
+-----------------------------------------------------------------
+[01:48 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Sí Wilson, exactamente debes agregar el registro TXT de Google en el panel de hosting donde está alojado tu sitio web, en la sección de DNS o Zone Editor de ese hosting.
+-----------------------------------------------------------------
+[01:49 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo dame un seg por favor y gracias
+-----------------------------------------------------------------
+[01:49 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale con mucho gusto espero tu confirmación
+-----------------------------------------------------------------
+[01:52 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo creo que estoy en lios aqui no veo TXT
+-----------------------------------------------------------------
+[01:53 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 ¿Al darle a crear registro no te da más opciones de registros? Porque en ese caso tendrías que validar con tu proveedor de hosting el tema
+-----------------------------------------------------------------
+[01:54 PM, 24th Jul] 👤 CLIENTE (Wilson)
+💬 @futbolhoyCo vale ya mismo mil gracias por el gran apoyo
+-----------------------------------------------------------------
+[01:55 PM, 24th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

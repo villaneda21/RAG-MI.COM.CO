@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp · MI.COM.CO</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23059669'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-size='11' font-family='Arial' font-weight='700'%3EMI%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } };
+    </script>
+    <style>
+        body { font-family: Inter, system-ui, sans-serif; }
+        .thread-bg { background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%); }
+        audio { height: 36px; width: 220px; }
+        #toast { transition: opacity 180ms ease, transform 180ms ease; }
+        #thinking p { animation: pulse-text 1.2s ease-in-out infinite; }
+        @keyframes pulse-text { 50% { opacity: 0.45; } }
+    </style>
+</head>
+<body class="h-screen overflow-hidden bg-zinc-200 text-slate-800">
+    <div id="toast" class="pointer-events-none fixed left-1/2 top-5 z-50 hidden -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-sm text-white shadow-lg"></div>
+
+    <main class="mx-auto flex h-full max-w-3xl flex-col bg-white shadow-sm">
+        <header class="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-3">
+            <div class="grid h-10 w-10 place-items-center rounded-2xl bg-emerald-600 text-sm font-semibold text-white shadow-sm">MI</div>
+            <div class="min-w-0 flex-1">
+                <p class="truncate text-sm font-semibold text-slate-900">Soporte MI.COM.CO</p>
+                <p id="presence" class="truncate text-xs text-slate-500">Atendido por Bot</p>
+            </div>
+            <span id="status-badge" class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">Activo</span>
+            <a href="/crm" class="rounded-xl border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 hover:bg-slate-50">CRM</a>
+        </header>
+        <div class="flex items-center gap-2 border-b border-slate-200 bg-slate-50 px-3 py-2">
+            <button id="new-test-chat" type="button" class="shrink-0 rounded-xl bg-emerald-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-emerald-700">+ Nuevo Chat de Prueba</button>
+            <label class="min-w-0 flex-1 text-[11px] font-medium text-slate-500">Chats activos de prueba
+                <select id="session-select" class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-800 outline-none focus:border-emerald-300"></select>
+            </label>
+        </div>
+        <section id="thread" class="thread-bg flex-1 space-y-3 overflow-y-auto px-3 py-5 sm:px-6"></section>
+        <div id="closed-banner" class="hidden border-t border-slate-200 bg-slate-50 px-4 py-2 text-center text-sm text-slate-600">
+            <span class="mr-2 rounded-full bg-zinc-200 px-2 py-0.5 text-[11px] font-medium text-zinc-600">Caso resuelto</span>
+            Si escribes de nuevo, abriremos una solicitud nueva.
+            <button id="new-chat" type="button" class="ml-1 font-semibold text-slate-800 underline">Empezar de cero</button>
+        </div>
+        <form id="composer" class="flex items-end gap-2 border-t border-slate-200 bg-zinc-100 px-3 py-2.5">
+            <input id="file" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp,audio/ogg,audio/mpeg,audio/mp3,audio/wav,.ogg,.mp3,.wav,.gif" class="hidden">
+            <button id="attach" type="button" class="grid h-11 w-11 place-items-center rounded-full text-slate-500 hover:bg-white" aria-label="Adjuntar nota de voz">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21.4 11.05 12.25 20.2a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.82-2.83l8.48-8.48"/></svg>
+            </button>
+            <textarea id="input" rows="1" placeholder="Escribe un mensaje" class="max-h-32 flex-1 resize-none rounded-2xl border border-transparent bg-white px-4 py-3 text-sm outline-none focus:border-emerald-300"></textarea>
+            <button id="send" type="submit" class="grid h-11 w-11 place-items-center rounded-full bg-emerald-600 text-white hover:bg-emerald-700" aria-label="Enviar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.4 11.2 20.2 3.5c.8-.4 1.7.5 1.3 1.3l-7.7 16.8c-.4.9-1.7.8-2-.2l-1.6-5.4-5.4-1.6c-1-.3-1.1-1.6-.4-2.2Z"/></svg>
+            </button>
+        </form>
+    </main>
+
+    <script>
+        const thread = document.getElementById('thread');
+        const presence = document.getElementById('presence');
+        const statusBadge = document.getElementById('status-badge');
+        const input = document.getElementById('input');
+        const fileInput = document.getElementById('file');
+        const closedBanner = document.getElementById('closed-banner');
+        const SESSION_KEY = 'micomco_test_chats';
+        const GIF_TOAST = '⚠️ Por políticas de este canal no se permiten archivos GIF ni elementos animados.';
+        let ticketId = localStorage.getItem('micomco_ticket_id');
+        let sending = false;
+        let known = '';
+
+        function loadSessions() {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(SESSION_KEY) || '[]');
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (_err) {
+                return [];
+            }
+        }
+
+        function shortArea(name) {
+            if (!name) return 'Soporte';
+            if (name.indexOf('Soporte') === 0) return 'Soporte';
+            return name;
+        }
+
+        function rememberSession(ticket) {
+            const sessions = loadSessions().filter((item) => item.id !== ticket.id);
+            sessions.unshift({
+                id: ticket.id,
+                name: ticket.customer_name || 'Cliente',
+                department: ticket.department_name || 'Soporte Técnico'
+            });
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sessions.slice(0, 20)));
+            paintSessions();
+        }
+
+        function forgetSession(id) {
+            const sessions = loadSessions().filter((item) => item.id !== id);
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sessions));
+            paintSessions();
+        }
+
+        function paintSessions() {
+            const select = document.getElementById('session-select');
+            select.replaceChildren();
+            const blank = document.createElement('option');
+            blank.value = '';
+            blank.textContent = 'Nuevo chat de prueba';
+            select.appendChild(blank);
+            loadSessions().forEach((session) => {
+                const option = document.createElement('option');
+                option.value = session.id;
+                option.textContent = session.name + ' (' + shortArea(session.department) + ')';
+                select.appendChild(option);
+            });
+            const knownId = ticketId && [...select.options].some((option) => option.value === ticketId);
+            select.value = knownId ? ticketId : '';
+        }
+
+        function setText(node, value) {
+            node.textContent = value == null ? '' : String(value);
+        }
+
+        function scrollThread(node) {
+            node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
+        }
+
+        function showThinking() {
+            hideThinking();
+            const row = document.createElement('div');
+            row.id = 'thinking';
+            row.className = 'flex justify-start';
+            row.setAttribute('aria-live', 'polite');
+            const bubble = document.createElement('div');
+            bubble.className = 'rounded-2xl rounded-bl-md border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-500 shadow-sm';
+            const label = document.createElement('p');
+            label.className = 'flex items-center gap-2';
+            setText(label, 'El bot está analizando tu consulta...');
+            const dot = document.createElement('span');
+            dot.className = 'inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-500';
+            dot.setAttribute('aria-hidden', 'true');
+            label.appendChild(dot);
+            bubble.appendChild(label);
+            row.appendChild(bubble);
+            thread.appendChild(row);
+            scrollThread(thread);
+        }
+
+        function hideThinking() {
+            const node = document.getElementById('thinking');
+            if (node) node.remove();
+        }
+
+        function toast(text) {
+            const node = document.getElementById('toast');
+            node.textContent = text;
+            node.classList.remove('hidden');
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => node.classList.add('hidden'), 3200);
+        }
+
+        function clock(iso) {
+            const date = new Date(iso);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function render(payload) {
+            const ticket = payload.ticket;
+            const messages = payload.messages || [];
+            rememberSession(ticket);
+            presence.textContent = handlerLine(ticket);
+            paintBadge(ticket.status);
+            const resolved = ticket.status === 'cerrado' || ticket.status === 'resuelto';
+            closedBanner.classList.toggle('hidden', !resolved);
+            input.placeholder = resolved ? 'Escribe para abrir una solicitud nueva' : 'Escribe un mensaje';
+            setComposer(true);
+            const signature = JSON.stringify(messages.map((item) => item.id));
+            if (signature === known) return;
+            known = signature;
+            thread.replaceChildren();
+            messages.forEach((message) => {
+                if (message.sender_type === 'system') {
+                    const row = document.createElement('div');
+                    row.className = 'flex justify-center';
+                    const note = document.createElement('p');
+                    note.className = 'max-w-md rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2 text-center text-xs leading-relaxed text-slate-600 shadow-sm';
+                    setText(note, message.content + (clock(message.created_at) ? ' · ' + clock(message.created_at) : ''));
+                    row.appendChild(note);
+                    thread.appendChild(row);
+                    return;
+                }
+                const mine = message.sender_type === 'client';
+                const row = document.createElement('div');
+                row.className = 'flex ' + (mine ? 'justify-end' : 'justify-start');
+                const bubble = document.createElement('div');
+                bubble.className = 'max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm shadow-sm ' + (mine
+                    ? 'rounded-br-md bg-emerald-600 text-white'
+                    : message.sender_type === 'agent'
+                        ? 'rounded-bl-md border border-indigo-100 bg-white text-slate-800'
+                        : 'rounded-bl-md border border-slate-200 bg-white text-slate-800');
+                const who = document.createElement('p');
+                who.className = 'mb-1 text-[11px] font-medium ' + (mine ? 'text-emerald-100' : message.sender_type === 'agent' ? 'text-indigo-600' : 'text-emerald-700');
+                who.textContent = mine ? 'Tú' : (message.sender_type === 'agent' ? ('Agente ' + (message.author_name || '')) : 'Bot');
+                bubble.appendChild(who);
+                if (message.media_type === 'audio' && message.media_url) {
+                    const audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.preload = 'none';
+                    audio.src = message.media_url;
+                    bubble.appendChild(audio);
+                }
+                if (message.media_type === 'image' && message.media_url) {
+                    const image = document.createElement('img');
+                    image.src = message.media_url;
+                    image.alt = 'Imagen adjunta';
+                    image.className = 'mt-1 max-h-64 w-full rounded-xl object-contain';
+                    bubble.appendChild(image);
+                }
+                const placeholder = (message.media_type === 'audio' && message.content === 'Nota de voz')
+                    || (message.media_type === 'image' && message.content === 'Imagen');
+                if (message.content && !placeholder) {
+                    const text = document.createElement('p');
+                    text.className = 'whitespace-pre-wrap leading-relaxed';
+                    setText(text, message.content);
+                    bubble.appendChild(text);
+                }
+                const meta = document.createElement('p');
+                meta.className = 'mt-1 text-[11px] ' + (mine ? 'text-emerald-100' : 'text-slate-400');
+                meta.textContent = clock(message.created_at);
+                bubble.appendChild(meta);
+                row.appendChild(bubble);
+                thread.appendChild(row);
+            });
+            scrollThread(thread);
+        }
+
+        function handlerLine(ticket) {
+            if (ticket.status === 'en_proceso' && ticket.agent_name) {
+                return 'Atendido por Agente ' + ticket.agent_name;
+            }
+            if (ticket.status === 'esperando_agente') return 'Esperando un agente de ' + ticket.department_name;
+            if (ticket.status === 'resuelto' || ticket.status === 'cerrado') return 'Caso resuelto';
+            return 'Atendido por Bot · ' + ticket.department_name;
+        }
+
+        function paintBadge(status) {
+            const styles = {
+                nuevo: ['bg-emerald-50 text-emerald-700', 'Activo'],
+                en_bot: ['bg-emerald-50 text-emerald-700', 'Activo'],
+                en_proceso: ['bg-sky-50 text-sky-700', 'En proceso'],
+                esperando_agente: ['bg-orange-50 text-orange-700', 'Esperando agente'],
+                resuelto: ['bg-zinc-100 text-zinc-500', 'Caso resuelto'],
+                cerrado: ['bg-zinc-100 text-zinc-500', 'Caso resuelto']
+            };
+            const chosen = styles[status] || styles.en_bot;
+            statusBadge.className = 'rounded-full px-2.5 py-1 text-[11px] font-medium ' + chosen[0];
+            statusBadge.textContent = chosen[1];
+        }
+
+        async function readError(response) {
+            try {
+                const body = await response.json();
+                return body.detail || 'No se pudo completar la solicitud.';
+            } catch (_err) {
+                return 'No se pudo completar la solicitud.';
+            }
+        }
+
+        function setComposer(enabled) {
+            input.disabled = !enabled;
+            document.getElementById('send').disabled = !enabled;
+            document.getElementById('attach').disabled = !enabled;
+            if (!enabled) input.placeholder = 'Completa tus datos en el chat';
+        }
+
+        function paintIntake() {
+            known = '';
+            presence.textContent = 'Atendido por Bot';
+            paintBadge('en_bot');
+            closedBanner.classList.add('hidden');
+            setComposer(false);
+            thread.replaceChildren();
+            const row = document.createElement('div');
+            row.className = 'flex justify-start';
+            const card = document.createElement('form');
+            card.id = 'triage-form';
+            card.className = 'w-full max-w-md rounded-2xl border border-slate-200 bg-white p-4 shadow-sm';
+            card.innerHTML = ''
+                + '<p class="text-[11px] font-medium text-emerald-700">Bot</p>'
+                + '<p class="mt-1 text-sm leading-relaxed text-slate-800">Hola. Soy el asistente de MI.COM.CO. Para abrir tu caso en este chat necesito estos datos.</p>'
+                + '<label class="mt-3 block text-xs font-medium text-slate-600">Nombre<input name="name" required maxlength="120" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none ring-emerald-500/30 focus:ring-4" placeholder="Tu nombre"></label>'
+                + '<label class="mt-2 block text-xs font-medium text-slate-600">Correo Mi.com.co<input name="email_micomco" type="email" required maxlength="160" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none ring-emerald-500/30 focus:ring-4" placeholder="cliente@mi.com.co"></label>'
+                + '<label class="mt-2 block text-xs font-medium text-slate-600">Dominio<input name="domain" required maxlength="160" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none ring-emerald-500/30 focus:ring-4" placeholder="midominio.com"></label>'
+                + '<label class="mt-2 block text-xs font-medium text-slate-600">Falla o motivo<textarea name="reason" required maxlength="4000" rows="3" class="mt-1 w-full resize-none rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none ring-emerald-500/30 focus:ring-4" placeholder="Cuéntanos qué ocurre"></textarea></label>'
+                + '<p id="triage-error" class="mt-2 hidden whitespace-pre-wrap text-sm text-rose-600"></p>'
+                + '<button id="triage-submit" type="submit" class="mt-3 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700">Empezar</button>';
+            row.appendChild(card);
+            thread.appendChild(row);
+            card.addEventListener('submit', submitIntake);
+        }
+
+        async function submitIntake(event) {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const error = form.querySelector('#triage-error');
+            const button = form.querySelector('#triage-submit');
+            error.classList.add('hidden');
+            button.disabled = true;
+            const body = Object.fromEntries(new FormData(form).entries());
+            try {
+                const response = await fetch('/api/client/triage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (!response.ok) {
+                    error.textContent = await readError(response);
+                    error.classList.remove('hidden');
+                    return;
+                }
+                const payload = await response.json();
+                ticketId = payload.ticket.id;
+                localStorage.setItem('micomco_ticket_id', ticketId);
+                known = '';
+                render(payload);
+            } finally {
+                if (button.isConnected) button.disabled = false;
+            }
+        }
+
+        async function refresh() {
+            if (!ticketId) return;
+            const response = await fetch('/api/client/tickets/' + ticketId);
+            if (response.status === 404) {
+                forgetSession(ticketId);
+                localStorage.removeItem('micomco_ticket_id');
+                ticketId = null;
+                paintIntake();
+                return;
+            }
+            if (!response.ok) return;
+            const payload = await response.json();
+            render(payload);
+        }
+
+        document.getElementById('composer').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            await send(input.value, null);
+        });
+
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                document.getElementById('composer').requestSubmit();
+            }
+        });
+
+        document.getElementById('attach').addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', async () => {
+            const file = fileInput.files && fileInput.files[0];
+            fileInput.value = '';
+            if (!file) return;
+            if (await blockedAnimation(file)) {
+                toast(GIF_TOAST);
+                return;
+            }
+            await send(input.value, file);
+        });
+
+        async function blockedAnimation(file) {
+            const mime = (file.type || '').toLowerCase();
+            const name = (file.name || '').toLowerCase();
+            if (mime === 'image/gif' || name.endsWith('.gif')) return true;
+            if (mime !== 'image/webp' && !name.endsWith('.webp')) return false;
+            const bytes = new Uint8Array(await file.slice(0, 21).arrayBuffer());
+            if (bytes.length < 21) return false;
+            const tag = (start, end) => String.fromCharCode.apply(null, bytes.slice(start, end));
+            return tag(0, 4) === 'RIFF' && tag(8, 12) === 'WEBP' && tag(12, 16) === 'VP8X' && (bytes[20] & 2) === 2;
+        }
+
+        function startNewTestChat() {
+            ticketId = null;
+            localStorage.removeItem('micomco_ticket_id');
+            paintSessions();
+            paintIntake();
+        }
+
+        document.getElementById('new-test-chat').addEventListener('click', startNewTestChat);
+        document.getElementById('session-select').addEventListener('change', () => {
+            const next = document.getElementById('session-select').value;
+            if (!next) {
+                startNewTestChat();
+                return;
+            }
+            if (next === ticketId) return;
+            ticketId = next;
+            localStorage.setItem('micomco_ticket_id', ticketId);
+            known = '';
+            thread.replaceChildren();
+            closedBanner.classList.add('hidden');
+            setComposer(true);
+            refresh();
+        });
+
+        document.getElementById('new-chat').addEventListener('click', startNewTestChat);
+
+        async function send(text, file) {
+            if (!ticketId || sending) return;
+            const content = (text || '').trim();
+            if (!content && !file) return;
+            sending = true;
+            document.getElementById('send').disabled = true;
+            document.getElementById('attach').disabled = true;
+            showThinking();
+            try {
+                const body = { ticket_id: ticketId, content };
+                if (file) {
+                    body.mime_type = file.type || '';
+                    body.filename = file.name || '';
+                    body.media_base64 = await readFile(file);
+                }
+                const response = await fetch('/api/client/message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (response.status === 409) {
+                    toast(await readError(response));
+                    return;
+                }
+                if (response.status === 400) {
+                    toast(await readError(response));
+                    return;
+                }
+                if (response.status === 415) {
+                    toast(await readError(response));
+                    return;
+                }
+                if (!response.ok) {
+                    toast(await readError(response));
+                    return;
+                }
+                input.value = '';
+                const payload = await response.json();
+                if (payload.ticket && payload.ticket.id) {
+                    ticketId = payload.ticket.id;
+                    localStorage.setItem('micomco_ticket_id', ticketId);
+                }
+                known = '';
+                render(payload);
+            } finally {
+                sending = false;
+                hideThinking();
+                const open = Boolean(ticketId);
+                document.getElementById('send').disabled = !open;
+                document.getElementById('attach').disabled = !open;
+            }
+        }
+
+        function readFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result || ''));
+                reader.onerror = () => reject(reader.error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        paintSessions();
+        if (ticketId) {
+            refresh();
+        } else {
+            paintIntake();
+        }
+        setInterval(refresh, 3000);
+    </script>
+</body>
+</html>

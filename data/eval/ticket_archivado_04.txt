@@ -1,0 +1,14 @@
+-----------------------------------------------------------------
+[04:05 PM, 06/02/2026] 🎧 SOPORTE (Atención)
+💬 Hola, Atención al habla. CANARIO-AGENTE. También puedo guiarte para crear una cuenta.
+-----------------------------------------------------------------
+[04:06 PM, 06/02/2026] 👤 CLIENTE (Clínica Sol)
+💬 Necesito instalar un certificado SSL en el servidor
+💬 El candado del navegador sigue en error y no sé dónde cargar el certificado
+-----------------------------------------------------------------
+[04:10 PM, 06/02/2026] 🎧 SOPORTE (Atención)
+💬 CANARIO-AGENTE: entra a cPanel y abre el código de cliente.
+-----------------------------------------------------------------
+[04:12 PM, 06/02/2026] 👤 CLIENTE (Clínica Sol)
+💬 CONFIRMO
+EXPECT: ESCALATE

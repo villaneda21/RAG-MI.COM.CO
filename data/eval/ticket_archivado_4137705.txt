@@ -1,0 +1,167 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137705
+=================================================================
+Asunto:     Conversación con Rodrigo  Aguilera
+Grupo ID:   48000640407
+Creado el:  2026-07-22T18:28:17Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[09:48 AM, 17th Jul] 🤖 BOT ASISTENTE
+💬 Rodrigo , muchas gracias por contactarte en nuestro canal de atención. Valoramos tu tiempo y tu interacción con nosotros. ??‍???‍? Queremos informarte que nuestro/a agente ha concluido el chat actual y se ha generado el caso *(#{freshdesk.ticket_id})* durante esta sesión. ? *Calificar agente*: bit.ly/3CGPPJr Esperamos poder ayudarte nuevamente en el futuro.??
+-----------------------------------------------------------------
+[12:34 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera Hola
+-----------------------------------------------------------------
+[12:34 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Rodrigo !?️? ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[12:34 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (rodrigo.aguilera@corvus-ig.com). ?: Rodrigo , estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[12:34 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[12:35 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera corvus-ig.com
+-----------------------------------------------------------------
+[12:35 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[12:35 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[12:35 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera 2
+-----------------------------------------------------------------
+[12:35 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Rodrigo , asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[12:35 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[12:35 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera creación de registro DS para corvus-ig.com
+-----------------------------------------------------------------
+[12:36 PM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[12:36 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera envie un correo a soporte
+-----------------------------------------------------------------
+[12:37 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero te encuentres muy bien, ¿Tienes de casualidad el id del correo que enviaste ?
+-----------------------------------------------------------------
+[12:39 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera Creación registro DS Corvus-ig.com
+-----------------------------------------------------------------
+[12:39 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera desde rodrigo.aguilera@corvus-ig.com
+-----------------------------------------------------------------
+[12:40 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera caso 4137655
+-----------------------------------------------------------------
+[12:43 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Vale perfecto gracias por tu confirmación ya estoy validando tu caso y te confirmo apenas quede completado
+-----------------------------------------------------------------
+[12:44 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera gracias
+-----------------------------------------------------------------
+[12:44 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera la vez anterior que se hizo
+-----------------------------------------------------------------
+[12:44 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera me dejo sin correos
+-----------------------------------------------------------------
+[12:44 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera por favor espero que no vuelva a pasar
+-----------------------------------------------------------------
+[12:51 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo, te confirmo que ya se configuraron con los datos enviados en el correo, porfa validas y me confirmas
+-----------------------------------------------------------------
+[12:52 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera gracias
+-----------------------------------------------------------------
+[12:52 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera estoy validando
+-----------------------------------------------------------------
+[12:52 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Vale perfecto quedo a la espera de tu confirmación
+-----------------------------------------------------------------
+[12:52 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera esperare un hora
+-----------------------------------------------------------------
+[12:53 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera porque la vez anterior.. quedo confirmado
+-----------------------------------------------------------------
+[12:53 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera pero al rato no recibiamos correos
+-----------------------------------------------------------------
+[12:53 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera esperaré la propagación..
+-----------------------------------------------------------------
+[12:55 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera en zonemaster:
+-----------------------------------------------------------------
+[12:55 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera Dnssec 1 1 DNSSEC signed zone and DS in parent for signed zone Dnssec07 Warning The following name servers respond with no DNSKEY (unsigned child zone). Name servers: "ns1.mysecurecloudhost.com/13.248.158.180; ns2.mysecurecloudhost.com/75.2.118.134; ns3.mysecurecloudhost.com/76.223.26.245; ns4.mysecurecloudhost.com/99.83.147.209". Warning The zone is not signed. DS in delegation requires signed zone Dnssec11 Error The child zone is unsigned, but the parent zone has DS record.
+-----------------------------------------------------------------
+[12:56 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera ERROR
+-----------------------------------------------------------------
+[12:56 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera https://dnsviz.net/d/corvus-ig.com/dnssec/
+-----------------------------------------------------------------
+[12:57 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera corvus-ig.com/A corvus-ig.com/MX corvus-ig.com/NS corvus-ig.com/SOA corvus-ig.com/TXT
+-----------------------------------------------------------------
+[12:58 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera
+-----------------------------------------------------------------
+[01:00 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera hola?
+-----------------------------------------------------------------
+[01:01 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera Actualmente no estoy recibiendo correos
+-----------------------------------------------------------------
+[01:01 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera áyuda por favor
+-----------------------------------------------------------------
+[01:02 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 vale ya valido
+-----------------------------------------------------------------
+[01:02 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera gracias
+-----------------------------------------------------------------
+[01:02 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera necesitas algun dato adicional?
+-----------------------------------------------------------------
+[01:06 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Dame un momento estoy validando y si necesito algún dato adicional te informo
+-----------------------------------------------------------------
+[01:07 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera muchas gracias
+-----------------------------------------------------------------
+[01:10 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Confirmamos que ya eliminamos los registros DS del dominio corvus-ig.com, por lo que tu correo debería volver a funcionar con normalidad en los próximos minutos una vez propague. el error que muestra Zonemaster indica que los nameservers de mysecurecloudhost.com no tienen la zona firmada con DNSSEC, lo que genera el conflicto y está causando que los correos no lleguen. Necesitas contactar a mysecurecloudhost.com y solicitarles que activen y firmen la zona DNSSEC en sus servidores para el dominio corvus-ig.com. Una vez ellos lo hagan, nos comentas porfa para volver a crear los registros y así evitamos la caída de tu correo
+-----------------------------------------------------------------
+[01:11 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera perfecto.. lo veo con ellos entonces
+-----------------------------------------------------------------
+[01:12 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Sí, correcto. Después de que ellos ajusten esa parte, nos informas, porfa. ¿Te parece marcar este caso como cerrado y, cuando ellos ajusten el tema, nos notificas?
+-----------------------------------------------------------------
+[01:13 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera si por favor
+-----------------------------------------------------------------
+[01:13 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera gracias
+-----------------------------------------------------------------
+[01:13 PM, 22nd Jul] 👤 CLIENTE (Rodrigo)
+💬 Aguilera confirmo que ya quedo como antes
+-----------------------------------------------------------------
+[01:15 PM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, perfecto. Marcaré el caso como cerrado. Apenas ajusten en la zona, nos informas ya sea por correo o por este medio y con gusto te ayudamos. Feliz día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM · MI.COM.CO</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-size='11' font-family='Arial' font-weight='700'%3EMI%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } };
+    </script>
+    <style>
+        body { font-family: Inter, system-ui, sans-serif; }
+        audio { height: 36px; width: 220px; }
+        .switch[aria-checked="true"] .knob { transform: translateX(20px); }
+    </style>
+</head>
+<body class="h-screen overflow-hidden bg-zinc-100 text-zinc-800">
+    <div id="auth-gate" class="fixed inset-0 z-40 hidden items-center justify-center bg-zinc-900/40 p-4">
+        <form id="auth-form" class="w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+            <h1 class="text-base font-semibold text-zinc-900">Acceso al CRM</h1>
+            <p class="mt-1 text-sm leading-relaxed text-zinc-500">Pega el valor de CRM_SECRET_TOKEN definido en el archivo .env.</p>
+            <input id="auth-token" type="password" autocomplete="current-password" required class="mt-4 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-indigo-400" placeholder="Token">
+            <p id="auth-error" class="mt-2 hidden text-sm text-rose-600"></p>
+            <button class="mt-4 w-full rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700" type="submit">Entrar</button>
+        </form>
+    </div>
+    <div class="flex h-full min-h-0 flex-col">
+        <header class="flex h-14 shrink-0 items-center gap-3 border-b border-zinc-200 bg-white px-4">
+            <a href="/crm" class="text-sm font-semibold tracking-tight text-zinc-900">Mesa <span class="text-indigo-600">MI</span></a>
+            <nav class="flex items-center gap-1 text-sm">
+                <a id="nav-inbox" href="/crm" class="rounded-lg px-3 py-1.5 text-zinc-500 hover:bg-zinc-100">Bandeja</a>
+                <a id="nav-admin" href="/crm/admin" class="rounded-lg px-3 py-1.5 text-zinc-500 hover:bg-zinc-100">Ajustes</a>
+            </nav>
+            <div class="ml-auto flex items-center gap-2">
+                <a href="/client" class="hidden text-xs text-zinc-400 hover:text-zinc-700 sm:inline">Vista cliente</a>
+                <label class="text-xs text-zinc-500" for="agent">Agente</label>
+                <select id="agent" class="rounded-lg border border-zinc-200 bg-white px-2 py-1.5 text-sm outline-none focus:border-indigo-400"></select>
+            </div>
+        </header>
+
+        <div id="inbox" class="grid min-h-0 flex-1 grid-cols-1 xl:grid-cols-[240px_minmax(0,1fr)_320px]">
+            <aside class="flex min-h-0 flex-col border-b border-zinc-200 bg-white xl:border-b-0 xl:border-r">
+                <div class="border-b border-zinc-100 p-3">
+                    <p class="px-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400">Departamento</p>
+                    <div id="departments" class="mt-2 flex flex-wrap gap-1.5"></div>
+                    <p class="mt-4 px-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400">Estado</p>
+                    <div id="views" class="mt-2 space-y-1"></div>
+                </div>
+                <div id="ticket-list" class="min-h-0 flex-1 overflow-y-auto"></div>
+            </aside>
+
+            <section class="flex min-h-0 flex-col border-zinc-200 bg-white xl:border-r">
+                <div id="chat-empty" class="grid flex-1 place-items-center text-sm text-zinc-400">Selecciona un chat</div>
+                <div id="chat" class="hidden min-h-0 flex-1 flex-col">
+                    <header class="flex items-center justify-between gap-3 border-b border-zinc-100 px-4 py-3">
+                        <div class="min-w-0">
+                            <p id="chat-title" class="truncate text-sm font-semibold text-zinc-900"></p>
+                            <p id="chat-sub" class="truncate text-xs text-zinc-500"></p>
+                        </div>
+                        <span id="chat-badge" class="shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-medium text-zinc-500"></span>
+                        <button id="open-side" type="button" class="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs xl:hidden">Ficha</button>
+                    </header>
+                    <div id="messages" class="min-h-0 flex-1 space-y-3 overflow-y-auto bg-zinc-50 px-4 py-4"></div>
+                    <div class="relative border-t border-zinc-100 p-3">
+                        <div class="mb-2 flex gap-2 text-xs">
+                            <button type="button" data-mode="reply" class="mode rounded-full bg-indigo-600 px-3 py-1 font-medium text-white">Respuesta al cliente</button>
+                            <button type="button" data-mode="note" class="mode rounded-full bg-zinc-100 px-3 py-1 font-medium text-zinc-600">Nota interna privada</button>
+                            <button id="snippet-btn" type="button" class="ml-auto rounded-full border border-zinc-200 px-3 py-1 font-medium text-zinc-600">/</button>
+                        </div>
+                        <div id="snippet-menu" class="absolute bottom-24 left-3 right-3 z-20 hidden max-h-56 overflow-y-auto rounded-2xl border border-zinc-200 bg-white shadow-xl"></div>
+                        <form id="composer" class="flex items-end gap-2">
+                            <textarea id="composer-input" rows="2" placeholder="Escribe una respuesta. / abre las respuestas rápidas" class="max-h-40 flex-1 resize-none rounded-2xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-indigo-400"></textarea>
+                            <button class="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700" type="submit">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <aside id="side" class="hidden min-h-0 flex-col overflow-y-auto bg-zinc-50 xl:flex">
+                <div id="side-empty" class="p-6 text-sm text-zinc-400">La ficha aparece al abrir un chat.</div>
+                <div id="side-body" class="hidden space-y-5 p-4">
+                    <section class="rounded-2xl border border-zinc-200 bg-white p-4">
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Cliente</h2>
+                        <label class="mt-3 block text-xs text-zinc-500">Nombre
+                            <input id="cust-name" class="mt-1 w-full rounded-lg border border-zinc-200 px-2.5 py-2 text-sm">
+                        </label>
+                        <label class="mt-2 block text-xs text-zinc-500">Dominio
+                            <input id="cust-domain" class="mt-1 w-full rounded-lg border border-zinc-200 px-2.5 py-2 text-sm">
+                        </label>
+                        <label class="mt-2 block text-xs text-zinc-500">Correo
+                            <input id="cust-email" class="mt-1 w-full rounded-lg border border-zinc-200 px-2.5 py-2 text-sm">
+                        </label>
+                        <button id="save-customer" type="button" class="mt-3 w-full rounded-lg border border-zinc-200 py-2 text-sm font-medium hover:bg-zinc-50">Guardar ficha</button>
+                    </section>
+                    <section class="rounded-2xl border border-zinc-200 bg-white p-4">
+                        <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">Asignación</h2>
+                        <label class="mt-3 block text-xs text-zinc-500">Departamento
+                            <select id="xfer-dept" class="mt-1 w-full rounded-lg border border-zinc-200 px-2.5 py-2 text-sm"></select>
+                        </label>
+                        <label class="mt-2 block text-xs text-zinc-500">Agente
+                            <select id="xfer-agent" class="mt-1 w-full rounded-lg border border-zinc-200 px-2.5 py-2 text-sm"></select>
+                        </label>
+                        <button id="transfer" type="button" class="mt-3 w-full rounded-lg bg-zinc-900 py-2 text-sm font-medium text-white hover:bg-zinc-800">Reasignar</button>
+                        <div class="mt-4 flex gap-2">
+                            <button id="mark-resolved" type="button" class="flex-1 rounded-lg border border-zinc-200 py-2 text-xs font-medium">Marcar resuelto</button>
+                            <button id="mark-closed" type="button" class="flex-1 rounded-lg border border-zinc-200 py-2 text-xs font-medium">Cerrar</button>
+                        </div>
+                    </section>
+                    <section class="rounded-2xl border border-zinc-200 bg-white p-4">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-medium text-zinc-900">Temporizador de Inactividad de 15 min</p>
+                                <p id="timeout-state" class="text-xs text-zinc-500">ON</p>
+                            </div>
+                            <button id="timeout-switch" type="button" role="switch" aria-checked="true" class="switch relative h-6 w-11 shrink-0 rounded-full bg-indigo-600">
+                                <span class="knob absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition"></span>
+                            </button>
+                        </div>
+                    </section>
+                    <section>
+                        <h2 class="px-1 text-xs font-semibold uppercase tracking-wider text-zinc-400">Auditoría</h2>
+                        <ol id="audit" class="mt-3 space-y-3 border-l border-zinc-200 pl-4"></ol>
+                    </section>
+                </div>
+            </aside>
+        </div>
+
+        <div id="admin" class="hidden min-h-0 flex-1 overflow-y-auto">
+            <div class="mx-auto grid max-w-5xl gap-6 p-6 lg:grid-cols-2">
+                <section class="rounded-3xl border border-zinc-200 bg-white p-5">
+                    <h2 class="text-lg font-semibold tracking-tight">Respuestas rápidas</h2>
+                    <p class="mt-1 text-sm text-zinc-500">Atajos que el agente inserta con /.</p>
+                    <form id="snippet-form" class="mt-4 space-y-2">
+                        <input type="hidden" id="snippet-id">
+                        <input id="snippet-shortcut" required placeholder="/dns" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm">
+                        <input id="snippet-title" required placeholder="Título" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm">
+                        <textarea id="snippet-content" required rows="4" placeholder="Texto que se inserta en el chat" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm"></textarea>
+                        <select id="snippet-dept" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm"></select>
+                        <div class="flex gap-2">
+                            <button class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white" type="submit">Guardar</button>
+                            <button id="snippet-reset" type="button" class="rounded-xl border border-zinc-200 px-4 py-2 text-sm">Limpiar</button>
+                        </div>
+                    </form>
+                    <ul id="snippet-list" class="mt-4 divide-y divide-zinc-100"></ul>
+                </section>
+                <section class="rounded-3xl border border-zinc-200 bg-white p-5">
+                    <h2 class="text-lg font-semibold tracking-tight">Reglas del bot</h2>
+                    <p class="mt-1 text-sm text-zinc-500">Advertencia, cierre y temporizadores globales.</p>
+                    <form id="rules-form" class="mt-4 space-y-3">
+                        <label class="block text-xs text-zinc-500">Minutos de advertencia
+                            <input id="rule-warning" type="number" min="0" max="1440" class="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm">
+                        </label>
+                        <label class="block text-xs text-zinc-500">Minutos de cierre tras la advertencia
+                            <input id="rule-close" type="number" min="0" max="1440" class="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm">
+                        </label>
+                        <label class="block text-xs text-zinc-500">Mensaje de advertencia
+                            <textarea id="rule-warning-text" rows="3" class="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm"></textarea>
+                        </label>
+                        <label class="block text-xs text-zinc-500">Mensaje de cierre
+                            <textarea id="rule-close-text" rows="3" class="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm"></textarea>
+                        </label>
+                        <label class="flex items-center gap-2 text-sm">
+                            <input id="rule-enabled" type="checkbox" class="h-4 w-4 accent-indigo-600">
+                            Auto-cierre global activo
+                        </label>
+                        <button class="rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white" type="submit">Guardar reglas</button>
+                        <p id="rules-msg" class="text-sm text-emerald-700"></p>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="pointer-events-none fixed bottom-4 left-1/2 z-50 hidden max-w-xl -translate-x-1/2 whitespace-pre-wrap rounded-2xl bg-zinc-900 px-4 py-3 text-center text-sm leading-relaxed text-white shadow-lg"></div>
+
+    <script>
+        const adminMode = location.pathname.replace(/\/$/, '') === '/crm/admin';
+        const inbox = document.getElementById('inbox');
+        const admin = document.getElementById('admin');
+        inbox.classList.toggle('hidden', adminMode);
+        admin.classList.toggle('hidden', !adminMode);
+        document.getElementById('nav-inbox').classList.toggle('bg-indigo-50', !adminMode);
+        document.getElementById('nav-inbox').classList.toggle('text-indigo-700', !adminMode);
+        document.getElementById('nav-admin').classList.toggle('bg-indigo-50', adminMode);
+        document.getElementById('nav-admin').classList.toggle('text-indigo-700', adminMode);
+
+        const views = [
+            ['mine', 'Mis chats'],
+            ['bot', 'En bot'],
+            ['waiting', 'Esperando agente'],
+            ['resolved', 'Resueltos']
+        ];
+        const state = {
+            agentId: localStorage.getItem('crm_agent_id') || '',
+            departmentId: '',
+            view: 'waiting',
+            ticketId: null,
+            mode: 'reply',
+            snippets: [],
+            departments: [],
+            agents: [],
+            detail: null
+        };
+
+        function toast(text) {
+            const node = document.getElementById('toast');
+            node.textContent = text;
+            node.classList.remove('hidden');
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => node.classList.add('hidden'), 12000);
+        }
+
+        const TOKEN_KEY = 'crm_secret_token';
+        let messageTail = '';
+        let knownWaiting = null;
+        let polling = false;
+
+        function setText(node, value) {
+            node.textContent = value == null ? '' : String(value);
+        }
+
+        function scrollThread(node) {
+            node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
+        }
+
+        function showAuthGate(message) {
+            const gate = document.getElementById('auth-gate');
+            gate.classList.remove('hidden');
+            gate.classList.add('flex');
+            const error = document.getElementById('auth-error');
+            if (message) {
+                setText(error, message);
+                error.classList.remove('hidden');
+            } else {
+                error.classList.add('hidden');
+            }
+        }
+
+        function hideAuthGate() {
+            const gate = document.getElementById('auth-gate');
+            gate.classList.add('hidden');
+            gate.classList.remove('flex');
+        }
+
+        function armAlert() {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if (!Ctx) return null;
+            if (!armAlert.ctx) armAlert.ctx = new Ctx();
+            if (armAlert.ctx.state === 'suspended') armAlert.ctx.resume();
+            return armAlert.ctx;
+        }
+
+        function playSoftAlert() {
+            const ctx = armAlert();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(660, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.06, now + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.46);
+        }
+
+        async function api(url, options) {
+            const opts = Object.assign({}, options || {});
+            const headers = new Headers(opts.headers || {});
+            const token = sessionStorage.getItem(TOKEN_KEY) || '';
+            if (token && !headers.has('Authorization')) headers.set('Authorization', 'Bearer ' + token);
+            opts.headers = headers;
+            const response = await fetch(url, opts);
+            if (response.status === 401) {
+                sessionStorage.removeItem(TOKEN_KEY);
+                showAuthGate('El token no es válido.');
+                throw new Error('No autorizado.');
+            }
+            const body = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(body.detail || 'No se pudo completar la solicitud.');
+            return body;
+        }
+
+        async function watchQueue() {
+            const data = await api('/api/crm/tickets?view=waiting');
+            const ids = (data.tickets || [])
+                .filter((ticket) => ticket.status === 'esperando_agente')
+                .map((ticket) => ticket.id);
+            if (knownWaiting) {
+                ids.forEach((id) => {
+                    if (!knownWaiting.has(id)) playSoftAlert();
+                });
+            }
+            knownWaiting = new Set(ids);
+        }
+
+        function clock(iso) {
+            const date = new Date(iso);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleString('es-CO', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function badgeClass(status) {
+            return ({
+                nuevo: 'bg-emerald-50 text-emerald-700',
+                en_bot: 'bg-emerald-50 text-emerald-700',
+                en_proceso: 'bg-sky-50 text-sky-700',
+                esperando_agente: 'bg-orange-50 text-orange-700',
+                resuelto: 'bg-zinc-100 text-zinc-500',
+                cerrado: 'bg-zinc-100 text-zinc-500'
+            })[status] || 'bg-zinc-100 text-zinc-500';
+        }
+
+        function handlerLine(ticket) {
+            if (ticket.status === 'en_proceso' && ticket.agent_name) return 'Atendido por Agente ' + ticket.agent_name;
+            if (ticket.status === 'esperando_agente') return 'Esperando agente · ' + ticket.department_name;
+            if (ticket.status === 'resuelto' || ticket.status === 'cerrado') return 'Caso resuelto';
+            return 'Atendido por Bot · ' + ticket.department_name;
+        }
+
+        function statusLabel(status) {
+            return ({
+                nuevo: 'Nuevo',
+                en_bot: 'En bot',
+                esperando_agente: 'Esperando',
+                en_proceso: 'En proceso',
+                resuelto: 'Resuelto',
+                cerrado: 'Cerrado'
+            })[status] || status;
+        }
+
+        function paintViews() {
+            const root = document.getElementById('views');
+            root.replaceChildren();
+            views.forEach(([id, label]) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = label;
+                button.className = 'block w-full rounded-lg px-2 py-1.5 text-left text-sm ' + (state.view === id ? 'bg-indigo-50 font-medium text-indigo-700' : 'text-zinc-600 hover:bg-zinc-50');
+                button.addEventListener('click', () => { state.view = id; paintViews(); loadTickets(); });
+                root.appendChild(button);
+            });
+        }
+
+        function paintDepartments() {
+            const root = document.getElementById('departments');
+            root.replaceChildren();
+            const all = document.createElement('button');
+            all.type = 'button';
+            all.textContent = 'Todos';
+            all.className = chip(state.departmentId === '');
+            all.addEventListener('click', () => { state.departmentId = ''; paintDepartments(); loadTickets(); });
+            root.appendChild(all);
+            state.departments.forEach((department) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = department.name.replace('Soporte Técnico', 'Soporte');
+                button.className = chip(state.departmentId === department.id);
+                button.addEventListener('click', () => {
+                    state.departmentId = department.id;
+                    paintDepartments();
+                    loadTickets();
+                });
+                root.appendChild(button);
+            });
+            const select = document.getElementById('xfer-dept');
+            const snippetDept = document.getElementById('snippet-dept');
+            select.replaceChildren();
+            snippetDept.replaceChildren();
+            const none = document.createElement('option');
+            none.value = '';
+            none.textContent = 'Cualquier área';
+            snippetDept.appendChild(none);
+            state.departments.forEach((department) => {
+                const option = document.createElement('option');
+                option.value = department.id;
+                option.textContent = department.name;
+                select.appendChild(option.cloneNode(true));
+                snippetDept.appendChild(option);
+            });
+        }
+
+        function chip(active) {
+            return 'rounded-full px-2.5 py-1 text-xs ' + (active ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600');
+        }
+
+        async function boot() {
+            const [departments, agents, snippets] = await Promise.all([
+                api('/api/crm/departments'),
+                api('/api/crm/agents'),
+                api('/api/admin/snippets')
+            ]);
+            state.departments = departments.departments;
+            state.agents = agents.agents;
+            state.snippets = snippets.snippets;
+            const select = document.getElementById('agent');
+            select.replaceChildren();
+            state.agents.forEach((agent) => {
+                const option = document.createElement('option');
+                option.value = agent.id;
+                option.textContent = agent.name;
+                select.appendChild(option);
+            });
+            if (!state.agents.some((agent) => agent.id === state.agentId)) {
+                state.agentId = state.agents[0] ? state.agents[0].id : '';
+            }
+            select.value = state.agentId;
+            const xfer = document.getElementById('xfer-agent');
+            xfer.replaceChildren();
+            const unassigned = document.createElement('option');
+            unassigned.value = '';
+            unassigned.textContent = 'Sin agente';
+            xfer.appendChild(unassigned);
+            state.agents.forEach((agent) => {
+                const option = document.createElement('option');
+                option.value = agent.id;
+                option.textContent = agent.name + ' · ' + agent.department_name;
+                xfer.appendChild(option);
+            });
+            paintDepartments();
+            paintViews();
+            if (adminMode) {
+                paintSnippets();
+                await loadRules();
+            } else {
+                await loadTickets();
+            }
+        }
+
+        document.getElementById('agent').addEventListener('change', (event) => {
+            state.agentId = event.target.value;
+            localStorage.setItem('crm_agent_id', state.agentId);
+            if (!adminMode) loadTickets();
+        });
+
+        async function loadTickets() {
+            const params = new URLSearchParams({ view: state.view });
+            if (state.departmentId) params.set('department_id', state.departmentId);
+            if (state.agentId) params.set('agent_id', state.agentId);
+            const data = await api('/api/crm/tickets?' + params.toString());
+            const list = document.getElementById('ticket-list');
+            list.replaceChildren();
+            if (!data.tickets.length) {
+                const empty = document.createElement('p');
+                empty.className = 'p-4 text-sm text-zinc-400';
+                empty.textContent = 'No hay chats en esta bandeja.';
+                list.appendChild(empty);
+                return;
+            }
+            data.tickets.forEach((ticket) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'mx-2 my-1.5 block w-[calc(100%-1rem)] rounded-xl border border-zinc-200 bg-white px-3 py-3 text-left shadow-sm hover:border-indigo-200 ' + (ticket.id === state.ticketId ? 'ring-2 ring-indigo-200' : '');
+                const title = document.createElement('div');
+                title.className = 'flex items-center justify-between gap-2';
+                const name = document.createElement('span');
+                name.className = 'truncate text-sm font-medium';
+                name.textContent = ticket.customer_name;
+                const badge = document.createElement('span');
+                badge.className = 'shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ' + badgeClass(ticket.status);
+                badge.textContent = statusLabel(ticket.status);
+                title.append(name, badge);
+                const preview = document.createElement('p');
+                preview.className = 'mt-1 truncate text-xs text-zinc-500';
+                preview.textContent = ticket.preview || ticket.department_name;
+                button.append(title, preview);
+                button.addEventListener('click', () => openTicket(ticket.id));
+                list.appendChild(button);
+            });
+        }
+
+        async function openTicket(id, silent) {
+            const data = await api('/api/crm/tickets/' + id);
+            if (silent && state.ticketId === id && document.getElementById('composer-input').value) {
+                state.detail = data;
+                return;
+            }
+            const editingSide = document.getElementById('side-body').contains(document.activeElement);
+            state.ticketId = id;
+            state.detail = data;
+            document.getElementById('chat-empty').classList.add('hidden');
+            document.getElementById('chat').classList.remove('hidden');
+            document.getElementById('chat').classList.add('flex');
+            document.getElementById('chat-title').textContent = data.ticket.customer_name;
+            document.getElementById('chat-sub').textContent = handlerLine(data.ticket) + ' · ' + data.ticket.priority;
+            const badge = document.getElementById('chat-badge');
+            badge.className = 'shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium ' + badgeClass(data.ticket.status);
+            badge.textContent = statusLabel(data.ticket.status);
+            paintMessages(data.messages);
+            if (!silent || !editingSide) paintSide(data);
+            if (!silent) loadTickets();
+        }
+
+        function paintMessages(messages) {
+            const root = document.getElementById('messages');
+            root.replaceChildren();
+            messages.forEach((message) => {
+                if (message.sender_type === 'system') {
+                    const row = document.createElement('div');
+                    row.className = 'flex justify-center';
+                    const note = document.createElement('p');
+                    note.className = 'max-w-md rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2 text-center text-xs leading-relaxed text-slate-600 shadow-sm';
+                    setText(note, message.content);
+                    row.appendChild(note);
+                    root.appendChild(row);
+                    return;
+                }
+                if (message.is_internal_note) {
+                    const note = document.createElement('div');
+                    note.className = 'rounded-2xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950';
+                    const who = document.createElement('p');
+                    who.className = 'text-[11px] font-medium text-amber-700';
+                    who.textContent = (message.author_name || 'Agente') + ' · ' + clock(message.created_at) + ' · Nota interna';
+                    const body = document.createElement('p');
+                    body.className = 'mt-1 whitespace-pre-wrap';
+                    setText(body, message.content);
+                    note.append(who, body);
+                    root.appendChild(note);
+                    return;
+                }
+                const mine = message.sender_type !== 'client';
+                const row = document.createElement('div');
+                row.className = 'flex ' + (mine ? 'justify-end' : 'justify-start');
+                const bubble = document.createElement('div');
+                bubble.className = 'max-w-[75%] rounded-2xl px-3.5 py-2.5 text-sm shadow-sm ' + (mine
+                    ? (message.sender_type === 'agent' ? 'border border-indigo-100 bg-indigo-50 text-slate-800' : 'border border-slate-200 bg-white text-slate-800')
+                    : 'border border-slate-200 bg-white text-slate-800');
+                if (message.media_type === 'audio' && message.media_url) {
+                    const audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = message.media_url;
+                    bubble.appendChild(audio);
+                }
+                if (message.media_type === 'image' && message.media_url) {
+                    const image = document.createElement('img');
+                    image.src = message.media_url;
+                    image.alt = 'Imagen adjunta';
+                    image.className = 'mt-1 max-h-64 w-full rounded-xl object-contain';
+                    bubble.appendChild(image);
+                }
+                const placeholder = (message.media_type === 'audio' && message.content === 'Nota de voz')
+                    || (message.media_type === 'image' && message.content === 'Imagen');
+                if (!placeholder) {
+                    const text = document.createElement('p');
+                    text.className = 'whitespace-pre-wrap';
+                    setText(text, message.content);
+                    bubble.appendChild(text);
+                }
+                const meta = document.createElement('p');
+                meta.className = 'mt-1 text-[11px] text-zinc-400';
+                const who = message.sender_type === 'client'
+                    ? 'Cliente'
+                    : message.sender_type === 'agent'
+                        ? ('Agente ' + (message.author_name || ''))
+                        : 'Bot';
+                meta.textContent = who + ' · ' + clock(message.created_at);
+                bubble.append(meta);
+                row.appendChild(bubble);
+                root.appendChild(row);
+            });
+            const tail = messages.length ? String(messages[messages.length - 1].id || messages.length) : '';
+            if (tail !== messageTail) {
+                messageTail = tail;
+                requestAnimationFrame(() => scrollThread(root));
+            }
+        }
+
+        function paintSide(data) {
+            document.getElementById('side-empty').classList.add('hidden');
+            document.getElementById('side-body').classList.remove('hidden');
+            document.getElementById('cust-name').value = data.ticket.customer_name;
+            document.getElementById('cust-domain').value = data.ticket.customer_domain;
+            document.getElementById('cust-email').value = data.ticket.email_micomco;
+            document.getElementById('xfer-dept').value = data.ticket.department_id;
+            document.getElementById('xfer-agent').value = data.ticket.assigned_agent_id || '';
+            paintSwitch(data.ticket.auto_timeout_enabled);
+            const audit = document.getElementById('audit');
+            audit.replaceChildren();
+            data.audit.forEach((entry) => {
+                const item = document.createElement('li');
+                const title = document.createElement('p');
+                title.className = 'text-xs font-medium text-zinc-800';
+                title.textContent = entry.action_type.replaceAll('_', ' ');
+                const body = document.createElement('p');
+                body.className = 'text-xs text-zinc-500';
+                body.textContent = entry.details;
+                const when = document.createElement('p');
+                when.className = 'text-[11px] text-zinc-400';
+                when.textContent = (entry.agent_name ? entry.agent_name + ' · ' : '') + clock(entry.created_at);
+                item.append(title, body, when);
+                audit.appendChild(item);
+            });
+        }
+
+        function paintSwitch(on) {
+            const button = document.getElementById('timeout-switch');
+            button.setAttribute('aria-checked', on ? 'true' : 'false');
+            button.classList.toggle('bg-indigo-600', on);
+            button.classList.toggle('bg-zinc-300', !on);
+            document.getElementById('timeout-state').textContent = on ? 'ON' : 'OFF';
+        }
+
+        function setMode(mode) {
+            state.mode = mode;
+            document.querySelectorAll('.mode').forEach((button) => {
+                const active = button.dataset.mode === mode;
+                button.className = 'mode rounded-full px-3 py-1 font-medium ' + (active
+                    ? (mode === 'note' ? 'bg-amber-200 text-amber-950' : 'bg-indigo-600 text-white')
+                    : 'bg-zinc-100 text-zinc-600');
+            });
+            const input = document.getElementById('composer-input');
+            input.classList.toggle('bg-amber-50', mode === 'note');
+            input.classList.toggle('border-amber-200', mode === 'note');
+            input.placeholder = mode === 'note'
+                ? 'Nota interna. El cliente no la ve.'
+                : 'Escribe una respuesta. / abre las respuestas rápidas';
+        }
+
+        document.querySelectorAll('.mode').forEach((button) => {
+            button.addEventListener('click', () => setMode(button.dataset.mode));
+        });
+
+        document.getElementById('composer').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!state.ticketId || !state.agentId) return;
+            const input = document.getElementById('composer-input');
+            const content = input.value.trim();
+            if (!content) return;
+            const path = state.mode === 'note' ? '/notes' : '/reply';
+            await api('/api/crm/tickets/' + state.ticketId + path, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content, agent_id: state.agentId })
+            });
+            input.value = '';
+            hideSnippets();
+            await openTicket(state.ticketId, true);
+            await loadTickets();
+        });
+
+        const composerInput = document.getElementById('composer-input');
+        composerInput.addEventListener('input', () => {
+            if (state.mode !== 'reply') return;
+            const match = composerInput.value.match(/(^|\s)\/([a-z0-9_-]*)$/i);
+            if (!match) { hideSnippets(); return; }
+            showSnippets(match[2].toLowerCase());
+        });
+        composerInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') hideSnippets();
+            if (event.key === '/' && state.mode === 'reply' && composerInput.value === '') {
+                setTimeout(() => showSnippets(''), 0);
+            }
+        });
+        document.getElementById('snippet-btn').addEventListener('click', () => showSnippets(''));
+
+        function showSnippets(query) {
+            const menu = document.getElementById('snippet-menu');
+            const items = state.snippets.filter((snippet) => snippet.shortcut.includes('/' + query) || snippet.title.toLowerCase().includes(query));
+            menu.replaceChildren();
+            if (!items.length) { menu.classList.add('hidden'); return; }
+            items.forEach((snippet) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'block w-full px-3 py-2 text-left hover:bg-zinc-50';
+                const title = document.createElement('span');
+                title.className = 'text-sm font-medium text-indigo-700';
+                title.textContent = snippet.shortcut + ' · ' + snippet.title;
+                const body = document.createElement('span');
+                body.className = 'mt-0.5 block truncate text-xs text-zinc-500';
+                body.textContent = snippet.content;
+                button.append(title, body);
+                button.addEventListener('click', () => insertSnippet(snippet.content));
+                menu.appendChild(button);
+            });
+            menu.classList.remove('hidden');
+        }
+
+        function hideSnippets() {
+            document.getElementById('snippet-menu').classList.add('hidden');
+        }
+
+        function insertSnippet(content) {
+            const input = document.getElementById('composer-input');
+            input.value = input.value.replace(/(^|\s)\/[a-z0-9_-]*$/i, '$1') + content;
+            hideSnippets();
+            input.focus();
+        }
+
+        document.getElementById('save-customer').addEventListener('click', async () => {
+            if (!state.detail) return;
+            await api('/api/crm/customers', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: state.detail.ticket.customer_id,
+                    name: document.getElementById('cust-name').value,
+                    domain: document.getElementById('cust-domain').value,
+                    email_micomco: document.getElementById('cust-email').value
+                })
+            });
+            toast('Ficha actualizada');
+            await openTicket(state.ticketId, true);
+            await loadTickets();
+        });
+
+        document.getElementById('transfer').addEventListener('click', async () => {
+            if (!state.ticketId) return;
+            const agent = document.getElementById('xfer-agent').value;
+            await api('/api/crm/tickets/' + state.ticketId + '/transfer', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    department_id: document.getElementById('xfer-dept').value,
+                    agent_id: agent || null,
+                    actor_agent_id: state.agentId || null
+                })
+            });
+            toast('Chat reasignado');
+            await openTicket(state.ticketId, true);
+            await loadTickets();
+        });
+
+        document.getElementById('timeout-switch').addEventListener('click', async () => {
+            if (!state.detail) return;
+            const next = state.detail.ticket.auto_timeout_enabled !== true;
+            const data = await api('/api/crm/tickets/' + state.ticketId + '/timeout-toggle', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ auto_timeout_enabled: next, agent_id: state.agentId || null })
+            });
+            state.detail.ticket = data.ticket;
+            paintSwitch(data.ticket.auto_timeout_enabled);
+        });
+
+        async function setStatus(status) {
+            if (!state.ticketId) return;
+            await api('/api/crm/tickets/' + state.ticketId + '/status', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status, agent_id: state.agentId || null })
+            });
+            await openTicket(state.ticketId, true);
+            await loadTickets();
+        }
+        document.getElementById('mark-resolved').addEventListener('click', () => setStatus('resuelto'));
+        document.getElementById('mark-closed').addEventListener('click', () => setStatus('cerrado'));
+
+        document.getElementById('open-side').addEventListener('click', () => {
+            const side = document.getElementById('side');
+            side.classList.toggle('hidden');
+            side.classList.toggle('flex');
+        });
+
+        function paintSnippets() {
+            const list = document.getElementById('snippet-list');
+            list.replaceChildren();
+            state.snippets.forEach((snippet) => {
+                const item = document.createElement('li');
+                item.className = 'flex items-start justify-between gap-3 py-3';
+                const copy = document.createElement('div');
+                const title = document.createElement('p');
+                title.className = 'text-sm font-medium';
+                title.textContent = snippet.shortcut + ' · ' + snippet.title;
+                const body = document.createElement('p');
+                body.className = 'text-xs text-zinc-500';
+                body.textContent = snippet.content;
+                copy.append(title, body);
+                const actions = document.createElement('div');
+                actions.className = 'flex gap-2 text-xs';
+                const edit = document.createElement('button');
+                edit.type = 'button';
+                edit.textContent = 'Editar';
+                edit.className = 'text-indigo-600';
+                edit.addEventListener('click', () => {
+                    document.getElementById('snippet-id').value = snippet.id;
+                    document.getElementById('snippet-shortcut').value = snippet.shortcut;
+                    document.getElementById('snippet-title').value = snippet.title;
+                    document.getElementById('snippet-content').value = snippet.content;
+                    document.getElementById('snippet-dept').value = snippet.department_id || '';
+                });
+                const remove = document.createElement('button');
+                remove.type = 'button';
+                remove.textContent = 'Eliminar';
+                remove.className = 'text-rose-600';
+                remove.addEventListener('click', async () => {
+                    await api('/api/admin/snippets/' + snippet.id, { method: 'DELETE' });
+                    state.snippets = (await api('/api/admin/snippets')).snippets;
+                    paintSnippets();
+                });
+                actions.append(edit, remove);
+                item.append(copy, actions);
+                list.appendChild(item);
+            });
+        }
+
+        document.getElementById('snippet-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const id = document.getElementById('snippet-id').value;
+            const payload = {
+                shortcut: document.getElementById('snippet-shortcut').value,
+                title: document.getElementById('snippet-title').value,
+                content: document.getElementById('snippet-content').value,
+                department_id: document.getElementById('snippet-dept').value || null
+            };
+            if (id) payload.id = id;
+            await api(id ? '/api/admin/snippets/' + id : '/api/admin/snippets', {
+                method: id ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            document.getElementById('snippet-reset').click();
+            state.snippets = (await api('/api/admin/snippets')).snippets;
+            paintSnippets();
+            toast('Respuesta guardada');
+        });
+
+        document.getElementById('snippet-reset').addEventListener('click', () => {
+            document.getElementById('snippet-id').value = '';
+            document.getElementById('snippet-form').reset();
+        });
+
+        async function loadRules() {
+            const rules = await api('/api/admin/rules');
+            document.getElementById('rule-warning').value = rules.inactivity_warning_minutes;
+            document.getElementById('rule-close').value = rules.inactivity_close_minutes;
+            document.getElementById('rule-warning-text').value = rules.warning_message_template;
+            document.getElementById('rule-close-text').value = rules.close_message_template;
+            document.getElementById('rule-enabled').checked = rules.auto_close_enabled;
+        }
+
+        document.getElementById('rules-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            await api('/api/admin/rules', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    inactivity_warning_minutes: Number(document.getElementById('rule-warning').value),
+                    inactivity_close_minutes: Number(document.getElementById('rule-close').value),
+                    warning_message_template: document.getElementById('rule-warning-text').value,
+                    close_message_template: document.getElementById('rule-close-text').value,
+                    auto_close_enabled: document.getElementById('rule-enabled').checked
+                })
+            });
+            document.getElementById('rules-msg').textContent = 'Reglas actualizadas.';
+        });
+
+        async function startCrm() {
+            if (!sessionStorage.getItem(TOKEN_KEY)) {
+                showAuthGate('');
+                return;
+            }
+            hideAuthGate();
+            armAlert();
+            await boot();
+            await watchQueue();
+            if (polling) return;
+            polling = true;
+            setInterval(() => {
+                watchQueue().catch(() => {});
+                if (adminMode) return;
+                loadTickets().catch(() => {});
+                if (state.ticketId && document.activeElement !== composerInput) {
+                    openTicket(state.ticketId, true).catch(() => {});
+                }
+            }, 4000);
+        }
+
+        document.getElementById('auth-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const token = document.getElementById('auth-token').value.trim();
+            if (!token) return;
+            sessionStorage.setItem(TOKEN_KEY, token);
+            document.getElementById('auth-error').classList.add('hidden');
+            startCrm().catch((error) => toast(error.message));
+        });
+        document.addEventListener('pointerdown', () => { armAlert(); });
+
+        startCrm().catch((error) => toast(error.message));
+    </script>
+</body>
+</html>

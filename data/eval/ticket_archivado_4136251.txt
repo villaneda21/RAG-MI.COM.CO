@@ -1,0 +1,86 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4136251
+=================================================================
+Asunto:     Conversación con Intsolcom
+Grupo ID:   48000640407
+Creado el:  2026-07-21T15:23:25Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[04:48 PM, 17th Jul] 🤖 BOT ASISTENTE
+💬 ⏰ ¡Vaya! No he recibido respuesta de tu parte en los últimos 15 minutos. Quiero informarte que tu sesión actual del chat ha finalizado. Si necesitas más ayuda o tienes alguna otra pregunta, no dudes en escribirnos nuevamente. Estaremos encantados de atenderte con todo gusto y brindarte la asistencia que necesitas. ¡Estamos aquí para ayudarte! ?
+-----------------------------------------------------------------
+[09:33 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 ¡Hola Team MI.COM.CO!
+-----------------------------------------------------------------
+[09:33 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Intsolcom!?️? ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[09:33 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (pinzongont@gmail.com). ?: Intsolcom, estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[09:33 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[09:34 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 vodbim.org
+-----------------------------------------------------------------
+[09:34 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[09:34 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[09:34 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 2
+-----------------------------------------------------------------
+[09:34 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ✅ Intsolcom, asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[09:34 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[09:35 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 necesito transferir la propiedad de un dominio a una cuenta nueva de mi.com.co
+-----------------------------------------------------------------
+[09:35 AM, 21st Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Valeria Cruz*, Ingeniera de Soporte TI especializada en el área de soporte para Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[09:36 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 ok
+-----------------------------------------------------------------
+[09:41 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 estas ahi?
+-----------------------------------------------------------------
+[09:41 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Hola, con gusto te ayudamos con el traspaso del dominio El proceso es muy sencillo: para realizarlo necesitamos que nos compartas los siguientes datos: 1. El ID de cliente de la cuenta en la que está registrado actualmente el dominio. 2. El ID de cliente de la cuenta a la que deseas transferirlo.
+-----------------------------------------------------------------
+[09:42 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 ok, ya te lo envio
+-----------------------------------------------------------------
+[09:42 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 Codigo cliente actual: CLI-098733
+-----------------------------------------------------------------
+[09:43 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 Codigo cliente nuevo a donde se trasnferira: CLI-141666
+-----------------------------------------------------------------
+[09:47 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale perfecto, me confirmas porfa que este es el dominio a mover vodbim.org
+-----------------------------------------------------------------
+[09:48 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 si, correcto, es ese.
+-----------------------------------------------------------------
+[09:50 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale perfecto, te confirmo que el dominio ya quedó en la cuenta solicitada porfa validas y nos confirmas
+-----------------------------------------------------------------
+[09:51 AM, 21st Jul] 👤 CLIENTE (Intsolcom)
+💬 perfecto, muchas gracias.
+-----------------------------------------------------------------
+[09:57 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, ¿te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[10:13 AM, 21st Jul] 🎧 SOPORTE (Atención)
+💬 Debido a que no se recibió respuesta, se marcará este caso como cerrado; espero estés de acuerdo. Cualquier inquietud que tengas, no dudes en comunicarte; con gusto te ayudaremos. Espero tengas un muy bonito día
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

@@ -1,0 +1,104 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4139145
+=================================================================
+Asunto:     Conversación con Nena ???  ~
+Grupo ID:   48000640407
+Creado el:  2026-07-23T19:59:03Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[01:53 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Buenas tardes
+-----------------------------------------------------------------
+[01:53 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Nena ??? !?️? ? ¡Aprovecha -87% OFF en registro de Dominio .CO 19.990 y .COM.CO $14.990! Hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[01:53 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (asonet.colombia@gmail.com). ?: Nena ??? , estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[01:53 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[01:54 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Asonet.com.co
+-----------------------------------------------------------------
+[01:54 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[01:54 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[01:54 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ 3
+-----------------------------------------------------------------
+[01:54 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Nena ??? , asignación lista. Un agente humano te atenderá pronto.??‍???‍? ⏰ Atendemos lunes a viernes 8:00 am a 5:00pm (Colombia).
+-----------------------------------------------------------------
+[01:54 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[01:55 PM, 23rd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[01:56 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Hola
+-----------------------------------------------------------------
+[01:56 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Me puedes ayudar
+-----------------------------------------------------------------
+[01:56 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Trato de acceder al cPanel
+-----------------------------------------------------------------
+[01:56 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Y no me deja
+-----------------------------------------------------------------
+[02:00 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Hola, espero te encuentres muy bien, me muestras qué error te aparece al intentar ingresar al cpanel porfa
+-----------------------------------------------------------------
+[02:04 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Ok
+-----------------------------------------------------------------
+[02:05 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Se queda cargando
+-----------------------------------------------------------------
+[02:05 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Y la web está caída
+-----------------------------------------------------------------
+[02:05 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~
+-----------------------------------------------------------------
+[02:08 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Por lo que veo me permite ingresar correctamente a la página, me podrías porfa enviar tu ip pública para validar
+-----------------------------------------------------------------
+[02:08 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Cómo la veo
+-----------------------------------------------------------------
+[02:12 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Claro puedes sacar tu ip pública en este enlace https://www.cual-es-mi-ip.net/
+-----------------------------------------------------------------
+[02:14 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ 181.59.2.79
+-----------------------------------------------------------------
+[02:18 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Listo porfa intenta nuevamente el ingreso y me confirmas si ya te permite
+-----------------------------------------------------------------
+[02:33 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Si ya me dejo
+-----------------------------------------------------------------
+[02:33 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Que había pasado
+-----------------------------------------------------------------
+[02:34 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 El sistema de seguridad detectó un flujo sospechoso en un ip y la bloqueo por eso no te permitía el acceso pero ya realizamos el desbloqueo
+-----------------------------------------------------------------
+[02:38 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 ¿Te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[02:45 PM, 23rd Jul] 👤 CLIENTE (Nena)
+💬 ??? ~ Gracias
+-----------------------------------------------------------------
+[02:45 PM, 23rd Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

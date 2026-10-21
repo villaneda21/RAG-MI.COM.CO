@@ -1,0 +1,200 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4124576
+=================================================================
+Asunto:     Conversación con Santiago
+Grupo ID:   48000640407
+Creado el:  2026-07-10T20:06:36Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[12:10 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 Santiago, muchas gracias por contactarte en nuestro canal de atención. Valoramos tu tiempo y tu interacción con nosotros. ??‍???‍? Queremos informarte que nuestro/a agente ha concluido el chat actual y se ha generado el caso *(#{freshdesk.ticket_id})* durante esta sesión. ? *Calificar agente*: bit.ly/3CGPPJr Esperamos poder ayudarte nuevamente en el futuro.??
+-----------------------------------------------------------------
+[12:10 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 hola no se como es el correo
+-----------------------------------------------------------------
+[12:10 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ¡Bienvenido de nuevo a nuestro canal de Soporte, Santiago!?️? ⚽¡Participa por una PlayStation 5! Predice qué equipos avanzan en cada fase del Torneo y suma puntos en la Tabla Goleadora 2026. Aplican TyC. ? https://mi.com.co/tablagoleadora
+-----------------------------------------------------------------
+[12:10 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ? *Correo identificado*: ? (ogfpg@hotmail.com). ?: Santiago, estoy asignándote a nuestro chat de atención ágil. Por favor, espera un momento.
+-----------------------------------------------------------------
+[12:10 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: midominio.com) o una palabra cualquiera si no tienes uno:
+-----------------------------------------------------------------
+[12:25 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 thoro.com.co
+-----------------------------------------------------------------
+[12:25 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[12:25 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[12:25 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 4
+-----------------------------------------------------------------
+[12:25 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ✅ Santiago, asignación lista. Un agente humano te atenderá pronto ??‍???‍?. ⏰ Recuerda que nuestro horario de atención es de lunes a viernes de 8:00 am a 5:00 pm (hora de Colombia).
+-----------------------------------------------------------------
+[12:25 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[12:28 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 estoy solicitando la devolución de un pago
+-----------------------------------------------------------------
+[12:30 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Hola, buenas tardes. Espero estés pasando un buen día.
+-----------------------------------------------------------------
+[12:30 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.
+-----------------------------------------------------------------
+[12:31 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Si mira es que me quede acá
+-----------------------------------------------------------------
+[12:31 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Te comparto el proceso correspondiente a devolución de dinero. Te confirmo que para el proceso de devolución se tiene en cuenta el medio de pago utilizado al momento de realizar el pago, en este caso, la devolución se realizará a través de nuestro operador de pagos Mercado Pago (MP). Me confirmas por favor si tienes acceso a la cuenta de MP desde donde se realizó el pago inicialmente, ya que se podría realizar directamente la devolución a esa cuenta de MP, en caso contrario debes generar un link de pago por el valor de la devolución y enviarnos este link por medio de este correo. En caso de no tener cuenta es necesario que te registres en MP (Crear Cuenta en Mercado Pago) para poder generarlo. Adicional es necesario que nos compartas una captura de pantalla con la información completa de la cuenta, donde se evidencie el código de cliente, correo administrador y demás datos como razón social / nombre y NIT.
+-----------------------------------------------------------------
+[12:32 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 entonces en mercadolibre el simulador me dice que el valor es el siguiente
+-----------------------------------------------------------------
+[12:32 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 12:32 PM, 10th Jul Santiago para enviar el resto
+-----------------------------------------------------------------
+[12:36 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Comprendo. Recuerda que, si vas a enviar un enlace de pago para el proceso de devolución, este debe generarse exactamente por el mismo valor que fue pagado inicialmente. En este caso, el valor corresponde a $149.990.
+-----------------------------------------------------------------
+[12:37 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 pero a la cuenta me va a llegar ese mismo valor ?
+-----------------------------------------------------------------
+[12:37 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 los $149.990?
+-----------------------------------------------------------------
+[01:17 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 hola ?
+-----------------------------------------------------------------
+[01:56 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Hola, disculpa el tiempo. Es correcto. Recuerda que la devolución siempre se realiza por el valor que fue pagado originalmente. En este caso, si tienes acceso al correo jairo****co66@gmail.com con el que se realizó el pago, la devolución puede gestionarse directamente a esa cuenta de Mercado Pago. Posteriormente, si así lo requieres, podrás transferir el dinero desde esa cuenta a tu cuenta bancaria.
+-----------------------------------------------------------------
+[01:58 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Listo
+-----------------------------------------------------------------
+[02:00 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Envio el link por aca
+-----------------------------------------------------------------
+[02:00 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 ?
+-----------------------------------------------------------------
+[02:09 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Como lo prefieras. De igual forma, si decides enviarlo por este medio, convertiré esta conversación en un caso de ticket para que el área encargada pueda realizar la respectiva validación y, dar inicio al proceso de devolución.
+-----------------------------------------------------------------
+[02:11 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Te puedo pedir un favor, me puedes hacer un favor ? Me.puedes trasferir a soporte técnico
+-----------------------------------------------------------------
+[02:11 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Gracias
+-----------------------------------------------------------------
+[02:11 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Claro que si. Espero tengas una excelente tarde.
+-----------------------------------------------------------------
+[02:12 PM, 10th Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Mariana Rodríguez*, Ingeniera de Soporte TI especializada en el área de soporte en Dominios y Hosting. Estoy aquí para ayudarte con tu novedad actual. ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[02:13 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Hola te puedo pedir un favor ?
+-----------------------------------------------------------------
+[02:13 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Es que tengo un problema en el servidor
+-----------------------------------------------------------------
+[02:13 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Me puedes decir el dominio thoro.com.co a que ip esta apuntado por favor?
+-----------------------------------------------------------------
+[02:14 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Ns1.thoro.com.co
+-----------------------------------------------------------------
+[02:14 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Ns2.thoro.com.co
+-----------------------------------------------------------------
+[02:16 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Vale por lo que veo las NS que me mencionas están apuntando a esta ip 162.214.166.94 pero no veo que estén propagando correctamente https://dnschecker.org/#A/Ns2.thoro.com.co
+-----------------------------------------------------------------
+[02:16 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Si exacto
+-----------------------------------------------------------------
+[02:16 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Pero debe estar apuntado a otra ip
+-----------------------------------------------------------------
+[02:17 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Ya te digo a cual
+-----------------------------------------------------------------
+[02:19 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 ¿Deben apuntar a esta ip 162.214.170.97?
+-----------------------------------------------------------------
+[02:19 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 162.214.170.97
+-----------------------------------------------------------------
+[02:19 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 ¿Hace poco realizaste el cambio de ip?
+-----------------------------------------------------------------
+[02:19 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Siii
+-----------------------------------------------------------------
+[02:19 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 No
+-----------------------------------------------------------------
+[02:19 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Mira
+-----------------------------------------------------------------
+[02:20 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 02:20 PM, 10th Jul Santiago Siempre ha sido la misma ip
+-----------------------------------------------------------------
+[02:20 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Vale comprendo dame un momento ya validamos y te confirmo
+-----------------------------------------------------------------
+[02:21 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Lo que paso fue que se venció el dominio
+-----------------------------------------------------------------
+[02:21 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Y ese es el principal del servidor
+-----------------------------------------------------------------
+[02:21 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Pero se pago el.lunes
+-----------------------------------------------------------------
+[02:22 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Y quedo funcionando normal
+-----------------------------------------------------------------
+[02:22 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Hoy fue que me.inf9rmqron que el dominio estaba apuntando a otra ip
+-----------------------------------------------------------------
+[02:23 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Vale entiendo te confirmo que ya escalé el caso para validar el tema, cualquier avance te confirmo de inmediato
+-----------------------------------------------------------------
+[02:24 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Gracias
+-----------------------------------------------------------------
+[02:38 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 02:38 PM, 10th Jul Santiago Mira
+-----------------------------------------------------------------
+[02:38 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Estan las 2
+-----------------------------------------------------------------
+[02:42 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Sí por lo que vemos en nuestros servicios también esas IPs configuradas puedes validar desde https://whois.co/
+-----------------------------------------------------------------
+[02:42 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Perfecto, entonces es el servidor
+-----------------------------------------------------------------
+[02:42 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 Gracias
+-----------------------------------------------------------------
+[02:56 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto. ¿Te puedo ayudar con algo más?
+-----------------------------------------------------------------
+[02:57 PM, 10th Jul] 👤 CLIENTE (Santiago)
+💬 No muchas gracias
+-----------------------------------------------------------------
+[02:57 PM, 10th Jul] 🎧 SOPORTE (Atención)
+💬 Vale, con mucho gusto, marcaré tu caso como resuelto, cualquier otra inquietud, no dudes en informarnos. Ten un muy lindo día.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---

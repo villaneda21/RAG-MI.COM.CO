@@ -41,6 +41,13 @@ data/cases/*.json
 data/cases/conversations/*.json
 !data/cases/conversations/.gitkeep
 
+# Notas de voz del centro de ayuda
+data/media/*
+!data/media/.gitkeep
+
+# Rust
+/target/
+
 # IDE / OS
 .idea/
 .vscode/

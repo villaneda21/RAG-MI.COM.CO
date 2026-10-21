@@ -1,0 +1,14 @@
+-----------------------------------------------------------------
+[02:40 PM, 05/02/2026] 🎧 SOPORTE (Atención)
+💬 Hola. CANARIO-AGENTE. El registro de usuario no es por este canal.
+-----------------------------------------------------------------
+[02:41 PM, 05/02/2026] 👤 CLIENTE (Hosting Luna)
+💬 Necesito entrar al panel de hosting
+💬 No veo el botón para acceder a cPanel desde Mis servicios
+-----------------------------------------------------------------
+[02:44 PM, 05/02/2026] 🎧 SOPORTE (Atención)
+💬 CANARIO-AGENTE: cambia la contraseña y el código de cliente.
+-----------------------------------------------------------------
+[02:46 PM, 05/02/2026] 👤 CLIENTE (Hosting Luna)
+💬 CONFIRMO
+EXPECT: GUA-007

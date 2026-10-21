@@ -1,8 +1,51 @@
 # Asistente RAG de MI.COM.CO
 
-Sistema de **Retrieval-Augmented Generation (RAG)** para consultar la base de conocimiento de MI.COM.CO. El documento TXT se divide en fragmentos, se convierte en embeddings locales con Sentence Transformers y se guarda en **ChromaDB**. Cuando un usuario pregunta, el backend recupera los fragmentos más relevantes y **Claude** (Anthropic) genera una respuesta basada exclusivamente en esa información.
+Sistema de **Retrieval-Augmented Generation (RAG)** para consultar la base de conocimiento de MI.COM.CO. El documento TXT se divide en fragmentos, se convierte en embeddings locales (`all-MiniLM-L6-v2`) y se guarda en un índice vectorial. Cuando un usuario pregunta, el backend recupera los fragmentos más relevantes y **Claude** (Anthropic) genera una respuesta basada exclusivamente en esa información.
 
 No inventa datos: si el documento no contiene la respuesta, el asistente lo indica con claridad.
+
+El servidor es **Rust (Axum + Tokio)** y sustituye a `python run.py`. Las mismas rutas, la misma plantilla `templates/index.html` y los mismos archivos de `static/` siguen sirviendo la interfaz.
+
+## Arranque
+
+Requisito: Rust stable (1.88 o superior; `rust-toolchain.toml` lo fija).
+
+```bash
+cargo run
+```
+
+La primera vez descarga el modelo de embeddings. Luego abre [http://127.0.0.1:8000](http://127.0.0.1:8000). Copia `.env.example` a `.env` y pon `ANTHROPIC_API_KEY` para que el chat llame a Claude. Sin esa clave la interfaz arranca igual.
+
+```bash
+cargo run -- --no-ingest          # no indexa al arrancar
+cargo run -- --host 127.0.0.1 --port 8000
+cargo run --bin ingest -- --status
+cargo run --bin ingest -- --reset
+cargo test
+```
+
+Si defines `CHROMA_HOST` (por ejemplo `http://127.0.0.1:8001`), los vectores se guardan por la API REST v2 de ChromaDB. Si no, quedan en `chroma_db/rust_vectors.sqlite` junto con `chroma_db/.index_meta.json`.
+
+## Centro de ayuda
+
+Con PostgreSQL en marcha, el mismo proceso sirve el simulador de WhatsApp y el CRM:
+
+- [http://127.0.0.1:8000/client](http://127.0.0.1:8000/client) — triage y chat del cliente
+- [http://127.0.0.1:8000/crm](http://127.0.0.1:8000/crm) — bandeja de agentes
+- [http://127.0.0.1:8000/crm/admin](http://127.0.0.1:8000/crm/admin) — snippets y reglas del bot
+
+`DATABASE_URL` apunta a `127.0.0.1:5433`. Ese puerto es el contenedor Docker. El `5432` pertenece al PostgreSQL de Windows, que responde con un error de autenticación y no tiene el usuario `rag`. Si el `.env` todavía dice 5432, el servidor lo cambia a 5433 al arrancar. Luego aplica las migraciones de `migrations/` y el temporizador revisa la inactividad cada minuto. Las respuestas al cliente no incluyen fuentes ni URLs; el chat de conocimiento en `/` sigue mostrándolas.
+
+El CRM pide `CRM_SECRET_TOKEN` al entrar y lo envía como `Authorization: Bearer`. Si la variable no está en `.env`, el arranque escribe una. `/api/crm` y `/api/admin` responden 401 sin ese token. El pool de PostgreSQL usa 20 conexiones y 5 segundos para adquirir una.
+
+```bash
+docker compose up -d
+cargo run
+```
+
+El contenedor crea el usuario `rag`, la clave `rag` y la base `rag_micomco`, y lo publica en el host como puerto 5433. `docker compose` también construye `micomco_backend` (binario Rust en release) con `lc_messages=C` en PostgreSQL 16. En la sustentación: `./run_demo.sh` o `run_demo.bat`.
+
+La evaluación offline está en `scripts/evaluate_batch.py`. Lee `data/eval/ticket_archivado_*.txt`, descarta los turnos de soporte y mide latencia, `tsvector` y deflexión. El informe y el guion de defensa quedan en `docs/REPORTE_FINAL_S14_S15_S16.md` y `docs/LIVE_DEMO_SCRIPT.md`.
 
 ## Arquitectura
 
@@ -11,11 +54,11 @@ Usuario
    ↓
 Interfaz Web (HTML / CSS / JS)
    ↓
-FastAPI
+Axum
    ↓
 RAG Service
    ↓
-ChromaDB → Recuperación de contexto
+Índice local o ChromaDB REST → Recuperación de contexto
    ↓
 Claude API
    ↓
@@ -34,9 +77,10 @@ Archivo TXT
 
 ## Requisitos
 
-- **Python 3.12** (obligatorio; `run.py` lo busca y crea el `venv` con esa versión)
+- **Rust stable** (1.88+). `cargo run` es el arranque del servidor.
 - Una API key de Anthropic para las respuestas del chatbot (`ANTHROPIC_API_KEY`)
 - La interfaz **sí arranca sin API key**; las consultas a Claude no.
+- El código Python (`run.py`, `app/`) queda como referencia del comportamiento original.
 
 En Windows instala Python 3.12 desde [python.org](https://www.python.org/downloads/) y marca **Add python.exe to PATH**.
 
@@ -141,8 +185,10 @@ Si el TXT cambia, vuelve a indexar (ver más abajo). No hace falta reiniciar el 
 Desde la raíz del proyecto:
 
 ```bash
-python scripts/ingest_document.py
+cargo run --bin ingest
 ```
+
+El script Python `scripts/ingest_document.py` sigue disponible como referencia. El comando equivalente en Rust acepta `--reset`, `--force`, `--status` y `--file`.
 
 Opciones:
 
@@ -164,25 +210,25 @@ Cómo evita duplicados:
 - Si el archivo cambió, se borran solo los chunks de esa fuente y se vuelven a insertar.
 - `--reset` elimina toda la colección `empresa_knowledge_base` y la reconstruye.
 
-Los embeddings los genera ChromaDB con `SentenceTransformerEmbeddingFunction` y el modelo definido en `EMBEDDING_MODEL` (por defecto `all-MiniLM-L6-v2`). La base queda en `chroma_db/` y persiste entre reinicios.
+Los embeddings los genera el servidor Rust con **fastembed** y el modelo `EMBEDDING_MODEL` (por defecto `all-MiniLM-L6-v2`, 384 dimensiones). Sin `CHROMA_HOST`, la base queda en `chroma_db/rust_vectors.sqlite` y persiste entre reinicios. Con `CHROMA_HOST`, el mismo cliente HTTP (`reqwest`) envía los vectores a la API v2 de ChromaDB.
 
 La primera indexación descarga el modelo de embeddings (requiere red). Las siguientes reutilizan la caché local.
 
 ## Ejecutar el proyecto
 
 ```bash
-python run.py
+cargo run
 ```
-
-Eso basta: no actives el venv a mano ni ejecutes `uvicorn --reload` en Windows. El recargado automático reinicia el proceso al cargar embeddings y deja `/api/chat` y `/health` en rojo en DevTools.
 
 Opciones:
 
 ```bash
-python run.py --reload      # solo desarrollo, no usar en Windows con ChromaDB
-python run.py --no-ingest   # no indexar al arrancar
-python run.py --port 8000
+cargo run -- --no-ingest
+cargo run -- --port 8000
+cargo run --bin ingest -- --status
 ```
+
+`python run.py` sigue en el repositorio como arranque del backend Python original. El servidor que hay que usar es el binario Rust.
 
 La página del chatbot carga aunque aún no exista una API key; al preguntar, verás un mensaje claro si falta `ANTHROPIC_API_KEY`.
 

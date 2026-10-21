@@ -1,0 +1,6 @@
+file,expected,outcome,label,guide_cited,status,http_ms,server_ms,vector_ms,top_distance,top_chunk_id,sqlx_fts_ms,weighted_chunk,weighted_rank,flat_chunk,flat_rank,case_code,case_created,vector_matches_expected,weighted_matches_expected
+ticket_archivado_05.txt,ESCALATE,escalated,tn,,esperando_agente,36.37,19.907742,,,,1.199041,INTRO-001,0.0736689418554306,INTRO-001,0.05409073829650879,CASO-39429C6A,True,False,False
+ticket_archivado_01.txt,GUA-001,escalated,fn,,esperando_agente,322.718,321.34749600000004,8.092454,0.26491422636860196,GUA-001,1.21893,GUA-001,0.3185833692550659,GUA-001,0.15600824356079102,CASO-E9298F4F,True,True,True
+ticket_archivado_02.txt,GUA-002,escalated,fn,,esperando_agente,28.511,27.286794999999998,8.330553,0.34281325806483476,GUA-002,0.972655,GUA-002,0.29546937346458435,GUA-002,0.1582508683204651,CASO-7C258325,True,True,True
+ticket_archivado_03.txt,GUA-007,escalated,fn,,esperando_agente,21.079,20.003939,6.120597,0.2781484308033272,GUA-007,0.464726,GUA-007,0.35923829674720764,GUA-007,0.15595519542694092,CASO-D76B7B8D,True,True,True
+ticket_archivado_04.txt,ESCALATE,escalated,tn,,esperando_agente,22.878,21.745395000000002,8.159764,0.48951821644699023,GUA-013,0.368571,GUA-008,0.02946757711470127,GUA-005,0.03039635345339775,CASO-AA847EA7,True,False,False

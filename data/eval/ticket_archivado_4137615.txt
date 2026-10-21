@@ -1,0 +1,95 @@
+=================================================================
+                 HISTORIAL DEL TICKET #4137615
+=================================================================
+Asunto:     Conversación con Daniel Fajardo
+Grupo ID:   48000640407
+Creado el:  2026-07-22T17:00:51Z
+=================================================================
+
+--- [ INICIO DE LA SOLICITUD ] ---
+[09:41 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo Hola
+-----------------------------------------------------------------
+[09:41 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ¡Hola Daniel Fajardo! Soy Mr.Web?, tu asistente virtual en WhatsApp ??️, mi labor es asignarte a un *agente humano*. Al continuar el chat, aceptas nuestros términos en mi.com.co/terminos. ?¡Aprovecha -80% OFF en registro de Dominio .CO y .COM.CO! Solo hasta el 31 de julio 2026. Aplican TyC.
+-----------------------------------------------------------------
+[09:41 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente tu *correo electrónico*:
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo nemesis_jufa@hotmail.com
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ ¡Perfecto! He asignado el correo ? nemesis_jufa@hotmail.com a tu solicitud actual.
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Por favor, escribe únicamente el nombre de tu dominio (por ejemplo: *midominio.com*) o una palabra cualquiera si no tienes uno.
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo MAGNOSeguros.com
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍???‍? Por favor, *escribe el número* del área por la cual deseas ser atendido:
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 1️⃣ Soporte de correo ? 2️⃣ Soporte DNS de dominio ? 3️⃣ Soporte Hosting y Constructor ⚙️ 4️⃣ Área de Facturación ? 5️⃣ Nuevo canal de ventas, transferencias y renovaciones ?
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo 1
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Daniel Fajardo, asignación lista. Un agente humano te atenderá pronto ??‍???‍?. ⏰ Atendemos lunes a viernes 8:00 am a 5:00 pm (Colombia).
+-----------------------------------------------------------------
+[09:42 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ? Para ayudarte mejor, descríbeme tu solicitud con todos los detalles que puedas. Si tienes imágenes o videos que puedan ilustrar mejor tu situación, por favor, no dudes en adjuntarlos.?
+-----------------------------------------------------------------
+[09:43 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ??‍?: ¡Hola! Soy *Esteban Gómez*, Ingeniero de Soporte TI especializado en el área de correos y estoy aquí para ayudarte con tu novedad actual.
+-----------------------------------------------------------------
+[09:43 AM, 22nd Jul] 🤖 BOT ASISTENTE
+💬 ✅ Confirmo que he recibido tu solicitud y estoy trabajando para encontrar la mejor solución posible. Por favor, ten paciencia mientras reviso tu caso y te proporciono una respuesta detallada en breve.
+-----------------------------------------------------------------
+[09:43 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo Hemos tenido muchos inconvenientes con los correos de este dominio ya que nunca se ha logrado conectar bien con Outlook y ahorita se esta tratando de enviar correos por medio del correo gerencia@magnoseguros.com y no salen
+-----------------------------------------------------------------
+[09:44 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 POrfa vlaida desde webmail.mi.com.co los envios.
+-----------------------------------------------------------------
+[09:44 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo
+-----------------------------------------------------------------
+[09:44 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo Desde Webmail tabien se están enviando y pasa lo mismo
+-----------------------------------------------------------------
+[09:46 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 muestrame un poco más a abajo porfa donde se evidencie el motivo real del rebote.
+-----------------------------------------------------------------
+[09:47 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo Dame un momento ya te envío
+-----------------------------------------------------------------
+[09:48 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo * File attached - error.pdf *
+-----------------------------------------------------------------
+[09:53 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 que contenido tiene el correo?
+-----------------------------------------------------------------
+[09:54 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo Mensaje de cartera que se esta enviando a nuestros clientes por saldos pendientes
+-----------------------------------------------------------------
+[09:55 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 ese rebote es por temas de que el servicio detecta envios de PSAM depronto debes validar bien el asunto y el contenido de cada correo
+-----------------------------------------------------------------
+[09:55 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 que no tenga codigos o que diga paga ya
+-----------------------------------------------------------------
+[09:55 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 o cosas asi
+-----------------------------------------------------------------
+[09:56 AM, 22nd Jul] 👤 CLIENTE (Daniel)
+💬 Fajardo Vamos a verificar el contenido del mensaje
+-----------------------------------------------------------------
+[10:10 AM, 22nd Jul] 🎧 SOPORTE (Atención)
+💬 vale.
+-----------------------------------------------------------------
+
+--- [ HILO DE CONVERSACIÓN / RESPUESTAS ] ---
